@@ -1,0 +1,6 @@
+{
+  "name": "DripStick",
+  "description": "Premium cone-shaped waffles on a stick with customizable sauces, toppings, interactive builder, outlets locator, catering and franchise portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

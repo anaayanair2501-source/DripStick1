@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #FDF8F2;
+    color: #4A2C2A;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.03em;
+  }
+
+  .font-brand {
+    font-family: 'Syne', sans-serif;
+  }
+}
+
+@keyframes dripSlow {
+  0% {
+    transform: scaleY(0.8) translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scaleY(1.15) translateY(4px);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.8) translateY(0);
+    opacity: 0.9;
+  }
+}
+
+@keyframes dropFall {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(18px) scale(0.9, 1.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(28px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(210, 145, 108, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(210, 145, 108, 0.45);
+  }
+}
+
+.animate-drip {
+  animation: dripSlow 4s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.animate-drop {
+  animation: dropFall 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.animate-float {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Custom Waffle Grid Texture */
+.waffle-texture {
+  background-image: repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(74, 44, 42, 0.07) 10px, rgba(74, 44, 42, 0.07) 12px);
+}
+
+/* Hide scrollbar for clean horizontal scrolls */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
