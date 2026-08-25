@@ -3,6 +3,7 @@ import { Sparkles, Star, Plus, Check, Eye, ArrowRight, Flame } from 'lucide-reac
 import { SHOW_STOPPERS } from '../data/mockData';
 import { ShowStopperProduct } from '../types';
 import { soundEffects } from '../utils/soundEffects';
+import { TiltedCard } from './TiltedCard';
 
 interface ShowStoppersSectionProps {
   onAddShowStopperToCart: (product: ShowStopperProduct) => void;
@@ -92,21 +93,32 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                   </div>
                 </div>
 
-                {/* Product Image Frame */}
-                <div className="relative h-44 w-full rounded-2xl overflow-hidden bg-[#2D1B11] mb-4">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
+                {/* Product Image Frame wrapped in ReactBits TiltedCard */}
+                <div className="relative mb-4 w-full h-44 rounded-2xl overflow-hidden">
+                  <TiltedCard
+                    imageSrc={product.image}
+                    altText={product.name}
+                    captionText={`★ ${product.rating} • ${product.badge}`}
+                    containerHeight="176px"
+                    containerWidth="100%"
+                    imageHeight="100%"
+                    imageWidth="100%"
+                    rotateAmplitude={12}
+                    scaleOnHover={1.06}
+                    showTooltip={true}
+                    displayOverlayContent={true}
+                    overlayContent={
+                      <div className="flex justify-between items-center w-full">
+                        <span className="text-[9px] font-black uppercase tracking-wider text-[#D2916C] bg-[#4A2C2A]/85 backdrop-blur-xs px-2 py-0.5 rounded-full shadow-xs">
+                          {product.badge}
+                        </span>
+                        <div className="flex items-center gap-1 bg-white/90 backdrop-blur-xs px-2 py-0.5 rounded-full text-[10px] font-bold text-[#4A2C2A] shadow-xs">
+                          <Star className="w-3 h-3 fill-[#D2916C] text-[#D2916C]" />
+                          <span>{product.rating}</span>
+                        </div>
+                      </div>
+                    }
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#26140A]/60 via-transparent to-transparent pointer-events-none" />
-                  
-                  {/* Rating */}
-                  <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1 bg-white/90 backdrop-blur-xs px-2 py-0.5 rounded-full text-[10px] font-bold text-[#4A2C2A] shadow-xs">
-                    <Star className="w-3 h-3 fill-[#D2916C] text-[#D2916C]" />
-                    <span>{product.rating}</span>
-                  </div>
                 </div>
 
                 {/* Description & Tags */}
@@ -170,22 +182,31 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
         {selectedProductDetail && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
             <div className="bg-[#FDF8F2] rounded-3xl max-w-lg w-full overflow-hidden border-2 border-[#4A2C2A]/20 shadow-2xl animate-scale-up">
-              <div className="relative h-64 w-full">
-                <img
-                  src={selectedProductDetail.image}
-                  alt={selectedProductDetail.name}
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
+              <div className="relative h-64 w-full bg-[#26140A] overflow-hidden">
+                <TiltedCard
+                  imageSrc={selectedProductDetail.image}
+                  altText={selectedProductDetail.name}
+                  captionText={`★ ${selectedProductDetail.rating} • ${selectedProductDetail.badge}`}
+                  containerHeight="256px"
+                  containerWidth="100%"
+                  imageHeight="100%"
+                  imageWidth="100%"
+                  rotateAmplitude={10}
+                  scaleOnHover={1.04}
+                  showTooltip={false}
+                  displayOverlayContent={true}
+                  overlayContent={
+                    <div className="absolute bottom-3 left-4 bg-[#4A2C2A] text-[#D2916C] px-3 py-1 rounded-full text-xs font-bold shadow-md">
+                      {selectedProductDetail.badge}
+                    </div>
+                  }
                 />
                 <button
                   onClick={() => setSelectedProductDetail(null)}
-                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center font-bold text-sm hover:bg-black"
+                  className="absolute top-4 right-4 z-30 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center font-bold text-sm hover:bg-black transition-colors"
                 >
                   ✕
                 </button>
-                <div className="absolute bottom-3 left-4 bg-[#4A2C2A] text-[#D2916C] px-3 py-1 rounded-full text-xs font-bold">
-                  {selectedProductDetail.badge}
-                </div>
               </div>
 
               <div className="p-6">
