@@ -13,6 +13,7 @@ import { SocialHubSection } from './components/SocialHubSection';
 import { OrderCartModal } from './components/OrderCartModal';
 import { FlavorMatchmakerModal } from './components/FlavorMatchmakerModal';
 import { Footer } from './components/Footer';
+import { ClickSpark } from './components/ClickSpark';
 import { CartItem, CustomDripStick, ShowStopperProduct } from './types';
 import { soundEffects } from './utils/soundEffects';
 
@@ -142,7 +143,16 @@ export default function App() {
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#FDF8F2] text-[#4A2C2A] flex flex-col font-sans selection:bg-[#4A2C2A] selection:text-[#FDF8F2]">
+    <ClickSpark
+      sparkColor="#D2916C"
+      sparkCount={8}
+      sparkRadius={28}
+      sparkSize={14}
+      duration={450}
+      easing="ease-out"
+      extraScale={1.2}
+      className="min-h-screen bg-[#FDF8F2] text-[#4A2C2A] flex flex-col font-sans selection:bg-[#4A2C2A] selection:text-[#FDF8F2]"
+    >
       {/* Top Sticky Navigation with Chocolate Drips */}
       <Navbar
         cartCount={totalCartCount}
@@ -217,6 +227,6 @@ export default function App() {
 
       {/* 10 — FOOTER */}
       <Footer onNavigate={handleNavigate} />
-    </div>
+    </ClickSpark>
   );
 }
