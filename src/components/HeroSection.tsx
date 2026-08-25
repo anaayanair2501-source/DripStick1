@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Sparkles, Flame, Droplets, ChevronDown, CheckCircle2, Heart } from 'lucide-react';
 import { ASSETS } from '../data/mockData';
 import { soundEffects } from '../utils/soundEffects';
+import { BorderGlow } from './BorderGlow';
 
 interface HeroSectionProps {
   onOrderNow: () => void;
@@ -125,7 +126,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           </div>
 
-          {/* Right Column: Visual Stage with Signature Waffle & Tilted Badge */}
+          {/* Right Column: Visual Stage with Signature Waffle wrapped in BorderGlow */}
           <div className="lg:col-span-5 relative flex justify-center items-center py-4">
             
             {/* Ambient Background Glow */}
@@ -165,40 +166,53 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </button>
               </div>
 
-              {/* View 1: Photo View */}
-              {viewMode === 'photo' ? (
-                <div className="relative w-[290px] sm:w-[330px] h-[450px] sm:h-[490px] bg-[#3D2314] rounded-t-full rounded-b-3xl overflow-hidden shadow-2xl border-4 border-white">
-                  <img
-                    src={ASSETS.heroWaffle}
-                    alt="DripStick signature cone waffle on stick"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#26140A]/85 via-transparent to-transparent pointer-events-none" />
-                  
-                  {/* Bottom details */}
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#D2916C]">
-                      Signature Dip
-                    </p>
-                    <h4 className="font-bold text-base text-[#FDF8F2]">
-                      The Belgian Double Dip
-                    </h4>
-                    <p className="text-[11px] text-[#FDF8F2]/80">45°C Molten Dip • ₹189</p>
+              {/* React Bits Border Glow wrapping the homepage photo */}
+              <BorderGlow
+                glowColor="#D2916C"
+                glowSize={280}
+                borderWidth={4}
+                borderRadius="rounded-t-full rounded-b-3xl"
+                interactive={true}
+                animatedBeam={true}
+                beamDuration={5}
+                beamColor="rgba(210, 145, 108, 0.95)"
+                className="shadow-2xl"
+              >
+                {/* View 1: Photo View */}
+                {viewMode === 'photo' ? (
+                  <div className="relative w-[290px] sm:w-[330px] h-[450px] sm:h-[490px] bg-[#3D2314] overflow-hidden">
+                    <img
+                      src={ASSETS.heroWaffle}
+                      alt="DripStick signature cone waffle on stick"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#26140A]/85 via-transparent to-transparent pointer-events-none" />
+                    
+                    {/* Bottom details */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#D2916C]">
+                        Signature Dip
+                      </p>
+                      <h4 className="font-bold text-base text-[#FDF8F2]">
+                        The Belgian Double Dip
+                      </h4>
+                      <p className="text-[11px] text-[#FDF8F2]/80">45°C Molten Dip • ₹189</p>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                /* View 2: Design Graphic Cone from Design HTML */
-                <div className="relative w-[290px] sm:w-[330px] h-[450px] sm:h-[490px] bg-[#F5DEB3] rounded-t-full rounded-b-3xl border-4 border-[#4A2C2A]/10 shadow-2xl flex flex-col items-center overflow-hidden">
-                  <div className="w-full h-full waffle-texture" />
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#4A2C2A] via-[#4A2C2A]/85 to-transparent h-1/2 rounded-b-[40%] shadow-inner" />
-                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-4 h-60 bg-[#D2916C] rounded-full border-2 border-[#4A2C2A]/20 shadow-md" />
-                  
-                  {/* Molten drips */}
-                  <div className="absolute top-1/2 left-1/3 -translate-x-1/2 w-4 h-12 bg-[#4A2C2A] rounded-b-full shadow-md animate-drip" />
-                  <div className="absolute top-1/2 left-2/3 -translate-x-1/2 w-3 h-8 bg-[#4A2C2A] rounded-b-full shadow-md animate-drip" style={{ animationDelay: '0.6s' }} />
-                </div>
-              )}
+                ) : (
+                  /* View 2: Design Graphic Cone from Design HTML */
+                  <div className="relative w-[290px] sm:w-[330px] h-[450px] sm:h-[490px] bg-[#F5DEB3] flex flex-col items-center overflow-hidden">
+                    <div className="w-full h-full waffle-texture" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#4A2C2A] via-[#4A2C2A]/85 to-transparent h-1/2 rounded-b-[40%] shadow-inner" />
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-4 h-60 bg-[#D2916C] rounded-full border-2 border-[#4A2C2A]/20 shadow-md" />
+                    
+                    {/* Molten drips */}
+                    <div className="absolute top-1/2 left-1/3 -translate-x-1/2 w-4 h-12 bg-[#4A2C2A] rounded-b-full shadow-md animate-drip" />
+                    <div className="absolute top-1/2 left-2/3 -translate-x-1/2 w-3 h-8 bg-[#4A2C2A] rounded-b-full shadow-md animate-drip" style={{ animationDelay: '0.6s' }} />
+                  </div>
+                )}
+              </BorderGlow>
 
               {/* Tilted Best Seller Badge directly matching Design HTML */}
               <div className="absolute top-1/4 -right-3 sm:-right-6 bg-white p-4 rounded-2xl shadow-xl rotate-12 flex flex-col items-center gap-1 border border-[#4A2C2A]/10 z-20 hover:rotate-0 transition-transform duration-300">
@@ -214,7 +228,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
 
               {/* Interactive Drip counter badge */}
-              <div className="absolute bottom-2 left-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity bg-[#4A2C2A] text-[#FDF8F2] px-2.5 py-1 rounded-full text-[10px] font-bold">
+              <div className="absolute bottom-2 left-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity bg-[#4A2C2A] text-[#FDF8F2] px-2.5 py-1 rounded-full text-[10px] font-bold shadow-md">
                 Tap to Drip! ({dripCount})
               </div>
             </div>
