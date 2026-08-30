@@ -35,7 +35,9 @@ export const FlavorWheelSection: React.FC<FlavorWheelSectionProps> = ({ onAddPro
 
   const handleSpin = () => {
     if (isSpinning) return;
-    soundEffects.playPop();
+    
+    // Play the authentic wheel spin click slow down sound effect (Pixabay 101152)
+    soundEffects.playWheelSpinClickSlowDown(3800);
     setIsSpinning(true);
 
     // Calculate a random spin: 5 to 8 full rotations + random segment angle
@@ -142,9 +144,16 @@ export const FlavorWheelSection: React.FC<FlavorWheelSectionProps> = ({ onAddPro
               </button>
             </div>
 
-            <span className="text-[11px] font-bold text-[#4A2C2A]/60 mt-4 flex items-center gap-1">
-              <span>🎡 Tap center to spin the Wheel of Drip</span>
-            </span>
+            {isSpinning ? (
+              <span className="text-[11px] font-black text-[#E11D48] mt-4 flex items-center gap-1.5 animate-pulse">
+                <Volume2 className="w-3.5 h-3.5 text-[#E11D48]" />
+                <span>Spinning with sound effect... 🎡🔊</span>
+              </span>
+            ) : (
+              <span className="text-[11px] font-bold text-[#4A2C2A]/60 mt-4 flex items-center gap-1">
+                <span>🎡 Tap center to spin the Wheel of Drip</span>
+              </span>
+            )}
           </div>
 
           {/* Result Card & Coupon Bento */}
