@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Flame, Droplets, Thermometer, Sparkles, Volume2, VolumeX, Play, Pause, ExternalLink, Music2 } from 'lucide-react';
+import { Flame, Droplets, Thermometer, Sparkles, Volume2, VolumeX, Play, Pause, Music2 } from 'lucide-react';
 import { ASSETS } from '../data/mockData';
 import { soundEffects } from '../utils/soundEffects';
 
 export const TheDripExperienceSection: React.FC = () => {
   const [activeStage, setActiveStage] = useState<number>(1);
   const [isPlayingSound, setIsPlayingSound] = useState<boolean>(false);
-  const [showVideoPlayer, setShowVideoPlayer] = useState<boolean>(false);
 
   const handleStageClick = (stage: number) => {
     setActiveStage(stage);
@@ -18,6 +17,7 @@ export const TheDripExperienceSection: React.FC = () => {
   const toggleSoundPlay = () => {
     if (!isPlayingSound) {
       soundEffects.playDip();
+      soundEffects.playCrunch();
       setIsPlayingSound(true);
     } else {
       setIsPlayingSound(false);
@@ -159,7 +159,7 @@ export const TheDripExperienceSection: React.FC = () => {
                 {isPlayingSound ? (
                   <>
                     <Pause className="w-4 h-4 text-white animate-pulse" />
-                    <span>Pause Sound ⏸️</span>
+                    <span>Pause Crunch Sound ⏸️</span>
                   </>
                 ) : (
                   <>
@@ -167,19 +167,6 @@ export const TheDripExperienceSection: React.FC = () => {
                     <span>Hear the Crunch Sound 🔊</span>
                   </>
                 )}
-              </button>
-
-              {/* Toggle Video Preview Button */}
-              <button
-                onClick={() => {
-                  soundEffects.playDip();
-                  setShowVideoPlayer(!showVideoPlayer);
-                  if (!isPlayingSound) setIsPlayingSound(true);
-                }}
-                className="px-4 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-[#FDF8F2] text-xs font-black uppercase tracking-wider flex items-center gap-2 transition-all"
-              >
-                <Play className="w-3.5 h-3.5 text-[#FDE68A]" />
-                <span>{showVideoPlayer ? 'Hide Video' : 'Watch Video'}</span>
               </button>
             </div>
 
@@ -196,57 +183,56 @@ export const TheDripExperienceSection: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-[11px] font-black text-[#FDE68A]">
-                      Playing Crunch Audio Stream
+                      Playing Belgian Waffle Crunch Audio
                     </p>
                     <p className="text-[10px] text-[#FDF8F2]/70">
-                      YouTube Audio: 1XqEc-LKUrY
+                      Live acoustic crunch & fondue resonance
                     </p>
                   </div>
                 </div>
-                <a
-                  href="https://youtu.be/1XqEc-LKUrY?si=EIO6mEvQTV6OaTPk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[10px] font-bold text-[#FBCFE8] hover:underline flex items-center gap-1 shrink-0"
-                >
-                  <span>Open Video</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
+                <span className="text-[10px] font-bold text-[#86EFAC] bg-[#064E3B]/80 px-2.5 py-1 rounded-full border border-[#059669]/40">
+                  LIVE AUDIO 🔊
+                </span>
               </div>
             )}
           </div>
 
-          <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-xl border-2 border-white/20 bg-black aspect-video sm:aspect-auto sm:h-72">
-            {showVideoPlayer || isPlayingSound ? (
-              <iframe
-                src={`https://www.youtube.com/embed/1XqEc-LKUrY?autoplay=1&enablejsapi=1&rel=0`}
-                title="DripStick Crunch Audio Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="w-full h-full object-cover border-0"
-              />
-            ) : (
-              <>
-                <img
-                  src={ASSETS.heroWaffle}
-                  alt="Macro shot of chocolate dipping texture"
-                  className="w-full h-72 object-cover hover:scale-105 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
+          <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-xl border-2 border-white/20">
+            {/* Hidden Audio Stream Container */}
+            {isPlayingSound && (
+              <div className="sr-only pointer-events-none absolute w-0 h-0 overflow-hidden" aria-hidden="true">
+                <iframe
+                  src="https://www.youtube.com/embed/1XqEc-LKUrY?autoplay=1&enablejsapi=1&rel=0"
+                  title="Audio Crunch Stream"
+                  allow="autoplay"
+                  className="w-1 h-1"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#26140A] via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-[#FDF8F2]">
-                  <span className="font-black text-[#FDE68A]">DripStick Culinary Lab</span>
-                  <span className="font-semibold text-white/90">Antwerp Cocoa • 100% Pure Butter</span>
-                </div>
-                {/* Overlay Play Hint */}
-                <button
-                  onClick={toggleSoundPlay}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all shadow-lg group"
-                >
-                  <Play className="w-7 h-7 text-[#FDE68A] fill-[#FDE68A] ml-1 group-hover:scale-110 transition-transform" />
-                </button>
-              </>
+              </div>
             )}
+
+            <img
+              src={ASSETS.heroWaffle}
+              alt="Macro shot of chocolate dipping texture"
+              className="w-full h-72 object-cover hover:scale-105 transition-transform duration-500"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#26140A] via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-[#FDF8F2]">
+              <span className="font-black text-[#FDE68A]">DripStick Culinary Lab</span>
+              <span className="font-semibold text-white/90">Antwerp Cocoa • 100% Pure Butter</span>
+            </div>
+            {/* Overlay Audio Play Hint */}
+            <button
+              onClick={toggleSoundPlay}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all shadow-lg group"
+              title={isPlayingSound ? 'Pause Crunch Sound' : 'Play Crunch Sound'}
+            >
+              {isPlayingSound ? (
+                <Pause className="w-6 h-6 text-[#FDE68A] fill-[#FDE68A] group-hover:scale-110 transition-transform" />
+              ) : (
+                <Play className="w-7 h-7 text-[#FDE68A] fill-[#FDE68A] ml-1 group-hover:scale-110 transition-transform" />
+              )}
+            </button>
           </div>
         </div>
 
