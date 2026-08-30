@@ -83,6 +83,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </button>
               </li>
               <li>
+                <button onClick={() => onNavigate('flavor-wheel')} className="hover:text-[#FDE68A] text-[#FBCFE8] transition-colors font-bold flex items-center gap-1">
+                  <span>🎡 Spin the Flavor Wheel</span>
+                </button>
+              </li>
+              <li>
                 <button onClick={() => onNavigate('menu')} className="hover:text-white transition-colors">
                   Interactive Stick Builder
                 </button>

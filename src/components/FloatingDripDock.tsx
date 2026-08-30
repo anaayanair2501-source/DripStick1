@@ -53,13 +53,17 @@ export const FloatingDripDock: React.FC<FloatingDripDockProps> = ({
           <span className="hidden sm:inline">Showstoppers</span>
         </button>
 
-        {/* Spin & Matchmaker */}
+        {/* Spin Wheel Arcade Section */}
         <button
           onClick={() => {
             soundEffects.playPop();
-            onOpenMatchmaker();
+            onNavigate('flavor-wheel');
           }}
-          className="px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-[#F472B6] to-[#FB7185] text-white text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 transition-all"
+          className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 transition-all ${
+            activeSection === 'flavor-wheel'
+              ? 'bg-[#4A2C2A] text-white ring-2 ring-[#F472B6] scale-105'
+              : 'bg-gradient-to-r from-[#F472B6] to-[#FB7185] text-white'
+          }`}
         >
           <Sparkles className="w-3.5 h-3.5 text-[#FDE68A]" />
           <span>Spin Wheel 🎡</span>
