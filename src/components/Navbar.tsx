@@ -228,12 +228,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Chocolate Hanging Droplets Accents */}
-        <div className="absolute top-full left-1/2 -translate-x-1/2 flex gap-2 z-10 pointer-events-none">
-          <div className="w-3.5 h-10 sm:w-4 sm:h-12 bg-[#4A2C2A] rounded-b-full shadow-md animate-drip" />
-          <div className="w-2.5 h-16 sm:w-3 sm:h-20 bg-[#4A2C2A] rounded-b-full shadow-md -mt-2.5 animate-drip" style={{ animationDelay: '0.4s' }} />
-          <div className="w-4 h-12 sm:w-5 sm:h-16 bg-[#4A2C2A] rounded-b-full shadow-md -mt-1.5 animate-drip" style={{ animationDelay: '0.8s' }} />
-        </div>
+
 
         {/* Mobile Navigation Drawer with Pastel Accents */}
         {mobileMenuOpen && (
