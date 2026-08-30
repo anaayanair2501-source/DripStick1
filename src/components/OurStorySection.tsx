@@ -39,14 +39,14 @@ export const OurStorySection: React.FC = () => {
             <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
               <img
                 src={ASSETS.storyCraft}
-                alt="Chef in an apron dipping a golden waffle stick into warm melted Belgian chocolate"
+                alt="Pastry chef in an apron dipping a golden triangular cone stick waffle into warm melted Belgian chocolate"
                 className="w-full h-80 sm:h-96 object-cover hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#26140A]/70 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4 text-white">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-[#FCD34D]">Fresh Drip Ritual</p>
-                <p className="text-sm font-semibold">Freshly baked golden waffle sticks submerged into warm Belgian chocolate.</p>
+                <p className="text-sm font-semibold">Freshly baked golden cone waffle sticks submerged into warm Belgian chocolate.</p>
               </div>
             </div>
 
