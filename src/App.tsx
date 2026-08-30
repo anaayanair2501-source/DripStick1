@@ -164,6 +164,16 @@ export default function App() {
         activeSection={activeSection}
       />
 
+      {/* Top Brown & Blue Chocolate Drip Line */}
+      <div className="pt-14 sm:pt-20 -mb-6 sm:-mb-8 relative z-20 pointer-events-none">
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#38BDF8"
+          showDrops={true}
+          accentType="blue"
+        />
+      </div>
+
       {/* Main Content Sections Flow */}
       <main className="flex-grow">
         {/* 01 — HERO */}
@@ -173,7 +183,7 @@ export default function App() {
           onBuildCustom={() => handleNavigate('menu')}
         />
 
-        {/* Chocolate Drip Divider with Strawberry Accent */}
+        {/* Chocolate Drip Divider with Brown & Pink Colorway */}
         <ChocolateDripDivider
           fillColor="#4A2C2A"
           secondaryFillColor="#F472B6"

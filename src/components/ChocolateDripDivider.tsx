@@ -5,7 +5,8 @@ interface ChocolateDripDividerProps {
   secondaryFillColor?: string;
   inverted?: boolean;
   showDrops?: boolean;
-  accentType?: 'chocolate' | 'strawberry' | 'caramel' | 'pistachio';
+  accentType?: 'chocolate' | 'strawberry' | 'caramel' | 'pistachio' | 'blue';
+  customDropColor?: string;
 }
 
 export const ChocolateDripDivider: React.FC<ChocolateDripDividerProps> = ({
@@ -14,15 +15,17 @@ export const ChocolateDripDivider: React.FC<ChocolateDripDividerProps> = ({
   inverted = false,
   showDrops = true,
   accentType = 'chocolate',
+  customDropColor,
 }) => {
   const dropColors: Record<string, string> = {
     chocolate: '#4A2C2A',
     strawberry: '#F472B6',
     caramel: '#F59E0B',
     pistachio: '#10B981',
+    blue: '#38BDF8',
   };
 
-  const dropColor = dropColors[accentType] || fillColor;
+  const dropColor = customDropColor || dropColors[accentType] || secondaryFillColor || fillColor;
 
   return (
     <div className={`relative w-full overflow-hidden leading-none z-10 ${inverted ? 'rotate-180 -mt-1' : '-mb-1'}`}>
