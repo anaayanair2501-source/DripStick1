@@ -194,12 +194,12 @@ export default function App() {
         {/* 02 — OUR STORY */}
         <OurStorySection />
 
-        {/* Chocolate Drip Divider with Pistachio & Cream Accent */}
+        {/* Chocolate Drip Divider with Brown & Green (Pistachio) Colorway */}
         <ChocolateDripDivider
-          fillColor="#FAF5EE"
-          secondaryFillColor="#86EFAC"
-          inverted={true}
-          showDrops={false}
+          fillColor="#4A2C2A"
+          secondaryFillColor="#4ADE80"
+          showDrops={true}
+          accentType="pistachio"
         />
 
         {/* 03 — MENU: BUILD YOUR DRIPSTICK (FACTORY LAB) */}
