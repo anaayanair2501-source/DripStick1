@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Clock, Phone, Navigation, Sparkles, ExternalLink } from 'lucide-react';
+import { MapPin, Clock, Phone, Navigation, Sparkles, ExternalLink, Compass } from 'lucide-react';
 import { OUTLETS } from '../data/mockData';
 import { soundEffects } from '../utils/soundEffects';
 
@@ -7,7 +7,13 @@ export const OutletsSection: React.FC = () => {
   const [selectedCity, setSelectedCity] = useState<string>('All');
   const [activeOutletId, setActiveOutletId] = useState<string>(OUTLETS[0].id);
 
-  const cities = ['All', 'Mumbai', 'Bangalore', 'Pune', 'Delhi NCR'];
+  const cities = [
+    { name: 'All', emoji: '✨' },
+    { name: 'Mumbai', emoji: '🌊' },
+    { name: 'Bangalore', emoji: '🌳' },
+    { name: 'Pune', emoji: '⛰️' },
+    { name: 'Delhi NCR', emoji: '🏛️' }
+  ];
 
   const filteredOutlets = selectedCity === 'All'
     ? OUTLETS
@@ -16,18 +22,19 @@ export const OutletsSection: React.FC = () => {
   const activeOutlet = OUTLETS.find((o) => o.id === activeOutletId) || OUTLETS[0];
 
   return (
-    <section id="outlets" className="py-24 bg-white relative overflow-hidden border-t border-[#4A2C2A]/10">
+    <section id="outlets" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-t border-[#4A2C2A]/10">
       
-      {/* Decorative Glow */}
-      <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#D2916C]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Decorative Pastel Glows */}
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-tr from-[#FEF3C7]/30 to-[#FCE7F3]/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-10 right-10 w-96 h-96 bg-gradient-to-bl from-[#DCFCE7]/30 to-[#EDE9FE]/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
         {/* Section Header with Bold Typography */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDF8F2] border border-[#4A2C2A]/10 mb-4 shadow-xs">
-            <MapPin className="w-3.5 h-3.5 text-[#D2916C]" />
-            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#D2916C]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EDE9FE] border border-[#DDD6FE] mb-4 shadow-2xs">
+            <MapPin className="w-3.5 h-3.5 text-[#7C3AED]" />
+            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#6B21A8]">
               18 Outlets & Growing
             </span>
           </div>
@@ -35,27 +42,28 @@ export const OutletsSection: React.FC = () => {
             FIND A DRIPSTICK NEAR YOU
           </h2>
           <p className="text-base sm:text-lg text-[#4A2C2A]/80 leading-relaxed font-medium">
-            Step up to our warm chocolate fondue counter. Freshly made Belgian waffle sticks served hot in under 3 minutes.
+            Step up to our warm chocolate fondue counter. Freshly made Belgian waffle sticks served hot in under 3 minutes. 📍
           </p>
         </div>
 
         {/* City Filter Pills */}
-        <div className="flex items-center justify-center gap-2 mb-12 flex-wrap">
+        <div className="flex items-center justify-center gap-2.5 mb-12 flex-wrap">
           {cities.map((city) => (
             <button
-              key={city}
-              id={`filter-city-${city.toLowerCase()}`}
+              key={city.name}
+              id={`filter-city-${city.name.toLowerCase()}`}
               onClick={() => {
                 soundEffects.playDip();
-                setSelectedCity(city);
+                setSelectedCity(city.name);
               }}
-              className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
-                selectedCity === city
-                  ? 'bg-[#4A2C2A] text-[#FDF8F2] shadow-sm'
-                  : 'bg-[#FDF8F2] text-[#4A2C2A] hover:bg-[#4A2C2A]/10 border border-[#4A2C2A]/10'
+              className={`px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider transition-all duration-200 flex items-center gap-1.5 ${
+                selectedCity === city.name
+                  ? 'bg-[#4A2C2A] text-[#FDF8F2] shadow-md scale-105'
+                  : 'bg-white text-[#4A2C2A] hover:bg-[#FAF5EE] border border-[#4A2C2A]/15 shadow-2xs hover:scale-102'
               }`}
             >
-              {city}
+              <span>{city.emoji}</span>
+              <span>{city.name}</span>
             </button>
           ))}
         </div>
@@ -77,45 +85,45 @@ export const OutletsSection: React.FC = () => {
                   }}
                   className={`p-6 rounded-3xl cursor-pointer transition-all duration-300 border-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                     isSelected
-                      ? 'bg-[#FDF8F2] border-[#4A2C2A] shadow-md scale-[1.01]'
-                      : 'bg-[#FDF8F2]/60 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
+                      ? 'bg-white border-[#4A2C2A] shadow-xl scale-[1.02] ring-4 ring-[#4A2C2A]/10'
+                      : 'bg-white/80 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30 hover:scale-[1.01]'
                   }`}
                 >
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-white bg-[#4A2C2A] px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-[#7C3AED] bg-[#EDE9FE] border border-[#DDD6FE] px-2.5 py-0.5 rounded-full">
                         {outlet.city}
                       </span>
                       <h4 className="font-brand font-black text-lg text-[#4A2C2A]">
                         {outlet.name}
                       </h4>
                     </div>
-                    <p className="text-xs text-[#4A2C2A]/70 flex items-start gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#D2916C] shrink-0 mt-0.5" />
+                    <p className="text-xs text-[#4A2C2A]/70 flex items-start gap-1.5 font-medium">
+                      <MapPin className="w-3.5 h-3.5 text-[#DB2777] shrink-0 mt-0.5" />
                       <span>{outlet.address}</span>
                     </p>
-                    <div className="flex items-center gap-4 text-[11px] text-[#4A2C2A]/60 pt-1">
+                    <div className="flex items-center gap-4 text-[11px] text-[#4A2C2A]/60 pt-1 font-semibold">
                       <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-[#D2916C]" /> {outlet.timings}
+                        <Clock className="w-3 h-3 text-[#D97706]" /> {outlet.timings}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Phone className="w-3 h-3 text-[#D2916C]" /> {outlet.phone}
+                        <Phone className="w-3 h-3 text-[#16A34A]" /> {outlet.phone}
                       </span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 sm:flex-col shrink-0">
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                      Open Now
+                    <span className="text-[10px] font-black text-[#166534] bg-[#DCFCE7] border border-[#BBF7D0] px-3 py-1 rounded-full shadow-2xs">
+                      ● Open Now
                     </span>
                     <a
                       href={outlet.mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="px-3.5 py-1.5 bg-[#4A2C2A] text-white text-[11px] font-bold uppercase tracking-wider rounded-full flex items-center gap-1 hover:bg-[#361E1C]"
+                      className="px-4 py-2 bg-[#4A2C2A] text-white text-[11px] font-black uppercase tracking-wider rounded-full flex items-center gap-1 hover:bg-[#361E1C] transition-all shadow-xs"
                     >
-                      <Navigation className="w-3 h-3" />
+                      <Navigation className="w-3 h-3 text-[#FDE68A]" />
                       <span>Directions</span>
                     </a>
                   </div>
@@ -126,18 +134,18 @@ export const OutletsSection: React.FC = () => {
 
           {/* Right Column: Selected Outlet Showcase */}
           <div className="lg:col-span-5 sticky top-24">
-            <div className="bg-[#FDF8F2] p-6 sm:p-8 rounded-3xl border-2 border-[#4A2C2A]/15 shadow-xl space-y-6">
+            <div className="bg-white p-6 sm:p-8 rounded-3xl border-2 border-[#4A2C2A]/15 shadow-xl space-y-6">
               
               <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-[#4A2C2A]/10 shadow-inner bg-[#4A2C2A]">
                 <img
                   src={activeOutlet.image}
                   alt={activeOutlet.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#26140A]/80 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-4 right-4 text-white">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#D2916C]">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#FDE68A]">
                     Spotlight Outlet
                   </span>
                   <h3 className="font-brand font-black text-xl leading-tight">
@@ -148,26 +156,26 @@ export const OutletsSection: React.FC = () => {
 
               <div className="space-y-3 text-xs text-[#4A2C2A]/80">
                 <div className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-[#D2916C] shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#DB2777] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-[#4A2C2A]">Address:</strong>
-                    <span>{activeOutlet.address}</span>
+                    <strong className="block text-[#4A2C2A] font-black">Address:</strong>
+                    <span className="font-medium">{activeOutlet.address}</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-2.5">
-                  <Clock className="w-4 h-4 text-[#D2916C] shrink-0 mt-0.5" />
+                  <Clock className="w-4 h-4 text-[#D97706] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-[#4A2C2A]">Operating Hours:</strong>
-                    <span>{activeOutlet.timings} (Daily)</span>
+                    <strong className="block text-[#4A2C2A] font-black">Operating Hours:</strong>
+                    <span className="font-medium">{activeOutlet.timings} (Daily)</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-2.5">
-                  <Phone className="w-4 h-4 text-[#D2916C] shrink-0 mt-0.5" />
+                  <Phone className="w-4 h-4 text-[#16A34A] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-[#4A2C2A]">Direct Counter Hotline:</strong>
-                    <span>{activeOutlet.phone}</span>
+                    <strong className="block text-[#4A2C2A] font-black">Direct Counter Hotline:</strong>
+                    <span className="font-medium">{activeOutlet.phone}</span>
                   </div>
                 </div>
               </div>
@@ -177,9 +185,9 @@ export const OutletsSection: React.FC = () => {
                   href={activeOutlet.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 bg-[#4A2C2A] text-white rounded-full font-bold text-xs uppercase tracking-widest shadow-md hover:bg-[#361E1C] flex items-center justify-center gap-2 transition-all"
+                  className="w-full py-3.5 bg-[#4A2C2A] text-white rounded-full font-black text-xs uppercase tracking-widest shadow-md hover:bg-[#361E1C] flex items-center justify-center gap-2 transition-all hover:scale-102 active:scale-98"
                 >
-                  <Navigation className="w-4 h-4" />
+                  <Navigation className="w-4 h-4 text-[#FDE68A]" />
                   <span>Open in Google Maps</span>
                   <ExternalLink className="w-3.5 h-3.5 opacity-60" />
                 </a>

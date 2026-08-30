@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Sparkles, Flame, Droplets, ChevronDown, CheckCircle2, Heart } from 'lucide-react';
+import { ArrowRight, Sparkles, Flame, Droplets, ChevronDown, CheckCircle2, Heart, Gift, Wand2 } from 'lucide-react';
 import { ASSETS } from '../data/mockData';
 import { soundEffects } from '../utils/soundEffects';
 import { BorderGlow } from './BorderGlow';
@@ -18,31 +18,46 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const [dripCount, setDripCount] = useState(0);
   const [isDipping, setIsDipping] = useState(false);
   const [viewMode, setViewMode] = useState<'photo' | 'craft'>('photo');
+  const [activeFlavorMood, setActiveFlavorMood] = useState<'chocolate' | 'strawberry' | 'caramel'>('chocolate');
 
   const handleHeroDripClick = () => {
     soundEffects.playDip();
     setIsDipping(true);
     setDripCount((prev) => prev + 1);
-    setTimeout(() => setIsDipping(false), 800);
+    setTimeout(() => setIsDipping(false), 900);
   };
 
-  return (
-    <section id="hero" className="relative min-h-[92vh] pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-[#FDF8F2]">
-      
-      {/* Decorative Warm Ambient Glows */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#D2916C]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-40 right-10 w-96 h-96 bg-[#4A2C2A]/5 rounded-full blur-3xl pointer-events-none" />
+  const flavorMoods = [
+    { id: 'chocolate', label: '🍫 Belgian Fondue', bg: 'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]' },
+    { id: 'strawberry', label: '🍓 Ruby Berry Rose', bg: 'bg-[#FFE4E6] text-[#9F1239] border-[#FECDD3]' },
+    { id: 'caramel', label: '✨ Lotus Biscoff Crunch', bg: 'bg-[#F3E8FF] text-[#6B21A8] border-[#E9D5FF]' },
+  ];
 
-      {/* Background Floating Drops */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute top-28 left-[10%] w-3 h-4 rounded-full bg-[#4A2C2A]/20 animate-drop"
-          style={{ animationDuration: '3.5s', animationDelay: '0.5s' }}
-        />
-        <div
-          className="absolute top-48 right-[15%] w-3.5 h-5 rounded-full bg-[#D2916C]/25 animate-drop"
-          style={{ animationDuration: '4.2s', animationDelay: '1.8s' }}
-        />
+  return (
+    <section id="hero" className="relative min-h-[92vh] pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-[#FAF5EE]">
+      
+      {/* Decorative Pastel Ambient Glows */}
+      <div className="absolute top-10 left-1/4 w-[500px] h-[350px] bg-gradient-to-tr from-[#FCE7F3]/60 to-[#FEF3C7]/60 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-40 right-10 w-[450px] h-[450px] bg-gradient-to-bl from-[#DCFCE7]/50 via-[#E0F2FE]/40 to-[#F3E8FF]/50 rounded-full blur-3xl pointer-events-none" />
+
+      {/* Floating Cute Dessert Stickers */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        {/* Floating Waffle */}
+        <div className="absolute top-28 left-[5%] text-2xl sm:text-3xl animate-float p-2.5 rounded-2xl bg-white/70 backdrop-blur-xs shadow-xs border border-white/80">
+          🧇
+        </div>
+        {/* Floating Strawberry */}
+        <div className="absolute top-48 right-[10%] text-2xl sm:text-3xl animate-float-slow p-2.5 rounded-2xl bg-[#FFE4E6]/80 backdrop-blur-xs shadow-xs border border-[#FECDD3]" style={{ animationDelay: '1.2s' }}>
+          🍓
+        </div>
+        {/* Floating Chocolate Fondue */}
+        <div className="absolute bottom-32 left-[8%] text-2xl sm:text-3xl animate-float p-2.5 rounded-2xl bg-[#FEF3C7]/80 backdrop-blur-xs shadow-xs border border-[#FDE68A]" style={{ animationDelay: '2s' }}>
+          🍫
+        </div>
+        {/* Floating Sparkle */}
+        <div className="absolute top-20 right-[35%] text-xl sm:text-2xl animate-bounce-cute p-2 rounded-xl bg-[#F3E8FF]/80 backdrop-blur-xs shadow-xs border border-[#E9D5FF]" style={{ animationDelay: '0.6s' }}>
+          ✨
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
@@ -51,35 +66,60 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Left Column: Bold Typography & Actions */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             
-            {/* Tagline / Subheading Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#4A2C2A]/10 mb-6 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-[#D2916C] animate-ping" />
-              <span className="text-[11px] font-bold tracking-widest uppercase text-[#D2916C]">
+            {/* Tagline / Subheading Eyebrow with Pastel Pink Gradient */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#FFF1F2] via-[#FFE4E6] to-[#FEF3C7] border border-[#FECDD3] mb-6 shadow-2xs">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#E11D48] animate-ping" />
+              <span className="text-[11px] font-extrabold tracking-widest uppercase text-[#9F1239]">
                 Fresh Belgian Waffles On A Stick
               </span>
             </div>
 
-            {/* Massive Bold Headline from Design Spec */}
-            <h1 className="text-6xl sm:text-8xl md:text-9xl lg:text-[100px] xl:text-[116px] font-black leading-[0.85] tracking-tighter uppercase mb-4 text-[#4A2C2A]">
+            {/* Massive Headline */}
+            <h1 className="text-6xl sm:text-8xl md:text-9xl lg:text-[98px] xl:text-[114px] font-black leading-[0.88] tracking-tighter uppercase mb-4 text-[#4A2C2A]">
               STICK.<br />
-              DIP.<br />
-              LOVE.
+              <span className="text-[#D2916C]">DIP.</span><br />
+              <span className="bg-gradient-to-r from-[#4A2C2A] via-[#D2916C] to-[#E11D48] bg-clip-text text-transparent">LOVE.</span>
             </h1>
 
-            {/* Paragraph with pristine line-width and contrast */}
-            <p className="text-base sm:text-lg font-medium text-[#4A2C2A]/80 max-w-md leading-relaxed mb-8">
-              Premium cone-shaped waffles loaded with molten Belgian chocolate. Made to be loved anywhere, anytime.
+            {/* Paragraph */}
+            <p className="text-base sm:text-lg font-medium text-[#4A2C2A]/80 max-w-md leading-relaxed mb-6">
+              Warm golden Liège waffles baked with pearl sugar crystals, submerged into silky 45°C Belgian chocolate wells.
             </p>
 
-            {/* Action Buttons styled to theme */}
-            <div className="flex flex-wrap items-center gap-4 mb-10 w-full sm:w-auto">
+            {/* Interactive Quick Flavor Mood Pill Selector */}
+            <div className="mb-8 w-full">
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#4A2C2A]/60 block mb-2">
+                Pick Your Vibe Today:
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                {flavorMoods.map((mood) => (
+                  <button
+                    key={mood.id}
+                    onClick={() => {
+                      soundEffects.playDip();
+                      setActiveFlavorMood(mood.id as any);
+                    }}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 border shadow-2xs hover:scale-105 active:scale-95 ${
+                      activeFlavorMood === mood.id
+                        ? `${mood.bg} ring-2 ring-[#4A2C2A]/20 font-black scale-105`
+                        : 'bg-white text-[#4A2C2A]/70 border-[#4A2C2A]/10 hover:bg-white'
+                    }`}
+                  >
+                    {mood.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons styled with sweet pastel & caramel accents */}
+            <div className="flex flex-wrap items-center gap-3.5 mb-10 w-full sm:w-auto">
               <button
                 id="btn-hero-explore-menu"
                 onClick={() => {
                   soundEffects.playCrunch();
                   onExploreMenu();
                 }}
-                className="bg-[#D2916C] hover:bg-[#c2805b] text-white px-8 py-4 rounded-full font-bold tracking-widest uppercase text-xs shadow-xl transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2"
+                className="bg-[#4A2C2A] hover:bg-[#361E1C] text-white px-8 py-4 rounded-full font-black tracking-widest uppercase text-xs shadow-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-2xl active:translate-y-0 flex items-center gap-2"
               >
                 <span>Explore Menu</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -91,9 +131,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   soundEffects.playDip();
                   onBuildCustom();
                 }}
-                className="border-2 border-[#4A2C2A] text-[#4A2C2A] px-8 py-4 rounded-full font-bold tracking-widest uppercase text-xs hover:bg-[#4A2C2A] hover:text-[#FDF8F2] transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
+                className="bg-white border-2 border-[#4A2C2A] text-[#4A2C2A] px-7 py-4 rounded-full font-bold tracking-widest uppercase text-xs hover:bg-[#FEF3C7] hover:border-[#D2916C] transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 shadow-xs"
               >
-                Build DripStick
+                ✨ Build Custom Stick
               </button>
 
               <button
@@ -102,25 +142,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   soundEffects.playDip();
                   onOrderNow();
                 }}
-                className="text-[11px] font-bold tracking-widest uppercase text-[#4A2C2A]/70 hover:text-[#4A2C2A] underline underline-offset-4 decoration-[#D2916C] px-3 py-2 transition-colors"
+                className="text-[11px] font-bold tracking-widest uppercase text-[#9F1239] hover:text-[#4A2C2A] bg-[#FFE4E6] border border-[#FECDD3] px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95"
               >
                 Order Pickup / Delivery &rarr;
               </button>
             </div>
 
-            {/* Micro Highlights */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-[#4A2C2A]/10 w-full">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#D2916C] shrink-0" />
-                <span className="text-xs font-bold text-[#4A2C2A]">100% Belgian Cocoa</span>
+            {/* Micro Highlights in Cute Pastel Pills */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-6 border-t border-[#4A2C2A]/10 w-full">
+              <div className="flex items-center gap-2 p-2 rounded-xl bg-white/80 border border-[#FEF3C7] shadow-2xs">
+                <span className="text-base">🧇</span>
+                <span className="text-xs font-bold text-[#4A2C2A]">100% Belgian Pearl Sugar</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Flame className="w-4 h-4 text-[#D2916C] shrink-0" />
-                <span className="text-xs font-bold text-[#4A2C2A]">Baked in 3 Mins</span>
+              <div className="flex items-center gap-2 p-2 rounded-xl bg-white/80 border border-[#FFE4E6] shadow-2xs">
+                <span className="text-base">⚡</span>
+                <span className="text-xs font-bold text-[#4A2C2A]">Baked Hot in 3 Mins</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Droplets className="w-4 h-4 text-[#D2916C] shrink-0" />
-                <span className="text-xs font-bold text-[#4A2C2A]">Mess-Free Stick</span>
+              <div className="flex items-center gap-2 p-2 rounded-xl bg-white/80 border border-[#DCFCE7] shadow-2xs">
+                <span className="text-base">🍫</span>
+                <span className="text-xs font-bold text-[#4A2C2A]">45°C Continuous Fondue</span>
               </div>
             </div>
 
@@ -130,18 +170,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="lg:col-span-5 relative flex justify-center items-center py-4">
             
             {/* Ambient Background Glow */}
-            <div className="absolute w-[360px] sm:w-[420px] h-[360px] sm:h-[420px] bg-[#D2916C]/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute w-[360px] sm:w-[420px] h-[360px] sm:h-[420px] bg-gradient-to-tr from-[#FECDD3]/40 via-[#FED7AA]/40 to-[#FEF3C7]/40 rounded-full blur-3xl pointer-events-none" />
 
             {/* Interactive Hero Card Container */}
             <div
               id="hero-waffle-interactive-card"
               onClick={handleHeroDripClick}
-              className={`relative cursor-pointer group transition-transform duration-300 ${
-                isDipping ? 'scale-98 rotate-1' : 'hover:scale-[1.02]'
+              className={`relative cursor-pointer group transition-all duration-300 ${
+                isDipping ? 'scale-95 rotate-1' : 'hover:scale-[1.02]'
               }`}
             >
               {/* Photo vs Graphic toggle */}
-              <div className="absolute -top-3 left-4 z-30 flex bg-white/90 backdrop-blur-xs p-1 rounded-full border border-[#4A2C2A]/15 shadow-sm text-[10px] font-bold">
+              <div className="absolute -top-3 left-4 z-30 flex bg-white/95 backdrop-blur-xs p-1 rounded-full border border-[#4A2C2A]/15 shadow-sm text-[10px] font-bold">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -162,20 +202,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     viewMode === 'craft' ? 'bg-[#4A2C2A] text-white' : 'text-[#4A2C2A]'
                   }`}
                 >
-                  Craft Art
+                  Art Mode
                 </button>
               </div>
 
               {/* React Bits Border Glow wrapping the homepage photo */}
               <BorderGlow
-                glowColor="#D2916C"
+                glowColor={activeFlavorMood === 'strawberry' ? '#E11D48' : '#D2916C'}
                 glowSize={280}
                 borderWidth={4}
                 borderRadius="rounded-t-full rounded-b-3xl"
                 interactive={true}
                 animatedBeam={true}
-                beamDuration={5}
-                beamColor="rgba(210, 145, 108, 0.95)"
+                beamDuration={4.5}
+                beamColor={activeFlavorMood === 'strawberry' ? 'rgba(225, 29, 72, 0.95)' : 'rgba(210, 145, 108, 0.95)'}
                 className="shadow-2xl"
               >
                 {/* View 1: Photo View */}
@@ -191,17 +231,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     
                     {/* Bottom details */}
                     <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#D2916C]">
-                        Signature Dip
-                      </p>
-                      <h4 className="font-bold text-base text-[#FDF8F2]">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E11D48] text-white text-[9px] font-black uppercase tracking-wider mb-1">
+                        <Sparkles className="w-2.5 h-2.5" /> Chef Signature
+                      </div>
+                      <h4 className="font-bold text-base text-[#FAF5EE]">
                         The Belgian Double Dip
                       </h4>
-                      <p className="text-[11px] text-[#FDF8F2]/80">45°C Molten Dip • ₹189</p>
+                      <p className="text-[11px] text-[#FAF5EE]/80">45°C Molten Couverture • ₹189</p>
                     </div>
                   </div>
                 ) : (
-                  /* View 2: Design Graphic Cone from Design HTML */
+                  /* View 2: Design Graphic Cone */
                   <div className="relative w-[290px] sm:w-[330px] h-[450px] sm:h-[490px] bg-[#F5DEB3] flex flex-col items-center overflow-hidden">
                     <div className="w-full h-full waffle-texture" />
                     <div className="absolute inset-0 bg-gradient-to-b from-[#4A2C2A] via-[#4A2C2A]/85 to-transparent h-1/2 rounded-b-[40%] shadow-inner" />
@@ -214,22 +254,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 )}
               </BorderGlow>
 
-              {/* Tilted Best Seller Badge directly matching Design HTML */}
-              <div className="absolute top-1/4 -right-3 sm:-right-6 bg-white p-4 rounded-2xl shadow-xl rotate-12 flex flex-col items-center gap-1 border border-[#4A2C2A]/10 z-20 hover:rotate-0 transition-transform duration-300">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-[#D2916C]">
-                  Best Seller
+              {/* Tilted Best Seller Badge in Sweet Pastel Theme */}
+              <div className="absolute top-1/4 -right-3 sm:-right-6 bg-gradient-to-br from-white to-[#FEF3C7] p-4 rounded-2xl shadow-xl rotate-12 flex flex-col items-center gap-1 border border-[#FDE68A] z-20 hover:rotate-0 transition-transform duration-300">
+                <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#D97706] flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-[#D97706]" /> Best Seller
                 </div>
-                <div className="font-bold italic text-sm text-[#4A2C2A] whitespace-nowrap">
+                <div className="font-brand font-black text-sm text-[#4A2C2A] whitespace-nowrap">
                   The Oreo Drip
                 </div>
-                <span className="text-[10px] font-black text-white bg-[#4A2C2A] px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-black text-white bg-[#4A2C2A] px-2.5 py-0.5 rounded-full shadow-2xs">
                   ₹189
                 </span>
               </div>
 
-              {/* Interactive Drip counter badge */}
-              <div className="absolute bottom-2 left-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity bg-[#4A2C2A] text-[#FDF8F2] px-2.5 py-1 rounded-full text-[10px] font-bold shadow-md">
-                Tap to Drip! ({dripCount})
+              {/* Interactive Drip counter badge with sweet chime feedback */}
+              <div className="absolute bottom-3 left-3 z-20 bg-[#4A2C2A]/90 backdrop-blur-xs text-[#FAF5EE] px-3 py-1 rounded-full text-[10px] font-bold shadow-md flex items-center gap-1.5">
+                <span>🍫 Tap to Dip!</span>
+                <span className="bg-[#D2916C] text-white px-1.5 py-0.2 rounded-full font-mono">{dripCount}</span>
               </div>
             </div>
 
@@ -237,23 +278,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         </div>
 
-        {/* Live Brand Ticker Stats Bar */}
-        <div className="mt-16 pt-8 border-t border-[#4A2C2A]/10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div className="p-4 rounded-2xl bg-white border border-[#4A2C2A]/5 shadow-xs">
+        {/* Live Brand Ticker Stats Bar in Delightful Pastel Cards */}
+        <div className="mt-16 pt-8 border-t border-[#4A2C2A]/10 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
+          <div className="p-4 rounded-3xl bg-gradient-to-br from-white to-[#FEF3C7]/40 border border-[#FDE68A]/60 shadow-xs hover:scale-105 transition-transform duration-200">
             <p className="font-display font-black text-2xl sm:text-3xl text-[#4A2C2A]">250,000+</p>
-            <p className="text-[11px] font-bold uppercase tracking-widest text-[#D2916C] mt-1">Sticks Dipped</p>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-[#D97706] mt-1">Sticks Dipped 🧇</p>
           </div>
-          <div className="p-4 rounded-2xl bg-white border border-[#4A2C2A]/5 shadow-xs">
+          <div className="p-4 rounded-3xl bg-gradient-to-br from-white to-[#DCFCE7]/40 border border-[#BBF7D0]/60 shadow-xs hover:scale-105 transition-transform duration-200">
             <p className="font-display font-black text-2xl sm:text-3xl text-[#4A2C2A]">18 Outlets</p>
-            <p className="text-[11px] font-bold uppercase tracking-widest text-[#D2916C] mt-1">4 Major Cities</p>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-[#16A34A] mt-1">4 Major Cities 📍</p>
           </div>
-          <div className="p-4 rounded-2xl bg-white border border-[#4A2C2A]/5 shadow-xs">
+          <div className="p-4 rounded-3xl bg-gradient-to-br from-white to-[#FFE4E6]/40 border border-[#FECDD3]/60 shadow-xs hover:scale-105 transition-transform duration-200">
             <p className="font-display font-black text-2xl sm:text-3xl text-[#4A2C2A]">4.95 ★</p>
-            <p className="text-[11px] font-bold uppercase tracking-widest text-[#D2916C] mt-1">12,000+ Reviews</p>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-[#E11D48] mt-1">12,000+ Reviews ❤️</p>
           </div>
-          <div className="p-4 rounded-2xl bg-white border border-[#4A2C2A]/5 shadow-xs">
+          <div className="p-4 rounded-3xl bg-gradient-to-br from-white to-[#E0F2FE]/40 border border-[#BAE6FD]/60 shadow-xs hover:scale-105 transition-transform duration-200">
             <p className="font-display font-black text-2xl sm:text-3xl text-[#4A2C2A]">45°C</p>
-            <p className="text-[11px] font-bold uppercase tracking-widest text-[#D2916C] mt-1">Flowing Couverture</p>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-[#0284C7] mt-1">Molten Couverture 🍫</p>
           </div>
         </div>
 
@@ -261,10 +302,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="flex justify-center mt-10">
           <button
             onClick={() => onExploreMenu()}
-            className="flex flex-col items-center text-[10px] font-bold uppercase tracking-widest text-[#4A2C2A]/60 hover:text-[#4A2C2A] transition-colors group"
+            className="flex flex-col items-center text-[10px] font-bold uppercase tracking-widest text-[#4A2C2A]/70 hover:text-[#4A2C2A] transition-colors group"
           >
             <span className="mb-1">Explore Full Story & Menu</span>
-            <ChevronDown className="w-4 h-4 animate-bounce group-hover:translate-y-1 transition-transform" />
+            <ChevronDown className="w-4 h-4 text-[#D2916C] animate-bounce group-hover:translate-y-1 transition-transform" />
           </button>
         </div>
 

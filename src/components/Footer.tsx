@@ -17,9 +17,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   };
 
   return (
-    <footer className="bg-[#4A2C2A] text-[#FDF8F2] pt-20 pb-12 relative overflow-hidden border-t-4 border-[#D2916C]">
-      {/* Decorative Glow */}
-      <div className="absolute top-0 right-10 w-96 h-96 bg-[#D2916C]/10 rounded-full blur-3xl pointer-events-none" />
+    <footer className="bg-[#3B2220] text-[#FDF8F2] pt-20 pb-12 relative overflow-hidden border-t-4 border-[#F472B6]">
+      {/* Decorative Pastel Glows */}
+      <div className="absolute top-0 right-10 w-96 h-96 bg-[#F472B6]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-96 h-96 bg-[#FED7AA]/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
@@ -27,22 +28,23 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="border-b border-white/10 pb-16 mb-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end justify-between">
             <div className="lg:col-span-8">
-              <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#D2916C] block mb-2">
-                STICK. DIP. LOVE.
+              <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#FBCFE8] block mb-2">
+                STICK. DIP. LOVE. ✨
               </span>
-              <h2 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-[#FDF8F2] leading-none uppercase">
+              <h2 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#FDF8F2] via-[#FED7AA] to-[#FBCFE8] leading-none uppercase">
                 DRIPSTICK
               </h2>
             </div>
 
             {/* VIP Club Newsletter */}
             <div className="lg:col-span-4">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#D2916C] mb-2">
-                Join the Secret Drip Club
+              <p className="text-xs font-black uppercase tracking-wider text-[#FDE68A] mb-2 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-[#FDE68A]" />
+                <span>Join the Secret Drip Club</span>
               </p>
               {subscribed ? (
-                <div className="p-3 bg-[#361E1C] rounded-2xl border border-[#D2916C]/30 text-xs text-[#D2916C] font-bold">
-                  ✓ You're in! Check your inbox for 15% off your first stick.
+                <div className="p-3 bg-[#4E2D2A] rounded-2xl border border-[#F472B6]/40 text-xs text-[#FBCFE8] font-bold">
+                  ✓ You're in! Check your inbox for 15% off your first stick. 🧇
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex gap-2">
@@ -52,11 +54,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="flex-1 px-4 py-3 bg-[#361E1C] border border-white/15 rounded-full text-xs text-[#FDF8F2] focus:outline-none focus:border-[#D2916C]"
+                    className="flex-1 px-4 py-3 bg-[#2E1816] border border-white/20 rounded-full text-xs text-[#FDF8F2] focus:outline-none focus:border-[#F472B6]"
                   />
                   <button
                     type="submit"
-                    className="px-5 py-3 bg-[#D2916C] hover:bg-[#c2805b] text-white rounded-full font-bold text-xs uppercase tracking-widest transition-colors shrink-0"
+                    className="px-6 py-3 bg-gradient-to-r from-[#F472B6] to-[#FB7185] hover:scale-105 active:scale-95 text-white rounded-full font-black text-xs uppercase tracking-widest transition-all shadow-md shrink-0"
                   >
                     Join
                   </button>
@@ -71,10 +73,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           
           {/* Col 1: About */}
           <div>
-            <h4 className="font-bold uppercase tracking-widest text-[#D2916C] mb-4">
+            <h4 className="font-black uppercase tracking-widest text-[#FDE68A] mb-4">
               Experience
             </h4>
-            <ul className="space-y-2.5 text-[#FDF8F2]/75">
+            <ul className="space-y-2.5 text-[#FDF8F2]/75 font-medium">
               <li>
                 <button onClick={() => onNavigate('story')} className="hover:text-white transition-colors">
                   Our Story & Craft
@@ -100,10 +102,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Col 2: Business */}
           <div>
-            <h4 className="font-bold uppercase tracking-widest text-[#D2916C] mb-4">
+            <h4 className="font-black uppercase tracking-widest text-[#FDE68A] mb-4">
               Collaborations
             </h4>
-            <ul className="space-y-2.5 text-[#FDF8F2]/75">
+            <ul className="space-y-2.5 text-[#FDF8F2]/75 font-medium">
               <li>
                 <button onClick={() => onNavigate('catering')} className="hover:text-white transition-colors">
                   Live Event Catering Bar
@@ -129,24 +131,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Col 3: Outlets Info */}
           <div>
-            <h4 className="font-bold uppercase tracking-widest text-[#D2916C] mb-4">
+            <h4 className="font-black uppercase tracking-widest text-[#FDE68A] mb-4">
               Presence
             </h4>
-            <ul className="space-y-2.5 text-[#FDF8F2]/75">
+            <ul className="space-y-2.5 text-[#FDF8F2]/75 font-medium">
               <li>Mumbai (Bandra, Juhu, Powai)</li>
               <li>Bangalore (Indiranagar, Koramangala)</li>
               <li>Pune (FC Road, Koregaon Park)</li>
               <li>Delhi NCR (CyberHub, HKV)</li>
-              <li className="text-[#D2916C] font-bold">18 Outlets Pan-India</li>
+              <li className="text-[#FBCFE8] font-bold">18 Outlets Pan-India</li>
             </ul>
           </div>
 
           {/* Col 4: Social & Direct Contact */}
           <div>
-            <h4 className="font-bold uppercase tracking-widest text-[#D2916C] mb-4">
+            <h4 className="font-black uppercase tracking-widest text-[#FDE68A] mb-4">
               Connect With Us
             </h4>
-            <p className="text-[#FDF8F2]/75 mb-4">
+            <p className="text-[#FDF8F2]/75 mb-4 font-medium">
               hello@dripstick.com <br />
               +91 98200 44556
             </p>
@@ -155,7 +157,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-[#361E1C] border border-white/15 flex items-center justify-center text-white hover:bg-[#D2916C] transition-colors"
+                className="w-9 h-9 rounded-full bg-[#2E1816] border border-white/20 flex items-center justify-center text-white hover:bg-[#F472B6] hover:scale-110 transition-all shadow-xs"
               >
                 <Instagram className="w-4 h-4" />
               </a>
@@ -163,7 +165,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-[#361E1C] border border-white/15 flex items-center justify-center text-white hover:bg-[#D2916C] transition-colors"
+                className="w-9 h-9 rounded-full bg-[#2E1816] border border-white/20 flex items-center justify-center text-white hover:bg-[#F472B6] hover:scale-110 transition-all shadow-xs"
               >
                 <Twitter className="w-4 h-4" />
               </a>
@@ -171,7 +173,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-[#361E1C] border border-white/15 flex items-center justify-center text-white hover:bg-[#D2916C] transition-colors"
+                className="w-9 h-9 rounded-full bg-[#2E1816] border border-white/20 flex items-center justify-center text-white hover:bg-[#F472B6] hover:scale-110 transition-all shadow-xs"
               >
                 <Youtube className="w-4 h-4" />
               </a>
@@ -184,7 +186,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#FDF8F2]/60">
           <p>© {new Date().getFullYear()} DripStick Desserts Pvt. Ltd. All rights reserved.</p>
           <p className="flex items-center gap-1">
-            <span>Crafted with Belgian cocoa and pure passion</span>
+            <span>Crafted with Belgian cocoa and pure passion 🍫✨</span>
           </p>
         </div>
 

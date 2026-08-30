@@ -67,6 +67,14 @@ export interface ShowStopperProduct {
   image: string;
   calories: number;
   isPopular?: boolean;
+  category?: 'all' | 'fruity' | 'chocolate' | 'nutty' | 'caramel';
+  pastelTheme?: {
+    cardBg: string;
+    badgeBg: string;
+    badgeText: string;
+    border: string;
+    accent: string;
+  };
 }
 
 export interface Outlet {

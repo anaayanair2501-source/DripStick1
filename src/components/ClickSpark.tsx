@@ -17,17 +17,20 @@ interface Spark {
   y: number;
   angle: number;
   startTime: number;
+  color: string;
 }
+
+const PASTEL_SPARK_COLORS = ['#F472B6', '#FBBF24', '#34D399', '#818CF8', '#FB7185', '#FDE68A', '#A78BFA'];
 
 export const ClickSpark: React.FC<ClickSparkProps> = ({
   children,
-  sparkColor = '#D2916C',
-  sparkSize = 14,
-  sparkRadius = 26,
-  sparkCount = 8,
-  duration = 450,
+  sparkColor = '#F472B6',
+  sparkSize = 16,
+  sparkRadius = 32,
+  sparkCount = 10,
+  duration = 500,
   easing = 'ease-out',
-  extraScale = 1.2,
+  extraScale = 1.3,
   className = '',
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -110,8 +113,8 @@ export const ClickSpark: React.FC<ClickSparkProps> = ({
         const opacity = Math.max(0, 1 - progress);
 
         ctx.save();
-        ctx.strokeStyle = sparkColor;
-        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = spark.color;
+        ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         ctx.globalAlpha = opacity;
 
@@ -131,7 +134,7 @@ export const ClickSpark: React.FC<ClickSparkProps> = ({
         animationFrameId.current = null;
       }
     },
-    [duration, easeFunc, extraScale, sparkColor, sparkRadius, sparkSize]
+    [duration, easeFunc, extraScale, sparkRadius, sparkSize]
   );
 
   // Listen to window pointerdown or click events to catch every button and element
@@ -144,11 +147,13 @@ export const ClickSpark: React.FC<ClickSparkProps> = ({
       const newSparks: Spark[] = [];
       for (let i = 0; i < sparkCount; i++) {
         const angle = (i * 2 * Math.PI) / sparkCount + (Math.random() * 0.2 - 0.1);
+        const color = PASTEL_SPARK_COLORS[Math.floor(Math.random() * PASTEL_SPARK_COLORS.length)];
         newSparks.push({
           x: clickX,
           y: clickY,
           angle,
           startTime: now,
+          color,
         });
       }
 

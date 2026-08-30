@@ -39,19 +39,26 @@ export const CateringSection: React.FC = () => {
     setIsSubmitted(true);
   };
 
+  const packageColors: Record<string, { bg: string; badge: string; text: string; border: string }> = {
+    'pkg-starter': { bg: 'bg-[#FFFBEB]', badge: 'bg-[#FEF3C7] text-[#92400E]', text: 'text-[#92400E]', border: 'border-[#FDE68A]' },
+    'pkg-grand': { bg: 'bg-[#FFF1F2]', badge: 'bg-[#FFE4E6] text-[#9F1239]', text: 'text-[#9F1239]', border: 'border-[#FECDD3]' },
+    'pkg-royal': { bg: 'bg-[#F0FDF4]', badge: 'bg-[#DCFCE7] text-[#166534]', text: 'text-[#166534]', border: 'border-[#BBF7D0]' },
+  };
+
   return (
-    <section id="catering" className="py-24 bg-[#FDF8F2] relative overflow-hidden border-t border-[#4A2C2A]/10">
+    <section id="catering" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-t border-[#4A2C2A]/10">
       
-      {/* Decorative Glow */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#D2916C]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Decorative Pastel Glows */}
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-bl from-[#FFE4E6]/30 to-[#FEF3C7]/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCFCE7]/30 to-[#E0F2FE]/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
         {/* Section Header with Bold Typography */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#4A2C2A]/10 mb-4 shadow-xs">
-            <Gift className="w-3.5 h-3.5 text-[#D2916C]" />
-            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#D2916C]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFE4E6] border border-[#FECDD3] mb-4 shadow-2xs">
+            <Gift className="w-3.5 h-3.5 text-[#E11D48]" />
+            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#9F1239]">
               Live Dessert Bars & Events
             </span>
           </div>
@@ -59,7 +66,7 @@ export const CateringSection: React.FC = () => {
             BRING DRIPSTICK TO YOUR EVENT
           </h2>
           <p className="text-base sm:text-lg text-[#4A2C2A]/80 leading-relaxed font-medium">
-            Turn your wedding, birthday, campus fest, or corporate party into an interactive dessert spectacle with our pop-up Live Dip Stations.
+            Turn your wedding, birthday, campus fest, or corporate party into an interactive dessert spectacle with our pop-up Live Dip Stations. 🎉
           </p>
         </div>
 
@@ -67,6 +74,7 @@ export const CateringSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {CATERING_PACKAGES.map((pkg) => {
             const isSelected = selectedPkgId === pkg.id;
+            const theme = packageColors[pkg.id] || packageColors['pkg-starter'];
             return (
               <div
                 key={pkg.id}
@@ -77,18 +85,18 @@ export const CateringSection: React.FC = () => {
                 }}
                 className={`p-6 sm:p-8 rounded-3xl cursor-pointer transition-all duration-300 border-2 flex flex-col justify-between ${
                   isSelected
-                    ? 'bg-white border-[#4A2C2A] shadow-2xl scale-[1.02]'
-                    : 'bg-white/70 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
+                    ? `${theme.bg} border-[#4A2C2A] shadow-2xl scale-[1.03] ring-4 ring-[#4A2C2A]/10`
+                    : 'bg-white/80 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30 hover:scale-[1.01]'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#D2916C] bg-[#FDF8F2] px-3 py-1 rounded-full border border-[#4A2C2A]/10">
+                    <span className={`text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border ${theme.badge} ${theme.border}`}>
                       {pkg.minGuests}+ Guests
                     </span>
                     {pkg.id === 'pkg-grand' && (
-                      <span className="text-[10px] font-black uppercase tracking-widest text-white bg-[#4A2C2A] px-2.5 py-0.5 rounded-full">
-                        Most Popular
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white bg-gradient-to-r from-[#E11D48] to-[#F43F5E] px-3 py-1 rounded-full shadow-xs flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" /> Most Popular
                       </span>
                     )}
                   </div>
@@ -99,7 +107,7 @@ export const CateringSection: React.FC = () => {
                   <p className="text-xs text-[#4A2C2A]/70 mb-4">{pkg.description}</p>
 
                   <div className="mb-6 pb-4 border-b border-[#4A2C2A]/10">
-                    <span className="text-[10px] uppercase text-[#4A2C2A]/60 font-bold block">
+                    <span className="text-[10px] uppercase text-[#4A2C2A]/60 font-black block">
                       Starting From
                     </span>
                     <div className="flex items-baseline gap-1">
@@ -110,10 +118,10 @@ export const CateringSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <ul className="space-y-2.5 mb-6 text-xs text-[#4A2C2A]/80">
+                  <ul className="space-y-2.5 mb-6 text-xs text-[#4A2C2A]/85 font-medium">
                     {pkg.features.map((f, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#D2916C] shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#16A34A] shrink-0 mt-0.5" />
                         <span>{f}</span>
                       </li>
                     ))}
@@ -126,13 +134,13 @@ export const CateringSection: React.FC = () => {
                     soundEffects.playDip();
                     setSelectedPkgId(pkg.id);
                   }}
-                  className={`w-full py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+                  className={`w-full py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all ${
                     isSelected
                       ? 'bg-[#4A2C2A] text-white shadow-md'
-                      : 'bg-[#FDF8F2] text-[#4A2C2A] border border-[#4A2C2A]/20 hover:bg-[#4A2C2A] hover:text-white'
+                      : 'bg-white text-[#4A2C2A] border border-[#4A2C2A]/20 hover:bg-[#4A2C2A] hover:text-white'
                   }`}
                 >
-                  {isSelected ? '✓ Selected for Booking' : 'Select Package'}
+                  {isSelected ? '✓ Selected for Quote' : 'Select Package'}
                 </button>
               </div>
             );

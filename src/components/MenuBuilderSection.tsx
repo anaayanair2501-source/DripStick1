@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Check, Plus, RefreshCw, ShoppingBag, Flame, ChevronRight, Info } from 'lucide-react';
+import { Sparkles, Check, Plus, RefreshCw, ShoppingBag, Flame, ChevronRight, Info, Heart, Wand2 } from 'lucide-react';
 import { WAFFLE_BASES, SAUCE_DIPS, TOPPINGS, DRIZZLE_EXTRAS } from '../data/mockData';
 import { CustomDripStick, WaffleBase, SauceDip, Topping, DrizzleExtra } from '../types';
 import { soundEffects } from '../utils/soundEffects';
@@ -62,27 +62,27 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
     };
     onAddCustomToCart(customStick);
     setIsSuccessModal(true);
-    setTimeout(() => setIsSuccessModal(false), 2200);
+    setTimeout(() => setIsSuccessModal(false), 2400);
   };
 
   return (
-    <section id="menu" className="py-24 bg-[#FDF8F2] relative overflow-hidden">
+    <section id="menu" className="py-24 bg-[#FAF5EE] relative overflow-hidden">
       
-      {/* Decorative Warm Elements */}
-      <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#D2916C]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#4A2C2A]/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Decorative Pastel Ambient Lights */}
+      <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#FFE4E6]/50 to-[#FEF3C7]/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#DCFCE7]/40 to-[#E0F2FE]/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
-        {/* Section Header with Bold Typography */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#4A2C2A]/10 mb-4 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#D2916C]" />
-            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#D2916C]">
+        {/* Section Header with Pastel Flair */}
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFE4E6] border border-[#FECDD3] mb-4 shadow-2xs">
+            <Wand2 className="w-3.5 h-3.5 text-[#E11D48]" />
+            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#9F1239]">
               4-Step Interactive Customizer
             </span>
           </div>
-          <h2 className="font-brand font-black text-4xl sm:text-5xl lg:text-6xl text-[#4A2C2A] tracking-tight mb-4">
+          <h2 className="font-brand font-black text-4xl sm:text-5xl lg:text-6xl text-[#4A2C2A] tracking-tight mb-3">
             BUILD YOUR DRIPSTICK
           </h2>
           <p className="text-base sm:text-lg text-[#4A2C2A]/80 leading-relaxed font-medium">
@@ -97,12 +97,12 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
           <div className="lg:col-span-7 space-y-8">
             
             {/* Step Navigation Pill Tabs */}
-            <div className="flex items-center gap-2 p-1.5 rounded-full bg-white border border-[#4A2C2A]/15 overflow-x-auto no-scrollbar shadow-xs">
+            <div className="flex items-center gap-2 p-1.5 rounded-full bg-white border border-[#4A2C2A]/10 overflow-x-auto no-scrollbar shadow-xs">
               {[
-                { step: 1, label: '1. Cone Base' },
-                { step: 2, label: '2. Molten Dip' },
-                { step: 3, label: '3. Crunch Toppings' },
-                { step: 4, label: '4. Finishing Touch' },
+                { step: 1, label: '1. Cone Base', emoji: '🧇' },
+                { step: 2, label: '2. Molten Dip', emoji: '🍫' },
+                { step: 3, label: '3. Crunch Toppings', emoji: '🍓' },
+                { step: 4, label: '4. Finishing Touch', emoji: '🍯' },
               ].map((s) => (
                 <button
                   key={s.step}
@@ -110,13 +110,14 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                     soundEffects.playDip();
                     setCurrentStep(s.step as 1 | 2 | 3 | 4);
                   }}
-                  className={`flex-1 py-2 px-3 text-[11px] font-bold uppercase tracking-wider rounded-full whitespace-nowrap transition-all duration-200 ${
+                  className={`flex-1 py-2.5 px-3.5 text-[11px] font-extrabold uppercase tracking-wider rounded-full whitespace-nowrap transition-all duration-200 flex items-center justify-center gap-1.5 ${
                     currentStep === s.step
-                      ? 'bg-[#4A2C2A] text-[#FDF8F2] shadow-xs'
-                      : 'text-[#4A2C2A]/70 hover:text-[#4A2C2A] hover:bg-[#4A2C2A]/5'
+                      ? 'bg-[#4A2C2A] text-white shadow-xs scale-102'
+                      : 'text-[#4A2C2A]/70 hover:text-[#4A2C2A] hover:bg-[#FEF3C7]'
                   }`}
                 >
-                  {s.label}
+                  <span>{s.emoji}</span>
+                  <span>{s.label}</span>
                 </button>
               ))}
             </div>
@@ -131,7 +132,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                     </h3>
                     <p className="text-xs text-[#4A2C2A]/60 mt-0.5">Freshly pressed waffle batter infused with Belgian pearl sugar</p>
                   </div>
-                  <span className="text-xs font-bold text-[#D2916C] bg-[#FDF8F2] px-3 py-1 rounded-full border border-[#4A2C2A]/10">
+                  <span className="text-xs font-bold text-[#92400E] bg-[#FEF3C7] px-3.5 py-1 rounded-full border border-[#FDE68A]">
                     Step 1 of 4
                   </span>
                 </div>
@@ -147,15 +148,15 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                           soundEffects.playCrunch();
                           setSelectedBase(base);
                         }}
-                        className={`p-4 rounded-2xl cursor-pointer transition-all duration-200 border-2 flex flex-col justify-between ${
+                        className={`p-4 rounded-2xl cursor-pointer transition-all duration-200 border-2 flex flex-col justify-between hover:scale-102 active:scale-98 ${
                           isSelected
-                            ? 'bg-[#FDF8F2] border-[#4A2C2A] shadow-md scale-[1.01]'
-                            : 'bg-white border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
+                            ? 'bg-gradient-to-br from-[#FFFBEB] to-[#FEF3C7] border-[#D97706] shadow-md'
+                            : 'bg-[#FAF5EE]/60 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
                         }`}
                       >
                         <div className="flex items-start justify-between mb-2">
-                          <span className="text-2xl">{base.icon}</span>
-                          <span className="font-display font-black text-sm text-[#4A2C2A]">
+                          <span className="text-3xl">{base.icon}</span>
+                          <span className="font-display font-black text-base text-[#4A2C2A]">
                             ₹{base.price}
                           </span>
                         </div>
@@ -163,7 +164,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                         <p className="text-xs text-[#4A2C2A]/70 leading-relaxed mb-3">{base.description}</p>
                         <div className="flex items-center justify-between pt-2 border-t border-[#4A2C2A]/10 text-[10px] text-[#4A2C2A]/60">
                           <span>~{base.calories} kcal</span>
-                          {isSelected && <span className="font-bold text-[#D2916C]">✓ Selected</span>}
+                          {isSelected && <span className="font-bold text-[#D97706] flex items-center gap-1"><Check className="w-3 h-3" /> Selected</span>}
                         </div>
                       </div>
                     );
@@ -176,7 +177,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                       soundEffects.playDip();
                       setCurrentStep(2);
                     }}
-                    className="px-6 py-3 bg-[#4A2C2A] text-white text-xs font-bold uppercase tracking-widest rounded-full flex items-center gap-2 hover:bg-[#361E1C]"
+                    className="px-6 py-3.5 bg-[#4A2C2A] text-white text-xs font-black uppercase tracking-widest rounded-full flex items-center gap-2 hover:bg-[#361E1C] shadow-md hover:scale-105 active:scale-95 transition-all"
                   >
                     <span>Next: Choose Molten Dip</span>
                     <ChevronRight className="w-4 h-4" />
@@ -195,7 +196,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                     </h3>
                     <p className="text-xs text-[#4A2C2A]/60 mt-0.5">Kept at 45°C in continuous flowing fondue pots</p>
                   </div>
-                  <span className="text-xs font-bold text-[#D2916C] bg-[#FDF8F2] px-3 py-1 rounded-full border border-[#4A2C2A]/10">
+                  <span className="text-xs font-bold text-[#9A3412] bg-[#FFEDD5] px-3.5 py-1 rounded-full border border-[#FED7AA]">
                     Step 2 of 4
                   </span>
                 </div>
@@ -211,10 +212,10 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                           soundEffects.playDip();
                           setSelectedSauce(sauce);
                         }}
-                        className={`p-4 rounded-2xl cursor-pointer transition-all duration-200 border-2 flex flex-col justify-between ${
+                        className={`p-4 rounded-2xl cursor-pointer transition-all duration-200 border-2 flex flex-col justify-between hover:scale-102 active:scale-98 ${
                           isSelected
-                            ? 'bg-[#FDF8F2] border-[#4A2C2A] shadow-md scale-[1.01]'
-                            : 'bg-white border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
+                            ? 'bg-gradient-to-br from-[#FFF7ED] to-[#FFEDD5] border-[#EA580C] shadow-md'
+                            : 'bg-[#FAF5EE]/60 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-2">
@@ -222,14 +223,14 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                             <span className="w-5 h-5 rounded-full border border-black/20 shadow-xs" style={{ backgroundColor: sauce.color }} />
                             <h4 className="font-bold text-sm text-[#4A2C2A]">{sauce.name}</h4>
                           </div>
-                          <span className="font-display font-black text-sm text-[#4A2C2A]">
+                          <span className="font-display font-black text-base text-[#4A2C2A]">
                             ₹{sauce.price}
                           </span>
                         </div>
                         <p className="text-xs text-[#4A2C2A]/70 leading-relaxed mb-3">{sauce.description}</p>
                         <div className="flex items-center justify-between pt-2 border-t border-[#4A2C2A]/10 text-[10px] text-[#4A2C2A]/60">
                           <span>{sauce.cocoaPercent} Cocoa • ~{sauce.calories} kcal</span>
-                          {isSelected && <span className="font-bold text-[#D2916C]">✓ Selected</span>}
+                          {isSelected && <span className="font-bold text-[#EA580C] flex items-center gap-1"><Check className="w-3 h-3" /> Selected</span>}
                         </div>
                       </div>
                     );
@@ -248,7 +249,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                       soundEffects.playDip();
                       setCurrentStep(3);
                     }}
-                    className="px-6 py-3 bg-[#4A2C2A] text-white text-xs font-bold uppercase tracking-widest rounded-full flex items-center gap-2 hover:bg-[#361E1C]"
+                    className="px-6 py-3.5 bg-[#4A2C2A] text-white text-xs font-black uppercase tracking-widest rounded-full flex items-center gap-2 hover:bg-[#361E1C] shadow-md hover:scale-105 active:scale-95 transition-all"
                   >
                     <span>Next: Add Crunch Toppings</span>
                     <ChevronRight className="w-4 h-4" />
@@ -267,7 +268,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                     </h3>
                     <p className="text-xs text-[#4A2C2A]/60 mt-0.5">Showered immediately over warm chocolate to lock in crunch</p>
                   </div>
-                  <span className="text-xs font-bold text-[#D2916C] bg-[#FDF8F2] px-3 py-1 rounded-full border border-[#4A2C2A]/10">
+                  <span className="text-xs font-bold text-[#9F1239] bg-[#FFE4E6] px-3.5 py-1 rounded-full border border-[#FECDD3]">
                     {selectedToppings.length}/3 selected
                   </span>
                 </div>
@@ -280,10 +281,10 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                         key={topping.id}
                         id={`btn-topping-${topping.id}`}
                         onClick={() => handleToggleTopping(topping)}
-                        className={`p-3.5 rounded-2xl cursor-pointer transition-all duration-200 border-2 flex items-center justify-between ${
+                        className={`p-3.5 rounded-2xl cursor-pointer transition-all duration-200 border-2 flex items-center justify-between hover:scale-102 active:scale-98 ${
                           isSelected
-                            ? 'bg-[#FDF8F2] border-[#4A2C2A] shadow-xs'
-                            : 'bg-white border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
+                            ? 'bg-gradient-to-br from-[#FFF1F2] to-[#FFE4E6] border-[#E11D48] shadow-xs'
+                            : 'bg-[#FAF5EE]/60 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -295,7 +296,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                         </div>
                         <div className="text-right">
                           <span className="font-bold text-xs text-[#4A2C2A]">₹{topping.price}</span>
-                          <span className={`block text-[10px] font-bold ${isSelected ? 'text-[#D2916C]' : 'text-neutral-400'}`}>
+                          <span className={`block text-[10px] font-bold ${isSelected ? 'text-[#E11D48]' : 'text-neutral-400'}`}>
                             {isSelected ? '✓ Added' : '+ Add'}
                           </span>
                         </div>
@@ -316,7 +317,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                       soundEffects.playDip();
                       setCurrentStep(4);
                     }}
-                    className="px-6 py-3 bg-[#4A2C2A] text-white text-xs font-bold uppercase tracking-widest rounded-full flex items-center gap-2 hover:bg-[#361E1C]"
+                    className="px-6 py-3.5 bg-[#4A2C2A] text-white text-xs font-black uppercase tracking-widest rounded-full flex items-center gap-2 hover:bg-[#361E1C] shadow-md hover:scale-105 active:scale-95 transition-all"
                   >
                     <span>Next: Finishing Touches</span>
                     <ChevronRight className="w-4 h-4" />
@@ -335,7 +336,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                     </h3>
                     <p className="text-xs text-[#4A2C2A]/60 mt-0.5">Final zig-zag artisanal drizzle and special chef instructions</p>
                   </div>
-                  <span className="text-xs font-bold text-[#D2916C] bg-[#FDF8F2] px-3 py-1 rounded-full border border-[#4A2C2A]/10">
+                  <span className="text-xs font-bold text-[#6B21A8] bg-[#F3E8FF] px-3.5 py-1 rounded-full border border-[#E9D5FF]">
                     Step 4 of 4
                   </span>
                 </div>
@@ -351,13 +352,13 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                           soundEffects.playDip();
                           setSelectedDrizzle(isSelected ? undefined : drizzle);
                         }}
-                        className={`p-3 rounded-2xl cursor-pointer text-center transition-all duration-200 border-2 ${
+                        className={`p-3 rounded-2xl cursor-pointer text-center transition-all duration-200 border-2 hover:scale-102 active:scale-98 ${
                           isSelected
-                            ? 'bg-[#FDF8F2] border-[#4A2C2A] shadow-xs'
-                            : 'bg-white border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
+                            ? 'bg-gradient-to-br from-[#FAF5FF] to-[#F3E8FF] border-[#9333EA] shadow-xs'
+                            : 'bg-[#FAF5EE]/60 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
                         }`}
                       >
-                        <span className="w-4 h-4 rounded-full inline-block mb-1 border border-black/10" style={{ backgroundColor: drizzle.color }} />
+                        <span className="w-4 h-4 rounded-full inline-block mb-1 border border-black/10 shadow-xs" style={{ backgroundColor: drizzle.color }} />
                         <h4 className="font-bold text-xs text-[#4A2C2A]">{drizzle.name}</h4>
                         <p className="text-[10px] text-[#4A2C2A]/60">₹{drizzle.price}</p>
                       </div>
@@ -374,11 +375,11 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                     value={specialNote}
                     onChange={(e) => setSpecialNote(e.target.value)}
                     placeholder="e.g. Extra hot dip, half Oreo half KitKat, separate drizzle on side..."
-                    className="w-full p-3 bg-[#FDF8F2] border border-[#4A2C2A]/15 rounded-2xl text-xs text-[#4A2C2A] focus:outline-none focus:border-[#4A2C2A]"
+                    className="w-full p-3.5 bg-[#FAF5EE] border border-[#4A2C2A]/15 rounded-2xl text-xs text-[#4A2C2A] focus:outline-none focus:border-[#4A2C2A]"
                   />
                 </div>
 
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <button
                     onClick={() => setCurrentStep(3)}
                     className="px-5 py-3 border border-[#4A2C2A]/20 text-[#4A2C2A] text-xs font-bold uppercase tracking-wider rounded-full hover:bg-[#4A2C2A]/5"
@@ -387,7 +388,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                   </button>
                   <button
                     onClick={handleAddToCart}
-                    className="px-8 py-3.5 bg-[#4A2C2A] text-white text-xs font-black uppercase tracking-widest rounded-full flex items-center gap-2 hover:bg-[#361E1C] shadow-lg"
+                    className="px-8 py-3.5 bg-[#4A2C2A] text-white text-xs font-black uppercase tracking-widest rounded-full flex items-center gap-2 hover:bg-[#361E1C] shadow-lg hover:scale-105 active:scale-95 transition-all"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     <span>ADD CUSTOM DRIPSTICK TO BAG</span>
@@ -398,29 +399,29 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
 
           </div>
 
-          {/* Right Column: Live Dynamic DripStick Visualizer */}
+          {/* Right Column: Live Dynamic DripStick Visualizer with Pastel Glow */}
           <div className="lg:col-span-5 sticky top-24">
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border-2 border-[#4A2C2A]/15 shadow-xl">
+            <div className="bg-white p-6 sm:p-8 rounded-3xl border-2 border-[#4A2C2A]/15 shadow-xl relative overflow-hidden">
               
               <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#D2916C]">
-                  Live DripStick Preview
+                <span className="text-[10px] font-black uppercase tracking-widest text-[#E11D48] bg-[#FFE4E6] px-3 py-1 rounded-full border border-[#FECDD3] flex items-center gap-1 shadow-2xs">
+                  <Sparkles className="w-3 h-3" /> Live DripStick Preview
                 </span>
                 <button
                   onClick={handleReset}
-                  className="text-xs text-[#4A2C2A]/70 hover:text-[#4A2C2A] flex items-center gap-1 font-bold"
+                  className="text-xs text-[#4A2C2A]/70 hover:text-[#4A2C2A] flex items-center gap-1 font-bold bg-[#FAF5EE] px-2.5 py-1 rounded-full border border-[#4A2C2A]/10"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
+                  <RefreshCw className="w-3 h-3" />
                   <span>Reset</span>
                 </button>
               </div>
 
-              {/* Dynamic Animated Waffle Canvas */}
-              <div className="relative w-full h-80 rounded-2xl bg-[#FDF8F2] overflow-hidden border border-[#4A2C2A]/10 flex flex-col items-center justify-center p-4">
+              {/* Dynamic Animated Waffle Canvas with Pastel background */}
+              <div className="relative w-full h-80 rounded-2xl bg-gradient-to-b from-[#FAF5EE] to-[#FEF3C7]/30 overflow-hidden border border-[#4A2C2A]/10 flex flex-col items-center justify-center p-4 shadow-inner">
                 
                 {/* Waffle Cone Body with texture */}
                 <div
-                  className="relative w-28 sm:w-32 h-56 rounded-t-full rounded-b-xl border-2 border-[#4A2C2A]/20 shadow-xl overflow-hidden flex flex-col items-center transition-all duration-500"
+                  className="relative w-28 sm:w-32 h-56 rounded-t-full rounded-b-xl border-2 border-[#4A2C2A]/20 shadow-xl overflow-hidden flex flex-col items-center transition-all duration-500 hover:scale-105"
                   style={{
                     backgroundColor:
                       selectedBase.id === 'base-dark'
@@ -452,7 +453,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                   {/* Toppings Displayed on the Dip */}
                   <div className="absolute top-4 inset-x-2 flex flex-wrap justify-center gap-1 z-10 pointer-events-none">
                     {selectedToppings.map((t) => (
-                      <span key={t.id} className="text-sm drop-shadow animate-bounce">
+                      <span key={t.id} className="text-base drop-shadow animate-bounce-cute">
                         {t.icon}
                       </span>
                     ))}
@@ -460,13 +461,13 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
 
                   {/* Finishing Drizzle Line */}
                   {selectedDrizzle && (
-                    <div className="absolute top-3 inset-x-1 h-20 pointer-events-none z-10 opacity-80">
+                    <div className="absolute top-3 inset-x-1 h-20 pointer-events-none z-10 opacity-85">
                       <svg viewBox="0 0 100 80" className="w-full h-full">
                         <path
                           d="M10,15 Q30,35 50,15 Q70,35 90,15 Q50,45 20,60 Q60,75 85,55"
                           fill="none"
                           stroke={selectedDrizzle.color}
-                          strokeWidth="4"
+                          strokeWidth="4.5"
                           strokeLinecap="round"
                         />
                       </svg>
@@ -474,10 +475,10 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                   )}
 
                   {/* Wooden Stick */}
-                  <div className="absolute -bottom-10 w-3 h-20 bg-[#D2916C] rounded-full border border-[#4A2C2A]/20 shadow-md" />
+                  <div className="absolute -bottom-10 w-3.5 h-20 bg-[#D2916C] rounded-full border border-[#4A2C2A]/20 shadow-md" />
                 </div>
 
-                <div className="absolute bottom-2 left-3 text-[10px] text-[#4A2C2A]/60 font-bold">
+                <div className="absolute bottom-2 left-3 text-[10px] text-[#4A2C2A]/70 font-black bg-white/80 px-2.5 py-0.5 rounded-full border border-[#4A2C2A]/10">
                   {selectedBase.name} • {selectedSauce.name}
                 </div>
               </div>
@@ -510,7 +511,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                 </div>
               </div>
 
-              {/* Price & Add to Bag CTA */}
+              {/* Price & Add to Bag CTA with Cute Pastel Badge */}
               <div className="mt-6 pt-4 border-t-2 border-[#4A2C2A]/10 flex items-center justify-between gap-4">
                 <div>
                   <span className="text-[10px] uppercase font-bold text-[#4A2C2A]/60 block">
@@ -524,7 +525,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                 <button
                   id="btn-builder-add-to-cart"
                   onClick={handleAddToCart}
-                  className="flex-1 py-4 bg-[#4A2C2A] text-[#FDF8F2] rounded-full font-bold text-xs uppercase tracking-widest shadow-lg hover:bg-[#361E1C] transition-all flex items-center justify-center gap-2 active:scale-98"
+                  className="flex-1 py-4 bg-[#4A2C2A] text-[#FAF5EE] rounded-full font-black text-xs uppercase tracking-widest shadow-lg hover:bg-[#361E1C] transition-all flex items-center justify-center gap-2 active:scale-98 hover:scale-102"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>ADD TO BAG</span>
@@ -538,15 +539,15 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
 
       </div>
 
-      {/* Instant Success Toast */}
+      {/* Instant Success Toast in Sweet Pastel Design */}
       {isSuccessModal && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#4A2C2A] text-[#FDF8F2] px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 border border-[#D2916C]/40 animate-bounce">
-          <div className="w-6 h-6 rounded-full bg-[#D2916C] text-white flex items-center justify-center font-bold text-xs">
+        <div className="fixed bottom-6 right-6 z-50 bg-[#4A2C2A] text-[#FAF5EE] px-6 py-4 rounded-3xl shadow-2xl flex items-center gap-3 border border-[#FECDD3] animate-bounce-cute">
+          <div className="w-7 h-7 rounded-full bg-[#E11D48] text-white flex items-center justify-center font-bold text-xs shadow-xs">
             ✓
           </div>
           <div>
-            <p className="font-bold text-xs">Custom DripStick Added to Bag!</p>
-            <p className="text-[10px] text-[#FDF8F2]/70">₹{totalPrice} • View in your cart</p>
+            <p className="font-black text-xs">Custom DripStick Added to Bag!</p>
+            <p className="text-[10px] text-[#FAF5EE]/80">₹{totalPrice} • View in your cart</p>
           </div>
         </div>
       )}

@@ -34,18 +34,25 @@ export const FranchiseSection: React.FC = () => {
     setIsSubmitted(true);
   };
 
+  const tierColors: Record<string, { bg: string; badge: string; border: string }> = {
+    'tier-kiosk': { bg: 'bg-[#FEF3C7]/40', badge: 'bg-[#FEF3C7] text-[#92400E]', border: 'border-[#FDE68A]' },
+    'tier-inline': { bg: 'bg-[#FCE7F3]/40', badge: 'bg-[#FCE7F3] text-[#9D174D]', border: 'border-[#FBCFE8]' },
+    'tier-flagship': { bg: 'bg-[#EDE9FE]/40', badge: 'bg-[#EDE9FE] text-[#6B21A8]', border: 'border-[#DDD6FE]' },
+  };
+
   return (
-    <section id="opportunity" className="py-24 bg-[#FDF8F2] relative overflow-hidden border-t border-[#4A2C2A]/10">
-      {/* Decorative Glow */}
-      <div className="absolute top-10 left-10 w-96 h-96 bg-[#D2916C]/10 rounded-full blur-3xl pointer-events-none" />
+    <section id="opportunity" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-t border-[#4A2C2A]/10">
+      {/* Decorative Pastel Ambient Glows */}
+      <div className="absolute top-10 left-10 w-96 h-96 bg-gradient-to-br from-[#FED7AA]/30 to-[#FCE7F3]/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-tl from-[#EDE9FE]/30 to-[#DCFCE7]/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
         {/* Section Header with Bold Typography */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#4A2C2A]/10 mb-4 shadow-xs">
-            <TrendingUp className="w-3.5 h-3.5 text-[#D2916C]" />
-            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#D2916C]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FEF3C7] border border-[#FDE68A] mb-4 shadow-2xs">
+            <TrendingUp className="w-3.5 h-3.5 text-[#D97706]" />
+            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#92400E]">
               Partner & Grow With DripStick
             </span>
           </div>
@@ -53,7 +60,7 @@ export const FranchiseSection: React.FC = () => {
             FRANCHISE OPPORTUNITY
           </h2>
           <p className="text-base sm:text-lg text-[#4A2C2A]/80 leading-relaxed font-medium">
-            Join India’s fastest-growing dessert sensation. High gross margins (68%+), low operational footprint (80-350 sq.ft), and full turnkey brand support.
+            Join India’s fastest-growing dessert sensation. High gross margins (68%+), low operational footprint (80-350 sq.ft), and full turnkey brand support. 🚀
           </p>
         </div>
 
@@ -61,6 +68,7 @@ export const FranchiseSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {FRANCHISE_TIERS.map((tier) => {
             const isSelected = selectedTierId === tier.id;
+            const theme = tierColors[tier.id] || tierColors['tier-kiosk'];
             return (
               <div
                 key={tier.id}
@@ -71,18 +79,18 @@ export const FranchiseSection: React.FC = () => {
                 }}
                 className={`p-6 sm:p-8 rounded-3xl cursor-pointer transition-all duration-300 border-2 flex flex-col justify-between ${
                   isSelected
-                    ? 'bg-white border-[#4A2C2A] shadow-2xl scale-[1.02]'
-                    : 'bg-white/70 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30'
+                    ? `${theme.bg} border-[#4A2C2A] shadow-2xl scale-[1.03] ring-4 ring-[#4A2C2A]/10`
+                    : 'bg-white/80 border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30 hover:scale-[1.01]'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#D2916C] bg-[#FDF8F2] px-3 py-1 rounded-full border border-[#4A2C2A]/10">
+                    <span className={`text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border ${theme.badge} ${theme.border}`}>
                       {tier.spaceRequired}
                     </span>
                     {tier.id === 'tier-kiosk' && (
-                      <span className="text-[10px] font-black uppercase tracking-widest text-white bg-[#4A2C2A] px-2.5 py-0.5 rounded-full">
-                        Fastest Payback
+                      <span className="text-[10px] font-black uppercase tracking-widest text-[#92400E] bg-[#FEF3C7] border border-[#FDE68A] px-2.5 py-0.5 rounded-full shadow-xs">
+                        ⚡ Fastest Payback
                       </span>
                     )}
                   </div>
@@ -94,23 +102,23 @@ export const FranchiseSection: React.FC = () => {
 
                   <div className="space-y-2 py-4 border-t border-b border-[#4A2C2A]/10 text-xs mb-6">
                     <div className="flex justify-between">
-                      <span className="text-[#4A2C2A]/60">Investment Range:</span>
+                      <span className="text-[#4A2C2A]/60 font-medium">Investment Range:</span>
                       <span className="font-black text-[#4A2C2A]">{tier.investment}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-[#4A2C2A]/60">Estimated Payback:</span>
-                      <span className="font-black text-emerald-700">{tier.roiPeriod}</span>
+                      <span className="text-[#4A2C2A]/60 font-medium">Estimated Payback:</span>
+                      <span className="font-black text-[#16A34A]">{tier.roiPeriod}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-[#4A2C2A]/60">Gross Margin:</span>
-                      <span className="font-black text-[#D2916C]">{tier.profitMargin}</span>
+                      <span className="text-[#4A2C2A]/60 font-medium">Gross Margin:</span>
+                      <span className="font-black text-[#D97706]">{tier.profitMargin}</span>
                     </div>
                   </div>
 
-                  <ul className="space-y-2 mb-6 text-xs text-[#4A2C2A]/80">
+                  <ul className="space-y-2 mb-6 text-xs text-[#4A2C2A]/85 font-medium">
                     {tier.features.map((f, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#D2916C] shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#16A34A] shrink-0 mt-0.5" />
                         <span>{f}</span>
                       </li>
                     ))}
@@ -123,10 +131,10 @@ export const FranchiseSection: React.FC = () => {
                     soundEffects.playDip();
                     setSelectedTierId(tier.id);
                   }}
-                  className={`w-full py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+                  className={`w-full py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all ${
                     isSelected
                       ? 'bg-[#4A2C2A] text-white shadow-md'
-                      : 'bg-[#FDF8F2] text-[#4A2C2A] border border-[#4A2C2A]/20 hover:bg-[#4A2C2A] hover:text-white'
+                      : 'bg-white text-[#4A2C2A] border border-[#4A2C2A]/20 hover:bg-[#4A2C2A] hover:text-white'
                   }`}
                 >
                   {isSelected ? '✓ Selected Format' : 'Select Format'}

@@ -3,7 +3,7 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: #FDF8F2;
+    background-color: #FAF5EE;
     color: #4A2C2A;
   }
 
@@ -52,7 +52,16 @@
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-8px) rotate(1deg);
+    transform: translateY(-8px) rotate(1.5deg);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
   }
 }
 
@@ -62,6 +71,15 @@
   }
   50% {
     box-shadow: 0 0 30px rgba(210, 145, 108, 0.45);
+  }
+}
+
+@keyframes bounceCute {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.02);
   }
 }
 
@@ -78,13 +96,46 @@
   animation: floatGentle 5s ease-in-out infinite;
 }
 
+.animate-float-slow {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.animate-bounce-cute {
+  animation: bounceCute 2.5s ease-in-out infinite;
+}
+
 .animate-pulse-glow {
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
 /* Custom Waffle Grid Texture */
 .waffle-texture {
-  background-image: repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(74, 44, 42, 0.07) 10px, rgba(74, 44, 42, 0.07) 12px);
+  background-image: repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(74, 44, 42, 0.05) 10px, rgba(74, 44, 42, 0.05) 12px);
+}
+
+/* Pastel Glass & Sweet Gradients */
+.pastel-card-pink {
+  background: linear-gradient(145deg, #FFF1F2 0%, #FFE4E6 60%, #FECDD3 100%);
+}
+
+.pastel-card-pistachio {
+  background: linear-gradient(145deg, #F0FDF4 0%, #DCFCE7 60%, #BBF7D0 100%);
+}
+
+.pastel-card-honey {
+  background: linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 60%, #FDE68A 100%);
+}
+
+.pastel-card-lavender {
+  background: linear-gradient(145deg, #FAF5FF 0%, #F3E8FF 60%, #E9D5FF 100%);
+}
+
+.pastel-card-peach {
+  background: linear-gradient(145deg, #FFF7ED 0%, #FFEDD5 60%, #FED7AA 100%);
+}
+
+.pastel-card-sky {
+  background: linear-gradient(145deg, #F0F9FF 0%, #E0F2FE 60%, #BAE6FD 100%);
 }
 
 /* Hide scrollbar for clean horizontal scrolls */

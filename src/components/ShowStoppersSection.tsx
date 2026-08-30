@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Star, Plus, Check, Eye, ArrowRight, Flame } from 'lucide-react';
+import { Sparkles, Star, Plus, Check, Eye, ArrowRight, Flame, Heart, Layers } from 'lucide-react';
 import { SHOW_STOPPERS } from '../data/mockData';
 import { ShowStopperProduct } from '../types';
 import { soundEffects } from '../utils/soundEffects';
@@ -16,7 +16,19 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
 }) => {
   const [addedId, setAddedId] = useState<string | null>(null);
   const [selectedProductDetail, setSelectedProductDetail] = useState<ShowStopperProduct | null>(null);
-  const [viewStyle, setViewStyle] = useState<'cards' | 'banner'>('cards');
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+
+  const categories = [
+    { id: 'all', label: 'All Favorites (6)', emoji: '🧇' },
+    { id: 'chocolate', label: 'Rich Chocolates', emoji: '🍫' },
+    { id: 'fruity', label: 'Berry & Fruity', emoji: '🍓' },
+    { id: 'nutty', label: 'Nutty & Pistachio', emoji: '🥜' },
+    { id: 'caramel', label: 'Lotus & Caramel', emoji: '🍯' },
+  ];
+
+  const filteredProducts = activeCategory === 'all'
+    ? SHOW_STOPPERS
+    : SHOW_STOPPERS.filter((p) => p.category === activeCategory);
 
   const handleQuickAdd = (product: ShowStopperProduct) => {
     soundEffects.playChime();
@@ -26,8 +38,15 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
   };
 
   const getInitialBadge = (name: string, index: number) => {
-    const letters = ['O.', 'B.', 'C.', 'N.'];
-    const bgColors = ['bg-[#4A2C2A]', 'bg-[#D2916C]', 'bg-[#C4A484]', 'bg-[#361E1C]'];
+    const letters = ['O.', 'B.', 'C.', 'S.', 'P.', 'N.'];
+    const bgColors = [
+      'bg-gradient-to-tr from-[#F59E0B] to-[#FCD34D]',
+      'bg-gradient-to-tr from-[#EA580C] to-[#FDBA74]',
+      'bg-gradient-to-tr from-[#9333EA] to-[#D8B4FE]',
+      'bg-gradient-to-tr from-[#E11D48] to-[#FDA4AF]',
+      'bg-gradient-to-tr from-[#16A34A] to-[#86EFAC]',
+      'bg-gradient-to-tr from-[#0284C7] to-[#7DD3FC]',
+    ];
     return {
       letter: letters[index] || name.charAt(0) + '.',
       bg: bgColors[index % bgColors.length],
@@ -35,56 +54,82 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
   };
 
   return (
-    <section id="showstoppers" className="py-20 bg-white border-t border-b border-[#4A2C2A]/10 relative overflow-hidden">
+    <section id="showstoppers" className="py-20 bg-[#FAF5EE] border-t border-b border-[#4A2C2A]/10 relative overflow-hidden">
       
-      {/* Ambient background glow */}
-      <div className="absolute top-10 left-1/3 w-[500px] h-[300px] bg-[#D2916C]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Ambient background pastel glow */}
+      <div className="absolute top-10 left-1/4 w-[600px] h-[350px] bg-gradient-to-r from-[#FCE7F3]/40 via-[#FEF3C7]/40 to-[#DCFCE7]/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-[500px] h-[300px] bg-gradient-to-l from-[#E0F2FE]/40 via-[#F3E8FF]/40 to-[#FFE4E6]/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
-        {/* Section Header with Bold Typography Spec */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 pb-6 border-b border-[#4A2C2A]/10">
+        {/* Section Header with Pastel Flair */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6 pb-6 border-b border-[#4A2C2A]/10">
           <div>
-            <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#4A2C2A]/50 mb-1">
-              THIS MONTH’S
-            </h3>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFE4E6] border border-[#FECDD3] text-[10px] font-black uppercase tracking-widest text-[#9F1239] mb-2 shadow-2xs">
+              <Sparkles className="w-3 h-3 text-[#E11D48]" /> Chef Curation
+            </div>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black italic tracking-tight leading-none text-[#4A2C2A]">
               SHOW STOPPERS
             </h2>
             <p className="text-sm font-medium text-[#4A2C2A]/70 mt-2 max-w-lg">
-              Curated chef specials dipped in molten Belgian chocolate and layered with artisanal crunches.
+              Curated artisanal Belgian cone waffles dipped in molten couverture and encrusted with delicious toppings.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-[11px] font-bold tracking-widest uppercase text-[#D2916C] bg-[#FDF8F2] px-4 py-2 rounded-full border border-[#4A2C2A]/10">
-              Live Spotlight
+            <span className="text-[11px] font-bold tracking-widest uppercase text-[#92400E] bg-[#FEF3C7] px-4 py-2 rounded-full border border-[#FDE68A] shadow-2xs flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-ping" />
+              6 Fresh Editions
             </span>
           </div>
         </div>
 
-        {/* 4 Cards Grid - Bold Typography Archetype */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SHOW_STOPPERS.map((product, idx) => {
+        {/* Category Filters in Cute Pastel Pills */}
+        <div className="flex flex-wrap items-center gap-2 mb-10 overflow-x-auto pb-2">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => {
+                soundEffects.playDip();
+                setActiveCategory(cat.id);
+              }}
+              className={`px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all duration-200 flex items-center gap-2 shadow-2xs hover:scale-105 active:scale-95 whitespace-nowrap ${
+                activeCategory === cat.id
+                  ? 'bg-[#4A2C2A] text-white shadow-md'
+                  : 'bg-white text-[#4A2C2A]/80 border border-[#4A2C2A]/10 hover:bg-[#FEF3C7]'
+              }`}
+            >
+              <span>{cat.emoji}</span>
+              <span>{cat.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* 6 Cards Grid with Individual Pastel Palettes */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProducts.map((product, idx) => {
             const isJustAdded = addedId === product.id;
             const badge = getInitialBadge(product.name, idx);
+            const cardBg = product.pastelTheme?.cardBg || 'bg-white';
+            const borderTheme = product.pastelTheme?.border || 'border-[#4A2C2A]/10';
+            const badgeBg = product.pastelTheme?.badgeBg || 'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]';
 
             return (
               <div
                 key={product.id}
                 id={`card-showstopper-${product.id}`}
-                className="group rounded-3xl bg-[#FDF8F2] border border-[#4A2C2A]/10 hover:border-[#4A2C2A]/30 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden relative hover:-translate-y-1 p-5"
+                className={`group rounded-3xl ${cardBg} border ${borderTheme} shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden relative hover:-translate-y-1.5 p-5`}
               >
                 {/* Top Row with Letter Avatar + Name from Design Spec */}
                 <div className="flex items-center gap-3.5 mb-4">
-                  <div className={`w-14 h-14 sm:w-16 sm:h-16 ${badge.bg} rounded-2xl flex items-center justify-center text-white text-xl sm:text-2xl font-black shrink-0 shadow-sm`}>
+                  <div className={`w-14 h-14 sm:w-16 sm:h-16 ${badge.bg} rounded-2xl flex items-center justify-center text-white text-xl sm:text-2xl font-black shrink-0 shadow-md group-hover:rotate-6 transition-transform`}>
                     {badge.letter}
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#D2916C]">
+                    <span className={`text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full inline-block w-fit mb-0.5 ${badgeBg}`}>
                       {product.badge}
                     </span>
-                    <span className="font-brand font-black text-base sm:text-lg leading-tight text-[#4A2C2A]">
+                    <span className="font-brand font-black text-lg leading-tight text-[#4A2C2A]">
                       {product.name}
                     </span>
                     <span className="font-display font-black text-sm text-[#4A2C2A] mt-0.5">
@@ -94,12 +139,12 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                 </div>
 
                 {/* Product Image Frame wrapped in ReactBits TiltedCard */}
-                <div className="relative mb-4 w-full h-44 rounded-2xl overflow-hidden">
+                <div className="relative mb-4 w-full h-48 rounded-2xl overflow-hidden shadow-inner bg-black/10">
                   <TiltedCard
                     imageSrc={product.image}
                     altText={product.name}
                     captionText={`★ ${product.rating} • ${product.badge}`}
-                    containerHeight="176px"
+                    containerHeight="192px"
                     containerWidth="100%"
                     imageHeight="100%"
                     imageWidth="100%"
@@ -109,11 +154,11 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                     displayOverlayContent={true}
                     overlayContent={
                       <div className="flex justify-between items-center w-full">
-                        <span className="text-[9px] font-black uppercase tracking-wider text-[#D2916C] bg-[#4A2C2A]/85 backdrop-blur-xs px-2 py-0.5 rounded-full shadow-xs">
+                        <span className="text-[9px] font-black uppercase tracking-wider text-white bg-[#4A2C2A]/85 backdrop-blur-xs px-2.5 py-0.5 rounded-full shadow-xs">
                           {product.badge}
                         </span>
-                        <div className="flex items-center gap-1 bg-white/90 backdrop-blur-xs px-2 py-0.5 rounded-full text-[10px] font-bold text-[#4A2C2A] shadow-xs">
-                          <Star className="w-3 h-3 fill-[#D2916C] text-[#D2916C]" />
+                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-black text-[#4A2C2A] shadow-xs">
+                          <Star className="w-3 h-3 fill-[#F59E0B] text-[#F59E0B]" />
                           <span>{product.rating}</span>
                         </div>
                       </div>
@@ -127,11 +172,11 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                     {product.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-white border border-[#4A2C2A]/10 text-[#4A2C2A]">
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    <span className="text-[9px] font-extrabold px-2.5 py-1 rounded-lg bg-white/90 border border-[#4A2C2A]/10 text-[#4A2C2A] shadow-2xs">
                       🧇 {product.base.name}
                     </span>
-                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-[#D2916C]/15 text-[#D2916C]">
+                    <span className="text-[9px] font-extrabold px-2.5 py-1 rounded-lg bg-white/90 border border-[#4A2C2A]/10 text-[#D2916C] shadow-2xs">
                       🍫 {product.sauce.name}
                     </span>
                   </div>
@@ -142,21 +187,21 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                   <button
                     id={`btn-quick-add-${product.id}`}
                     onClick={() => handleQuickAdd(product)}
-                    className={`flex-1 py-2.5 px-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 ${
+                    className={`flex-1 py-3 px-4 rounded-full text-xs font-black uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-md active:scale-95 ${
                       isJustAdded
                         ? 'bg-emerald-600 text-white'
-                        : 'bg-[#4A2C2A] text-[#FDF8F2] hover:bg-[#361E1C]'
+                        : 'bg-[#4A2C2A] text-[#FAF5EE] hover:bg-[#361E1C] hover:scale-102'
                     }`}
                   >
                     {isJustAdded ? (
                       <>
-                        <Check className="w-3.5 h-3.5" />
-                        <span>Added!</span>
+                        <Check className="w-3.5 h-3.5 animate-bounce-cute" />
+                        <span>Added to Bag!</span>
                       </>
                     ) : (
                       <>
                         <Plus className="w-3.5 h-3.5" />
-                        <span>Quick Add</span>
+                        <span>Quick Add • ₹{product.price}</span>
                       </>
                     )}
                   </button>
@@ -168,9 +213,9 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                       setSelectedProductDetail(product);
                     }}
                     title="View Product Ingredients"
-                    className="p-2.5 bg-white hover:bg-[#D2916C]/10 text-[#4A2C2A] rounded-full border border-[#4A2C2A]/10 transition-colors"
+                    className="p-3 bg-white hover:bg-[#FEF3C7] text-[#4A2C2A] rounded-full border border-[#4A2C2A]/15 transition-all hover:scale-105 shadow-xs"
                   >
-                    <Eye className="w-3.5 h-3.5" />
+                    <Eye className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -181,7 +226,7 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
         {/* Product Detail Modal */}
         {selectedProductDetail && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-            <div className="bg-[#FDF8F2] rounded-3xl max-w-lg w-full overflow-hidden border-2 border-[#4A2C2A]/20 shadow-2xl animate-scale-up">
+            <div className="bg-[#FAF5EE] rounded-3xl max-w-lg w-full overflow-hidden border-2 border-[#4A2C2A]/20 shadow-2xl animate-scale-up">
               <div className="relative h-64 w-full bg-[#26140A] overflow-hidden">
                 <TiltedCard
                   imageSrc={selectedProductDetail.image}
@@ -196,7 +241,7 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                   showTooltip={false}
                   displayOverlayContent={true}
                   overlayContent={
-                    <div className="absolute bottom-3 left-4 bg-[#4A2C2A] text-[#D2916C] px-3 py-1 rounded-full text-xs font-bold shadow-md">
+                    <div className="absolute bottom-3 left-4 bg-[#4A2C2A] text-[#FAF5EE] px-3 py-1 rounded-full text-xs font-black shadow-md">
                       {selectedProductDetail.badge}
                     </div>
                   }
@@ -250,7 +295,7 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                       handleQuickAdd(selectedProductDetail);
                       setSelectedProductDetail(null);
                     }}
-                    className="flex-1 py-4 bg-[#4A2C2A] text-[#FDF8F2] rounded-full font-bold text-xs uppercase tracking-widest shadow-lg hover:bg-[#361E1C]"
+                    className="flex-1 py-4 bg-[#4A2C2A] text-[#FAF5EE] rounded-full font-black text-xs uppercase tracking-widest shadow-lg hover:bg-[#361E1C] active:scale-98"
                   >
                     Add to Bag (₹{selectedProductDetail.price})
                   </button>
