@@ -4,6 +4,7 @@ import { HeroSection } from './components/HeroSection';
 import { ChocolateDripDivider } from './components/ChocolateDripDivider';
 import { OurStorySection } from './components/OurStorySection';
 import { MenuBuilderSection } from './components/MenuBuilderSection';
+import { FlavorWheelSection } from './components/FlavorWheelSection';
 import { ShowStoppersSection } from './components/ShowStoppersSection';
 import { TheDripExperienceSection } from './components/TheDripExperienceSection';
 import { CateringSection } from './components/CateringSection';
@@ -12,6 +13,7 @@ import { OutletsSection } from './components/OutletsSection';
 import { SocialHubSection } from './components/SocialHubSection';
 import { OrderCartModal } from './components/OrderCartModal';
 import { FlavorMatchmakerModal } from './components/FlavorMatchmakerModal';
+import { FloatingDripDock } from './components/FloatingDripDock';
 import { Footer } from './components/Footer';
 import { ClickSpark } from './components/ClickSpark';
 import { CartItem, CustomDripStick, ShowStopperProduct } from './types';
@@ -39,8 +41,8 @@ export default function App() {
   // Active section scroll observer
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'story', 'menu', 'showstoppers', 'catering', 'opportunity', 'outlets', 'social'];
-      const scrollPos = window.scrollY + 200;
+      const sections = ['hero', 'story', 'menu', 'flavor-wheel', 'showstoppers', 'catering', 'opportunity', 'outlets', 'social'];
+      const scrollPos = window.scrollY + 220;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -144,14 +146,14 @@ export default function App() {
 
   return (
     <ClickSpark
-      sparkColor="#D2916C"
-      sparkCount={8}
-      sparkRadius={28}
-      sparkSize={14}
-      duration={450}
+      sparkColor="#F472B6"
+      sparkCount={10}
+      sparkRadius={32}
+      sparkSize={16}
+      duration={500}
       easing="ease-out"
-      extraScale={1.2}
-      className="min-h-screen bg-[#FDF8F2] text-[#4A2C2A] flex flex-col font-sans selection:bg-[#4A2C2A] selection:text-[#FDF8F2]"
+      extraScale={1.3}
+      className="min-h-screen bg-[#FAF5EE] text-[#4A2C2A] flex flex-col font-sans selection:bg-[#F472B6] selection:text-white"
     >
       {/* Top Sticky Navigation with Chocolate Drips */}
       <Navbar
@@ -171,39 +173,64 @@ export default function App() {
           onBuildCustom={() => handleNavigate('menu')}
         />
 
-        {/* Chocolate Drip Divider */}
-        <ChocolateDripDivider fillColor="#4A2C2A" showDrops={true} />
+        {/* Chocolate Drip Divider with Strawberry Accent */}
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#F472B6"
+          showDrops={true}
+          accentType="strawberry"
+        />
 
         {/* 02 — OUR STORY */}
         <OurStorySection />
 
-        {/* Chocolate Drip Divider */}
-        <ChocolateDripDivider fillColor="#FDF8F2" inverted={true} showDrops={false} />
+        {/* Chocolate Drip Divider with Pistachio & Cream Accent */}
+        <ChocolateDripDivider
+          fillColor="#FAF5EE"
+          secondaryFillColor="#86EFAC"
+          inverted={true}
+          showDrops={false}
+        />
 
-        {/* 03 — MENU: BUILD YOUR DRIPSTICK */}
+        {/* 03 — MENU: BUILD YOUR DRIPSTICK (FACTORY LAB) */}
         <MenuBuilderSection onAddCustomToCart={handleAddCustomToCart} />
 
-        {/* 04 — SHOW STOPPERS: BEST SELLERS */}
+        {/* 04 — INTERACTIVE FLAVOR CARNIVAL WHEEL */}
+        <FlavorWheelSection
+          onAddProduct={handleAddShowStopperToCart}
+          onOpenCart={() => setIsCartOpen(true)}
+        />
+
+        {/* 05 — SHOW STOPPERS: BEST SELLERS (CASSETTE BOXES) */}
         <ShowStoppersSection
           onAddShowStopperToCart={handleAddShowStopperToCart}
           onCustomizeShowStopper={() => handleNavigate('menu')}
         />
 
-        {/* 05 — THE DRIP EXPERIENCE & SCIENCE */}
+        {/* 06 — THE DRIP EXPERIENCE & SCIENCE */}
         <TheDripExperienceSection />
 
-        {/* 06 — CATERING & LIVE BAR */}
+        {/* 07 — CATERING & LIVE BAR */}
         <CateringSection />
 
-        {/* 07 — FRANCHISE OPPORTUNITY */}
+        {/* 08 — FRANCHISE OPPORTUNITY */}
         <FranchiseSection />
 
-        {/* 08 — OUTLETS & MAP */}
+        {/* 09 — OUTLETS & MAP */}
         <OutletsSection />
 
-        {/* 09 — SOCIAL PROOF & REELS */}
+        {/* 10 — SOCIAL PROOF & REELS */}
         <SocialHubSection />
       </main>
+
+      {/* Floating Bottom Quick-Action Drip Dock */}
+      <FloatingDripDock
+        cartCount={totalCartCount}
+        onOpenCart={() => setIsCartOpen(true)}
+        onOpenMatchmaker={() => setIsMatchmakerOpen(true)}
+        onNavigate={handleNavigate}
+        activeSection={activeSection}
+      />
 
       {/* Slide-over Order Cart Modal */}
       <OrderCartModal
@@ -225,8 +252,9 @@ export default function App() {
         }}
       />
 
-      {/* 10 — FOOTER */}
+      {/* 11 — FOOTER */}
       <Footer onNavigate={handleNavigate} />
     </ClickSpark>
   );
 }
+

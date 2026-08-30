@@ -5,6 +5,13 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: #FAF5EE;
     color: #4A2C2A;
+    background-image: 
+      radial-gradient(circle at 15px 15px, rgba(244, 114, 182, 0.15) 2px, transparent 2px),
+      radial-gradient(circle at 45px 45px, rgba(251, 191, 36, 0.15) 2px, transparent 2px),
+      radial-gradient(circle at 75px 25px, rgba(52, 211, 153, 0.12) 2px, transparent 2px),
+      radial-gradient(circle at 25px 75px, rgba(167, 139, 250, 0.15) 2px, transparent 2px);
+    background-size: 90px 90px;
+    background-attachment: fixed;
   }
 
   h1, h2, h3, .font-display {
@@ -52,25 +59,25 @@
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-8px) rotate(1.5deg);
+    transform: translateY(-8px) rotate(2deg);
   }
 }
 
 @keyframes floatSlow {
   0%, 100% {
-    transform: translateY(0px) rotate(-1deg);
+    transform: translateY(0px) rotate(-1.5deg);
   }
   50% {
-    transform: translateY(-12px) rotate(2deg);
+    transform: translateY(-14px) rotate(3deg);
   }
 }
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(210, 145, 108, 0.2);
+    box-shadow: 0 0 15px rgba(244, 114, 182, 0.25);
   }
   50% {
-    box-shadow: 0 0 30px rgba(210, 145, 108, 0.45);
+    box-shadow: 0 0 35px rgba(244, 114, 182, 0.55);
   }
 }
 
@@ -79,7 +86,16 @@
     transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-5px) scale(1.03);
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -93,27 +109,68 @@
 }
 
 .animate-float {
-  animation: floatGentle 5s ease-in-out infinite;
+  animation: floatGentle 4.5s ease-in-out infinite;
 }
 
 .animate-float-slow {
-  animation: floatSlow 7s ease-in-out infinite;
+  animation: floatSlow 6.5s ease-in-out infinite;
 }
 
 .animate-bounce-cute {
-  animation: bounceCute 2.5s ease-in-out infinite;
+  animation: bounceCute 2.2s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
-/* Custom Waffle Grid Texture */
-.waffle-texture {
-  background-image: repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(74, 44, 42, 0.05) 10px, rgba(74, 44, 42, 0.05) 12px);
+.animate-spin-slow {
+  animation: spinSlow 20s linear infinite;
 }
 
-/* Pastel Glass & Sweet Gradients */
+/* Custom Pastel Sprinkle & Gingham Canvas Patterns */
+.bg-pastel-sprinkles {
+  background-image: 
+    radial-gradient(circle at 10px 10px, #F472B6 2px, transparent 2px),
+    radial-gradient(circle at 35px 35px, #FBBF24 2.5px, transparent 2.5px),
+    radial-gradient(circle at 60px 15px, #34D399 2px, transparent 2px),
+    radial-gradient(circle at 20px 60px, #A78BFA 2.5px, transparent 2.5px);
+  background-size: 70px 70px;
+}
+
+.bg-waffle-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(74, 44, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(74, 44, 42, 0.04) 1px, transparent 1px);
+}
+
+.bg-pastel-gingham {
+  background-color: #FAF5EE;
+  background-image: 
+    linear-gradient(90deg, rgba(254, 205, 211, 0.25) 50%, transparent 50%),
+    linear-gradient(rgba(254, 240, 138, 0.25) 50%, transparent 50%);
+  background-size: 32px 32px;
+}
+
+/* Sticker & Neo-Pastel Shadows */
+.shadow-sticker {
+  box-shadow: 4px 6px 0px rgba(74, 44, 42, 0.18);
+}
+
+.shadow-sticker-lg {
+  box-shadow: 6px 10px 0px rgba(74, 44, 42, 0.22);
+}
+
+.shadow-pastel-pink {
+  box-shadow: 0 10px 25px -5px rgba(244, 114, 182, 0.35);
+}
+
+.shadow-pastel-yellow {
+  box-shadow: 0 10px 25px -5px rgba(251, 191, 36, 0.35);
+}
+
+/* Pastel Card Themes */
 .pastel-card-pink {
   background: linear-gradient(145deg, #FFF1F2 0%, #FFE4E6 60%, #FECDD3 100%);
 }
