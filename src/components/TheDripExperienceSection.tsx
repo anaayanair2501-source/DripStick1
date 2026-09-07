@@ -25,7 +25,7 @@ export const TheDripExperienceSection: React.FC = () => {
   };
 
   return (
-    <section className="py-24 bg-[#3B2220] text-[#FDF8F2] relative overflow-hidden">
+    <section id="drip-experience" className="py-24 bg-[#3B2220] text-[#FDF8F2] relative overflow-hidden">
       {/* Decorative Pastel & Warm Glows */}
       <div className="absolute top-10 left-10 w-96 h-96 bg-[#FED7AA]/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#FBCFE8]/15 rounded-full blur-3xl pointer-events-none" />

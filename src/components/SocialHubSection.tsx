@@ -24,7 +24,7 @@ export const SocialHubSection: React.FC = () => {
   };
 
   return (
-    <section id="social" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-t border-[#4A2C2A]/10">
+    <section id="social" className="py-24 bg-[#FAF5EE] relative overflow-hidden">
       
       {/* Decorative Pastel Ambient Light */}
       <div className="absolute top-10 right-10 w-96 h-96 bg-gradient-to-bl from-[#FCE7F3]/40 to-[#E0E7FF]/40 rounded-full blur-3xl pointer-events-none" />

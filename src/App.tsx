@@ -164,16 +164,6 @@ export default function App() {
         activeSection={activeSection}
       />
 
-      {/* Top Brown & Blue Chocolate Drip Line */}
-      <div className="pt-14 sm:pt-20 -mb-6 sm:-mb-8 relative z-20 pointer-events-none">
-        <ChocolateDripDivider
-          fillColor="#4A2C2A"
-          secondaryFillColor="#38BDF8"
-          showDrops={true}
-          accentType="blue"
-        />
-      </div>
-
       {/* Main Content Sections Flow */}
       <main className="flex-grow">
         {/* 01 — HERO */}
@@ -205,10 +195,26 @@ export default function App() {
         {/* 03 — MENU: BUILD YOUR DRIPSTICK (FACTORY LAB) */}
         <MenuBuilderSection onAddCustomToCart={handleAddCustomToCart} />
 
+        {/* Chocolate Drip Divider with Brown & Caramel Amber Colorway */}
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#F59E0B"
+          showDrops={true}
+          accentType="caramel"
+        />
+
         {/* 04 — INTERACTIVE FLAVOR CARNIVAL WHEEL */}
         <FlavorWheelSection
           onAddProduct={handleAddShowStopperToCart}
           onOpenCart={() => setIsCartOpen(true)}
+        />
+
+        {/* Chocolate Drip Divider with Brown & Velvet Purple Colorway */}
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#A855F7"
+          showDrops={true}
+          accentType="purple"
         />
 
         {/* 05 — SHOW STOPPERS: BEST SELLERS (CASSETTE BOXES) */}
@@ -217,17 +223,57 @@ export default function App() {
           onCustomizeShowStopper={() => handleNavigate('menu')}
         />
 
+        {/* Chocolate Drip Divider with Brown & Coral Orange Colorway */}
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#FB923C"
+          showDrops={true}
+          accentType="orange"
+        />
+
         {/* 06 — THE DRIP EXPERIENCE & SCIENCE */}
         <TheDripExperienceSection />
+
+        {/* Chocolate Drip Divider with Brown & Ruby Rose Colorway */}
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#F43F5E"
+          showDrops={true}
+          accentType="rose"
+        />
 
         {/* 07 — CATERING & LIVE BAR */}
         <CateringSection />
 
+        {/* Chocolate Drip Divider with Brown & Mango Yellow Colorway */}
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#FACC15"
+          showDrops={true}
+          accentType="yellow"
+        />
+
         {/* 08 — FRANCHISE OPPORTUNITY */}
         <FranchiseSection />
 
+        {/* Chocolate Drip Divider with Brown & Aqua Teal Colorway */}
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#06B6D4"
+          showDrops={true}
+          accentType="teal"
+        />
+
         {/* 09 — OUTLETS & MAP */}
         <OutletsSection />
+
+        {/* Chocolate Drip Divider with Brown & Electric Fuchsia Colorway */}
+        <ChocolateDripDivider
+          fillColor="#4A2C2A"
+          secondaryFillColor="#D946EF"
+          showDrops={true}
+          accentType="fuchsia"
+        />
 
         {/* 10 — SOCIAL PROOF & REELS */}
         <SocialHubSection />
@@ -260,6 +306,14 @@ export default function App() {
           handleAddShowStopperToCart(product);
           setIsCartOpen(true);
         }}
+      />
+
+      {/* Chocolate Drip Divider with Cocoa & Fresh Mint Colorway */}
+      <ChocolateDripDivider
+        fillColor="#3B2220"
+        secondaryFillColor="#2DD4BF"
+        showDrops={true}
+        accentType="mint"
       />
 
       {/* 11 — FOOTER */}

@@ -22,7 +22,7 @@ export const OutletsSection: React.FC = () => {
   const activeOutlet = OUTLETS.find((o) => o.id === activeOutletId) || OUTLETS[0];
 
   return (
-    <section id="outlets" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-t border-[#4A2C2A]/10">
+    <section id="outlets" className="py-24 bg-[#FAF5EE] relative overflow-hidden">
       
       {/* Decorative Pastel Glows */}
       <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-tr from-[#FEF3C7]/30 to-[#FCE7F3]/30 rounded-full blur-3xl pointer-events-none" />

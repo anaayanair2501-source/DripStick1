@@ -54,7 +54,7 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
   };
 
   return (
-    <section id="showstoppers" className="py-20 bg-[#FAF5EE] border-t border-b border-[#4A2C2A]/10 relative overflow-hidden">
+    <section id="showstoppers" className="py-20 bg-[#FAF5EE] border-b border-[#4A2C2A]/10 relative overflow-hidden">
       
       {/* Ambient background pastel glow */}
       <div className="absolute top-10 left-1/4 w-[600px] h-[350px] bg-gradient-to-r from-[#FCE7F3]/40 via-[#FEF3C7]/40 to-[#DCFCE7]/40 rounded-full blur-3xl pointer-events-none" />

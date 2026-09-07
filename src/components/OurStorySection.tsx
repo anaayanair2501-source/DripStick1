@@ -7,7 +7,7 @@ export const OurStorySection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'craft' | 'dip' | 'vibe'>('craft');
 
   return (
-    <section id="story" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-t border-b border-[#4A2C2A]/10">
+    <section id="story" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-b border-[#4A2C2A]/10">
       {/* Decorative Pastel Ambient Lights */}
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-gradient-to-br from-[#FFE4E6]/40 to-[#FEF3C7]/40 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-gradient-to-tl from-[#DCFCE7]/40 to-[#E0F2FE]/40 rounded-full blur-3xl pointer-events-none" />

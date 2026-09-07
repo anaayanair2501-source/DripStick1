@@ -46,7 +46,7 @@ export const CateringSection: React.FC = () => {
   };
 
   return (
-    <section id="catering" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-t border-[#4A2C2A]/10">
+    <section id="catering" className="py-24 bg-[#FAF5EE] relative overflow-hidden">
       
       {/* Decorative Pastel Glows */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-bl from-[#FFE4E6]/30 to-[#FEF3C7]/30 rounded-full blur-3xl pointer-events-none" />

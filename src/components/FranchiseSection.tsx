@@ -41,7 +41,7 @@ export const FranchiseSection: React.FC = () => {
   };
 
   return (
-    <section id="opportunity" className="py-24 bg-[#FAF5EE] relative overflow-hidden border-t border-[#4A2C2A]/10">
+    <section id="opportunity" className="py-24 bg-[#FAF5EE] relative overflow-hidden">
       {/* Decorative Pastel Ambient Glows */}
       <div className="absolute top-10 left-10 w-96 h-96 bg-gradient-to-br from-[#FED7AA]/30 to-[#FCE7F3]/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-tl from-[#EDE9FE]/30 to-[#DCFCE7]/30 rounded-full blur-3xl pointer-events-none" />

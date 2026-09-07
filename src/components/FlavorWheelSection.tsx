@@ -68,7 +68,7 @@ export const FlavorWheelSection: React.FC<FlavorWheelSectionProps> = ({ onAddPro
   };
 
   return (
-    <section id="flavor-wheel" className="py-20 bg-gradient-to-b from-[#FAF5EE] via-[#FFF1F2] to-[#FAF5EE] relative overflow-hidden border-t-2 border-b-2 border-[#4A2C2A]/10">
+    <section id="flavor-wheel" className="py-20 bg-gradient-to-b from-[#FAF5EE] via-[#FFF1F2] to-[#FAF5EE] relative overflow-hidden border-b-2 border-[#4A2C2A]/10">
       
       {/* Decorative Pastel Ambient Circles */}
       <div className="absolute top-10 left-10 w-80 h-80 bg-[#FEF3C7]/50 rounded-full blur-3xl pointer-events-none" />

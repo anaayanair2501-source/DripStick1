@@ -17,7 +17,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   };
 
   return (
-    <footer className="bg-[#3B2220] text-[#FDF8F2] pt-20 pb-12 relative overflow-hidden border-t-4 border-[#F472B6]">
+    <footer className="bg-[#3B2220] text-[#FDF8F2] pt-14 pb-12 relative overflow-hidden">
       {/* Decorative Pastel Glows */}
       <div className="absolute top-0 right-10 w-96 h-96 bg-[#F472B6]/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-10 w-96 h-96 bg-[#FED7AA]/15 rounded-full blur-3xl pointer-events-none" />

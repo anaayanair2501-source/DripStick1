@@ -5,8 +5,9 @@ interface ChocolateDripDividerProps {
   secondaryFillColor?: string;
   inverted?: boolean;
   showDrops?: boolean;
-  accentType?: 'chocolate' | 'strawberry' | 'caramel' | 'pistachio' | 'blue';
+  accentType?: 'chocolate' | 'strawberry' | 'caramel' | 'pistachio' | 'blue' | 'purple' | 'orange' | 'rose' | 'yellow' | 'teal' | 'fuchsia' | 'mint' | string;
   customDropColor?: string;
+  className?: string;
 }
 
 export const ChocolateDripDivider: React.FC<ChocolateDripDividerProps> = ({
@@ -16,6 +17,7 @@ export const ChocolateDripDivider: React.FC<ChocolateDripDividerProps> = ({
   showDrops = true,
   accentType = 'chocolate',
   customDropColor,
+  className = '',
 }) => {
   const dropColors: Record<string, string> = {
     chocolate: '#4A2C2A',
@@ -23,19 +25,26 @@ export const ChocolateDripDivider: React.FC<ChocolateDripDividerProps> = ({
     caramel: '#F59E0B',
     pistachio: '#10B981',
     blue: '#38BDF8',
+    purple: '#A855F7',
+    orange: '#FB923C',
+    rose: '#F43F5E',
+    yellow: '#FACC15',
+    teal: '#06B6D4',
+    fuchsia: '#D946EF',
+    mint: '#2DD4BF',
   };
 
   const dropColor = customDropColor || dropColors[accentType] || secondaryFillColor || fillColor;
 
   return (
-    <div className={`relative w-full overflow-hidden leading-none z-10 ${inverted ? 'rotate-180 -mt-1' : '-mb-1'}`}>
+    <div className={`relative w-full overflow-hidden leading-none z-10 border-t border-[#4A2C2A]/15 ${inverted ? 'rotate-180' : ''} ${className}`}>
       
       {/* Background secondary pastel shadow wave */}
       {secondaryFillColor && (
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
-          className="absolute inset-0 block w-full h-12 sm:h-16 lg:h-20 opacity-40 translate-y-1.5"
+          className="absolute inset-0 block w-full h-12 sm:h-16 lg:h-20 opacity-40"
         >
           <path
             d="M0,0 L0,45 C50,45 70,105 100,105 C130,105 150,35 190,35 C230,35 250,115 280,115 C310,115 330,50 370,50 C410,50 430,85 460,85 C490,85 510,25 550,25 C590,25 610,110 650,110 C690,110 710,40 750,40 C790,40 820,95 850,95 C880,95 900,30 940,30 C980,30 1000,120 1040,120 C1080,120 1110,55 1150,55 C1180,55 1195,80 1200,80 L1200,0 Z"

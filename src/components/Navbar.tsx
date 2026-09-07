@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Menu as MenuIcon, X, Sparkles, Volume2, VolumeX, MapPin, Copy, Check, Gift } from 'lucide-react';
 import { soundEffects } from '../utils/soundEffects';
+import { ChocolateDripDivider } from './ChocolateDripDivider';
 
 interface NavbarProps {
   cartCount: number;
@@ -274,6 +275,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
         )}
+
+        {/* Top Chocolate Drip Divider flush with navbar bottom border */}
+        <div
+          className={`absolute top-full left-0 right-0 pointer-events-none z-10 transition-all duration-300 ${
+            isScrolled ? 'opacity-0 -translate-y-2 pointer-events-none' : 'opacity-100 translate-y-0'
+          }`}
+        >
+          <ChocolateDripDivider
+            fillColor="#4A2C2A"
+            secondaryFillColor="#38BDF8"
+            showDrops={true}
+            accentType="blue"
+            className="border-t-0"
+          />
+        </div>
       </header>
 
       {/* Floating Bottom Persistent CTA for Mobile */}
