@@ -18,6 +18,75 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
   const [isZoomed, setIsZoomed] = useState<boolean>(false);
 
+  // Dynamically resolve realistic preview image based on all active choices
+  const { previewImage, styleLabel } = React.useMemo(() => {
+    // 1. Specific Sauce Dip matches
+    if (selectedSauce.id === 'sauce-white-velvet') {
+      return {
+        previewImage: ASSETS.waffleWhiteDip,
+        styleLabel: 'Silky White Velvet Couverture',
+      };
+    }
+    if (selectedSauce.id === 'sauce-dark-choco') {
+      return {
+        previewImage: ASSETS.waffleDarkDip,
+        styleLabel: '70% Antwerp Dark Couverture',
+      };
+    }
+    if (selectedSauce.id === 'sauce-bueno') {
+      return {
+        previewImage: ASSETS.waffleBueno,
+        styleLabel: 'Hazelnut Bueno Praline Cream',
+      };
+    }
+    if (selectedSauce.id === 'sauce-speculoos-dip') {
+      return {
+        previewImage: ASSETS.waffleBiscoff,
+        styleLabel: 'Lotus Biscoff Spiced Lava',
+      };
+    }
+
+    // 2. Base selection overrides if base is Dark Cocoa or Speculoos
+    if (selectedBase.id === 'base-dark') {
+      return {
+        previewImage: ASSETS.waffleDarkDip,
+        styleLabel: 'Belgian Dark Cocoa Cone & Drip',
+      };
+    }
+    if (selectedBase.id === 'base-speculoos' && !selectedToppings.some((t) => t.id === 'top-oreo')) {
+      return {
+        previewImage: ASSETS.waffleBiscoff,
+        styleLabel: 'Speculoos Spiced Crust & Dip',
+      };
+    }
+
+    // 3. Topping overrides for milk chocolate or nutella
+    if (selectedToppings.some((t) => t.id === 'top-oreo')) {
+      return {
+        previewImage: ASSETS.waffleOreo,
+        styleLabel: 'Oreo Crushed Midnight Drip',
+      };
+    }
+    if (selectedToppings.some((t) => t.id === 'top-biscoff')) {
+      return {
+        previewImage: ASSETS.waffleBiscoff,
+        styleLabel: 'Lotus Speculoos Crunch & Drip',
+      };
+    }
+    if (selectedToppings.some((t) => t.id === 'top-kitkat')) {
+      return {
+        previewImage: ASSETS.waffleBueno,
+        styleLabel: 'Wafer Crunch & Milk Chocolate',
+      };
+    }
+
+    // 4. Default / direct image
+    return {
+      previewImage: selectedSauce.image || selectedBase.image || ASSETS.realisticDripstick,
+      styleLabel: `${selectedSauce.name} • ${selectedBase.name}`,
+    };
+  }, [selectedBase, selectedSauce, selectedToppings]);
+
   // Price Calculation
   const toppingsPrice = selectedToppings.reduce((sum, item) => sum + item.price, 0);
   const drizzlePrice = selectedDrizzle ? selectedDrizzle.price : 0;
@@ -155,17 +224,42 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                             : 'bg-[#F2E5D6] border-[#CBB3A0] hover:border-[#9C7F6A] hover:bg-[#EBDBC9]'
                         }`}
                       >
-                        <div className="flex items-start justify-between mb-2">
-                          <span className="text-3xl">{base.icon}</span>
+                        <div className="flex items-start justify-between mb-2.5">
+                          <div className="flex items-center gap-2.5">
+                            {base.image ? (
+                              <img
+                                src={base.image}
+                                alt={base.name}
+                                referrerPolicy="no-referrer"
+                                className="w-11 h-11 rounded-xl object-cover border border-[#BAA18D] shadow-xs"
+                              />
+                            ) : (
+                              <span className="text-3xl">{base.icon}</span>
+                            )}
+                            <div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-sm">{base.icon}</span>
+                                <h4 className="font-bold text-sm text-[#361A17]">{base.name}</h4>
+                              </div>
+                              {base.badge && (
+                                <span className="inline-block text-[9px] font-black uppercase text-[#8C3A00] bg-[#F5DEB3] px-1.5 py-0.5 rounded-md mt-0.5 border border-[#BAA18D]/50">
+                                  {base.badge}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                           <span className="font-display font-black text-base text-[#361A17]">
                             ₹{base.price}
                           </span>
                         </div>
-                        <h4 className="font-bold text-sm text-[#361A17] mb-1">{base.name}</h4>
                         <p className="text-xs text-[#361A17]/80 leading-relaxed mb-3">{base.description}</p>
                         <div className="flex items-center justify-between pt-2 border-t border-[#BAA18D]/70 text-[10px] text-[#361A17]/80">
                           <span>~{base.calories} kcal</span>
-                          {isSelected && <span className="font-bold text-[#6E3C2B] flex items-center gap-1"><Check className="w-3 h-3" /> Selected</span>}
+                          {isSelected ? (
+                            <span className="font-bold text-[#6E3C2B] flex items-center gap-1"><Check className="w-3 h-3" /> Selected</span>
+                          ) : (
+                            <span className="text-[#361A17]/70 font-semibold group-hover:text-[#361A17]">Select Base →</span>
+                          )}
                         </div>
                       </div>
                     );
@@ -195,7 +289,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                     <h3 className="font-brand font-black text-2xl text-[#361A17]">
                       Step 2: Choose Warm Belgian Couverture Dip
                     </h3>
-                    <p className="text-xs text-[#361A17]/80 mt-0.5">Kept at 45°C in continuous flowing fondue pots</p>
+                    <p className="text-xs text-[#361A17]/80 mt-0.5">Kept at 45°C in continuous flowing fondue pots • Live preview updates instantly</p>
                   </div>
                   <span className="text-xs font-bold text-[#643419] bg-[#D7C0A9] px-3.5 py-1 rounded-full border border-[#BAA18D]">
                     Step 2 of 4
@@ -219,10 +313,29 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                             : 'bg-[#F2E5D6] border-[#CBB3A0] hover:border-[#9C7F6A] hover:bg-[#EBDBC9]'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <span className="w-5 h-5 rounded-full border border-black/20 shadow-xs" style={{ backgroundColor: sauce.color }} />
-                            <h4 className="font-bold text-sm text-[#361A17]">{sauce.name}</h4>
+                        <div className="flex items-start justify-between mb-2.5">
+                          <div className="flex items-center gap-2.5">
+                            {sauce.image ? (
+                              <img
+                                src={sauce.image}
+                                alt={sauce.name}
+                                referrerPolicy="no-referrer"
+                                className="w-11 h-11 rounded-xl object-cover border border-[#BAA18D] shadow-xs shrink-0"
+                              />
+                            ) : (
+                              <span className="w-6 h-6 rounded-full border border-black/20 shadow-xs shrink-0" style={{ backgroundColor: sauce.color }} />
+                            )}
+                            <div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full border border-black/20 shrink-0" style={{ backgroundColor: sauce.color }} />
+                                <h4 className="font-bold text-sm text-[#361A17]">{sauce.name}</h4>
+                              </div>
+                              {sauce.badge && (
+                                <span className="inline-block text-[9px] font-black uppercase text-[#8C3A00] bg-[#F5DEB3] px-1.5 py-0.5 rounded-md mt-0.5 border border-[#BAA18D]/50">
+                                  {sauce.badge}
+                                </span>
+                              )}
+                            </div>
                           </div>
                           <span className="font-display font-black text-base text-[#361A17]">
                             ₹{sauce.price}
@@ -230,8 +343,12 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                         </div>
                         <p className="text-xs text-[#361A17]/80 leading-relaxed mb-3">{sauce.description}</p>
                         <div className="flex items-center justify-between pt-2 border-t border-[#BAA18D]/70 text-[10px] text-[#361A17]/80">
-                          <span>{sauce.cocoaPercent} Cocoa • ~{sauce.calories} kcal</span>
-                          {isSelected && <span className="font-bold text-[#6E3C2B] flex items-center gap-1"><Check className="w-3 h-3" /> Selected</span>}
+                          <span>{sauce.cocoaPercent ? `${sauce.cocoaPercent} Cocoa • ` : ''}~{sauce.calories} kcal</span>
+                          {isSelected ? (
+                            <span className="font-bold text-[#6E3C2B] flex items-center gap-1"><Check className="w-3 h-3" /> Selected</span>
+                          ) : (
+                            <span className="text-[#361A17]/70 font-semibold group-hover:text-[#361A17]">Select Dip →</span>
+                          )}
                         </div>
                       </div>
                     );
@@ -419,17 +536,18 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
 
               {/* Dynamic Realistic DripStick Showcase */}
               <div className="relative w-full h-84 sm:h-96 rounded-2xl overflow-hidden border-2 border-[#BAA18D] shadow-inner group bg-gradient-to-b from-[#FFFDF9] to-[#E9D9C8]">
-                {/* Photorealistic DripStick Master Image */}
+                {/* Photorealistic DripStick Master Image with key to animate smoothly on option change */}
                 <img
-                  src={ASSETS.realisticDripstick}
-                  alt={`Custom Artisanal DripStick - ${selectedBase.name} dipped in ${selectedSauce.name}`}
+                  key={previewImage}
+                  src={previewImage}
+                  alt={`Custom Artisanal DripStick - ${styleLabel}`}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108 animate-fade-in"
                 />
 
                 {/* Dynamic Warm Ambient Couverture Glaze Layer */}
                 <div
-                  className="absolute inset-0 pointer-events-none transition-all duration-700 mix-blend-color opacity-35"
+                  className="absolute inset-0 pointer-events-none transition-all duration-700 mix-blend-color opacity-30"
                   style={{
                     background: `radial-gradient(circle at 50% 35%, ${selectedSauce.color || '#4A2C2A'} 0%, transparent 75%)`,
                   }}
@@ -437,7 +555,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
 
                 {/* Subdued Glaze Highlights */}
                 <div
-                  className="absolute top-0 inset-x-0 h-48 pointer-events-none transition-all duration-700 mix-blend-overlay opacity-25"
+                  className="absolute top-0 inset-x-0 h-48 pointer-events-none transition-all duration-700 mix-blend-overlay opacity-20"
                   style={{ backgroundColor: selectedSauce.color }}
                 />
 
@@ -450,7 +568,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
                   <div className="flex items-center gap-1.5 bg-[#361A17]/85 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/20 shadow-md">
                     <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping inline-block" />
-                    <span>Freshly Dipped • 45°C Couverture</span>
+                    <span>Live Visual • {selectedSauce.name.split(' ')[0]}</span>
                   </div>
                   <button
                     type="button"
@@ -460,6 +578,13 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                   >
                     <ZoomIn className="w-3.5 h-3.5" />
                   </button>
+                </div>
+
+                {/* Active Style Ribbon */}
+                <div className="absolute top-11 left-3 pointer-events-none">
+                  <span className="bg-[#FAF5EE]/95 backdrop-blur-md text-[#361A17] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs">
+                    {styleLabel}
+                  </span>
                 </div>
 
                 {/* Live Floating Ingredient Tags */}
@@ -480,13 +605,63 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
 
                 {/* Selected Toppings Ribbon on Top Right */}
                 {selectedToppings.length > 0 && (
-                  <div className="absolute top-12 right-3 pointer-events-none flex flex-col items-end gap-1">
+                  <div className="absolute top-11 right-3 pointer-events-none flex flex-col items-end gap-1">
                     <div className="bg-[#FAF5EE]/90 backdrop-blur-md text-[#361A17] text-[9px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs flex items-center gap-1">
                       <span>{selectedToppings.map((t) => t.icon).join(' ')}</span>
                       <span>{selectedToppings.length} {selectedToppings.length === 1 ? 'Topping' : 'Toppings'}</span>
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Quick Flavor Style Switcher to preview different images instantly */}
+              <div className="mt-3 pt-3 border-t border-[#BAA18D]/70">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-[#643419]">
+                    Live Couverture Style Switcher
+                  </span>
+                  <span className="text-[9px] text-[#361A17]/70 font-semibold">
+                    6 Options
+                  </span>
+                </div>
+                <div className="grid grid-cols-6 gap-1.5">
+                  {SAUCE_DIPS.map((sauce) => {
+                    const isSauceActive = selectedSauce.id === sauce.id;
+                    return (
+                      <button
+                        key={sauce.id}
+                        type="button"
+                        onClick={() => {
+                          soundEffects.playDip();
+                          setSelectedSauce(sauce);
+                        }}
+                        className={`flex flex-col items-center p-1 rounded-xl border transition-all text-center ${
+                          isSauceActive
+                            ? 'bg-[#DCBEA5] border-[#6E3C2B] ring-2 ring-[#6E3C2B]/40 scale-105 shadow-xs'
+                            : 'bg-[#F2E5D6] border-[#BAA18D] hover:bg-[#EBDBC9]'
+                        }`}
+                        title={sauce.name}
+                      >
+                        {sauce.image ? (
+                          <img
+                            src={sauce.image}
+                            alt={sauce.name}
+                            referrerPolicy="no-referrer"
+                            className="w-8 h-8 rounded-lg object-cover mb-0.5 border border-black/15 shadow-2xs"
+                          />
+                        ) : (
+                          <span
+                            className="w-8 h-8 rounded-lg mb-0.5 border border-black/15"
+                            style={{ backgroundColor: sauce.color }}
+                          />
+                        )}
+                        <span className="text-[8px] font-black text-[#361A17] truncate w-full leading-tight">
+                          {sauce.name.split(' ')[0]}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Composition Summary Checklist */}
@@ -588,20 +763,21 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
 
             <div className="mt-4 relative rounded-2xl overflow-hidden border border-[#BAA18D] shadow-inner aspect-square max-h-[440px] mx-auto bg-[#E9D9C8]">
               <img
-                src={ASSETS.realisticDripstick}
+                key={previewImage}
+                src={previewImage}
                 alt="Realistic Artisanal DripStick Macro"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center animate-fade-in"
               />
               <div
-                className="absolute inset-0 pointer-events-none mix-blend-color opacity-35"
+                className="absolute inset-0 pointer-events-none mix-blend-color opacity-30"
                 style={{
                   background: `radial-gradient(circle at 50% 35%, ${selectedSauce.color || '#4A2C2A'} 0%, transparent 75%)`,
                 }}
               />
               <div className="absolute bottom-3 inset-x-3 flex items-center justify-between pointer-events-none">
                 <div className="bg-[#361A17]/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[11px] font-bold border border-white/20 shadow-md">
-                  100% Pure Belgian Couverture • Pearl Sugar Crust
+                  {styleLabel} • 100% Belgian Couverture
                 </div>
                 <div className="bg-[#FAF5EE]/95 text-[#361A17] px-2.5 py-1 rounded-full text-[10px] font-black border border-[#BAA18D]">
                   45°C Warm

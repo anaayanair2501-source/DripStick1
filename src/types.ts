@@ -8,6 +8,7 @@ export interface WaffleBase {
   texture?: string;
   icon?: string;
   calories?: number;
+  image?: string;
 }
 
 export interface SauceDip {
@@ -22,6 +23,7 @@ export interface SauceDip {
   cocoaPercent?: string;
   badge?: string;
   calories?: number;
+  image?: string;
 }
 
 export interface Topping {

@@ -19,6 +19,8 @@ import waffleBiscoffImg from '../assets/images/waffle_biscoff_crush_178704315866
 import eventLifestyleImg from '../assets/images/dripstick_event_lifestyle_1787043175701.jpg';
 import coneWaffleImg from '../assets/images/cone_waffle_dip_1788099942308.jpg';
 import realisticDripstickImg from '../assets/images/realistic_dripstick_1788853805636.jpg';
+import waffleDarkDipImg from '../assets/images/waffle_dark_dip_1788854112130.jpg';
+import waffleWhiteDipImg from '../assets/images/waffle_white_dip_1788854128466.jpg';
 
 export const ASSETS = {
   heroWaffle: heroWaffleImg,
@@ -28,6 +30,8 @@ export const ASSETS = {
   eventLifestyle: eventLifestyleImg,
   storyCraft: coneWaffleImg,
   realisticDripstick: realisticDripstickImg,
+  waffleDarkDip: waffleDarkDipImg,
+  waffleWhiteDip: waffleWhiteDipImg,
 };
 
 export const WAFFLE_BASES: WaffleBase[] = [
@@ -41,6 +45,7 @@ export const WAFFLE_BASES: WaffleBase[] = [
     color: '#F5DEB3',
     badge: 'Signature',
     texture: 'Crisp outside, cloud-soft interior',
+    image: ASSETS.realisticDripstick,
   },
   {
     id: 'base-dark',
@@ -52,6 +57,7 @@ export const WAFFLE_BASES: WaffleBase[] = [
     color: '#3D2523',
     badge: 'Chocoholic',
     texture: 'Rich roasted chocolate aroma',
+    image: ASSETS.waffleDarkDip,
   },
   {
     id: 'base-cinnamon',
@@ -62,6 +68,7 @@ export const WAFFLE_BASES: WaffleBase[] = [
     icon: '✨',
     color: '#D2916C',
     texture: 'Spiced crispy caramelized sugar crust',
+    image: ASSETS.heroWaffle,
   },
   {
     id: 'base-speculoos',
@@ -73,6 +80,7 @@ export const WAFFLE_BASES: WaffleBase[] = [
     color: '#C4A484',
     badge: 'Chef Pick',
     texture: 'Warm spiced caramelized crunch',
+    image: ASSETS.waffleBiscoff,
   },
 ];
 
@@ -87,6 +95,7 @@ export const SAUCE_DIPS: SauceDip[] = [
     colorHex: '#6F4125',
     cocoaPercent: '38%',
     badge: '#1 Favorite',
+    image: ASSETS.realisticDripstick,
   },
   {
     id: 'sauce-dark-choco',
@@ -98,6 +107,7 @@ export const SAUCE_DIPS: SauceDip[] = [
     colorHex: '#361E1C',
     cocoaPercent: '70%',
     badge: 'Pure Cocoa',
+    image: ASSETS.waffleDarkDip,
   },
   {
     id: 'sauce-white-velvet',
@@ -108,6 +118,7 @@ export const SAUCE_DIPS: SauceDip[] = [
     color: '#F5EEDB',
     colorHex: '#F5EEDB',
     cocoaPercent: '32%',
+    image: ASSETS.waffleWhiteDip,
   },
   {
     id: 'sauce-bueno',
@@ -119,6 +130,7 @@ export const SAUCE_DIPS: SauceDip[] = [
     colorHex: '#D2916C',
     cocoaPercent: '42%',
     badge: 'Viral Sensation',
+    image: ASSETS.waffleBueno,
   },
   {
     id: 'sauce-nutella',
@@ -129,6 +141,7 @@ export const SAUCE_DIPS: SauceDip[] = [
     color: '#4A2C2A',
     colorHex: '#4A2C2A',
     cocoaPercent: '35%',
+    image: ASSETS.realisticDripstick,
   },
   {
     id: 'sauce-speculoos-dip',
@@ -139,6 +152,7 @@ export const SAUCE_DIPS: SauceDip[] = [
     color: '#C4A484',
     colorHex: '#C4A484',
     cocoaPercent: 'N/A',
+    image: ASSETS.waffleBiscoff,
   },
 ];
 
