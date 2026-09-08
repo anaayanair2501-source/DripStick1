@@ -220,7 +220,6 @@ export default function App() {
         {/* 05 — SHOW STOPPERS: BEST SELLERS (CASSETTE BOXES) */}
         <ShowStoppersSection
           onAddShowStopperToCart={handleAddShowStopperToCart}
-          onCustomizeShowStopper={() => handleNavigate('menu')}
         />
 
         {/* 06 — THE DRIP EXPERIENCE & SCIENCE */}
