@@ -223,14 +223,6 @@ export default function App() {
           onCustomizeShowStopper={() => handleNavigate('menu')}
         />
 
-        {/* Chocolate Drip Divider with Brown & Coral Orange Colorway */}
-        <ChocolateDripDivider
-          fillColor="#4A2C2A"
-          secondaryFillColor="#FB923C"
-          showDrops={true}
-          accentType="orange"
-        />
-
         {/* 06 — THE DRIP EXPERIENCE & SCIENCE */}
         <TheDripExperienceSection />
 
