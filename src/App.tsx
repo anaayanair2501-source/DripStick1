@@ -171,6 +171,7 @@ export default function App() {
           onOrderNow={() => setIsCartOpen(true)}
           onExploreMenu={() => handleNavigate('menu')}
           onBuildCustom={() => handleNavigate('menu')}
+          onAddProductToCart={handleAddShowStopperToCart}
         />
 
         {/* Chocolate Drip Divider with Brown & Pink Colorway */}
