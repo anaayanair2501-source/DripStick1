@@ -18,6 +18,7 @@ import waffleBuenoImg from '../assets/images/waffle_bueno_bliss_1787043146127.jp
 import waffleBiscoffImg from '../assets/images/waffle_biscoff_crush_1787043158667.jpg';
 import eventLifestyleImg from '../assets/images/dripstick_event_lifestyle_1787043175701.jpg';
 import coneWaffleImg from '../assets/images/cone_waffle_dip_1788099942308.jpg';
+import realisticDripstickImg from '../assets/images/realistic_dripstick_1788853805636.jpg';
 
 export const ASSETS = {
   heroWaffle: heroWaffleImg,
@@ -26,6 +27,7 @@ export const ASSETS = {
   waffleBiscoff: waffleBiscoffImg,
   eventLifestyle: eventLifestyleImg,
   storyCraft: coneWaffleImg,
+  realisticDripstick: realisticDripstickImg,
 };
 
 export const WAFFLE_BASES: WaffleBase[] = [

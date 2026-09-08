@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Sparkles, Check, Plus, RefreshCw, ShoppingBag, Flame, ChevronRight, Info, Heart, Wand2 } from 'lucide-react';
-import { WAFFLE_BASES, SAUCE_DIPS, TOPPINGS, DRIZZLE_EXTRAS } from '../data/mockData';
+import { Sparkles, Check, Plus, RefreshCw, ShoppingBag, Flame, ChevronRight, Info, Heart, Wand2, ZoomIn, Eye, X } from 'lucide-react';
+import { WAFFLE_BASES, SAUCE_DIPS, TOPPINGS, DRIZZLE_EXTRAS, ASSETS } from '../data/mockData';
 import { CustomDripStick, WaffleBase, SauceDip, Topping, DrizzleExtra } from '../types';
 import { soundEffects } from '../utils/soundEffects';
 
@@ -16,6 +16,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
   const [specialNote, setSpecialNote] = useState<string>('');
   const [isSuccessModal, setIsSuccessModal] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
+  const [isZoomed, setIsZoomed] = useState<boolean>(false);
 
   // Price Calculation
   const toppingsPrice = selectedToppings.reduce((sum, item) => sum + item.price, 0);
@@ -416,71 +417,76 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
                 </button>
               </div>
 
-              {/* Dynamic Animated Waffle Canvas with Warm Brown Tone */}
-              <div className="relative w-full h-80 rounded-2xl bg-gradient-to-b from-[#F2E5D6] to-[#DCBEA5]/70 overflow-hidden border border-[#BAA18D] flex flex-col items-center justify-center p-4 shadow-inner">
-                
-                {/* Waffle Cone Body with texture */}
-                <div
-                  className="relative w-28 sm:w-32 h-56 rounded-t-full rounded-b-xl border-2 border-[#361A17]/25 shadow-xl overflow-hidden flex flex-col items-center transition-all duration-500 hover:scale-105"
-                  style={{
-                    backgroundColor:
-                      selectedBase.id === 'base-dark'
-                        ? '#3D2523'
-                        : selectedBase.id === 'base-speculoos'
-                        ? '#D2916C'
-                        : '#F5DEB3',
-                  }}
-                >
-                  {/* Waffle Grid Lines Texture */}
-                  <div className="w-full h-full waffle-texture" />
+              {/* Dynamic Realistic DripStick Showcase */}
+              <div className="relative w-full h-84 sm:h-96 rounded-2xl overflow-hidden border-2 border-[#BAA18D] shadow-inner group bg-gradient-to-b from-[#FFFDF9] to-[#E9D9C8]">
+                {/* Photorealistic DripStick Master Image */}
+                <img
+                  src={ASSETS.realisticDripstick}
+                  alt={`Custom Artisanal DripStick - ${selectedBase.name} dipped in ${selectedSauce.name}`}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
+                />
 
-                  {/* Molten Chocolate Dip Coating on Top Half */}
-                  <div
-                    className="absolute top-0 left-0 right-0 h-32 rounded-b-[40%] shadow-md transition-all duration-500 overflow-hidden"
-                    style={{ backgroundColor: selectedSauce.color }}
+                {/* Dynamic Warm Ambient Couverture Glaze Layer */}
+                <div
+                  className="absolute inset-0 pointer-events-none transition-all duration-700 mix-blend-color opacity-35"
+                  style={{
+                    background: `radial-gradient(circle at 50% 35%, ${selectedSauce.color || '#4A2C2A'} 0%, transparent 75%)`,
+                  }}
+                />
+
+                {/* Subdued Glaze Highlights */}
+                <div
+                  className="absolute top-0 inset-x-0 h-48 pointer-events-none transition-all duration-700 mix-blend-overlay opacity-25"
+                  style={{ backgroundColor: selectedSauce.color }}
+                />
+
+                {/* Subtle Base Tint for Belgian Dark Cocoa Base */}
+                {selectedBase.id === 'base-dark' && (
+                  <div className="absolute bottom-0 inset-x-0 h-40 pointer-events-none bg-gradient-to-t from-[#251311]/50 to-transparent mix-blend-multiply" />
+                )}
+
+                {/* Top Badge: Freshly Dipped & Temperature Tag */}
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                  <div className="flex items-center gap-1.5 bg-[#361A17]/85 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/20 shadow-md">
+                    <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping inline-block" />
+                    <span>Freshly Dipped • 45°C Couverture</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsZoomed(true)}
+                    className="pointer-events-auto bg-[#361A17]/80 hover:bg-[#361A17] text-white p-1.5 rounded-full border border-white/20 shadow-md transition-all hover:scale-110 active:scale-95 flex items-center justify-center"
+                    title="Zoom in on realistic macro details"
                   >
-                    {/* Animated Droplet on bottom edge */}
-                    <div
-                      className="absolute bottom-1 left-1/3 w-3 h-6 rounded-b-full shadow-md animate-drip"
+                    <ZoomIn className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* Live Floating Ingredient Tags */}
+                <div className="absolute bottom-3 inset-x-3 flex flex-wrap items-center justify-between gap-1.5 pointer-events-none">
+                  <div className="bg-[#361A17]/90 backdrop-blur-md text-white px-3 py-1 rounded-xl text-[11px] font-extrabold border border-white/15 shadow-lg flex items-center gap-1.5">
+                    <span className="text-sm">{selectedBase.icon || '🧇'}</span>
+                    <span>{selectedBase.name}</span>
+                  </div>
+
+                  <div className="bg-[#FAF5EE]/95 backdrop-blur-md text-[#361A17] px-3 py-1 rounded-xl text-[11px] font-black border border-[#BAA18D] shadow-lg flex items-center gap-1.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full border border-black/20"
                       style={{ backgroundColor: selectedSauce.color }}
                     />
-                    <div
-                      className="absolute bottom-2 right-1/4 w-2 h-4 rounded-b-full shadow-md animate-drip"
-                      style={{ backgroundColor: selectedSauce.color, animationDelay: '0.5s' }}
-                    />
+                    <span className="truncate max-w-[130px]">{selectedSauce.name}</span>
                   </div>
+                </div>
 
-                  {/* Toppings Displayed on the Dip */}
-                  <div className="absolute top-4 inset-x-2 flex flex-wrap justify-center gap-1 z-10 pointer-events-none">
-                    {selectedToppings.map((t) => (
-                      <span key={t.id} className="text-base drop-shadow animate-bounce-cute">
-                        {t.icon}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Finishing Drizzle Line */}
-                  {selectedDrizzle && (
-                    <div className="absolute top-3 inset-x-1 h-20 pointer-events-none z-10 opacity-85">
-                      <svg viewBox="0 0 100 80" className="w-full h-full">
-                        <path
-                          d="M10,15 Q30,35 50,15 Q70,35 90,15 Q50,45 20,60 Q60,75 85,55"
-                          fill="none"
-                          stroke={selectedDrizzle.color}
-                          strokeWidth="4.5"
-                          strokeLinecap="round"
-                        />
-                      </svg>
+                {/* Selected Toppings Ribbon on Top Right */}
+                {selectedToppings.length > 0 && (
+                  <div className="absolute top-12 right-3 pointer-events-none flex flex-col items-end gap-1">
+                    <div className="bg-[#FAF5EE]/90 backdrop-blur-md text-[#361A17] text-[9px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs flex items-center gap-1">
+                      <span>{selectedToppings.map((t) => t.icon).join(' ')}</span>
+                      <span>{selectedToppings.length} {selectedToppings.length === 1 ? 'Topping' : 'Toppings'}</span>
                     </div>
-                  )}
-
-                  {/* Wooden Stick */}
-                  <div className="absolute -bottom-10 w-3.5 h-20 bg-[#D2916C] rounded-full border border-[#4A2C2A]/20 shadow-md" />
-                </div>
-
-                <div className="absolute bottom-2 left-3 text-[10px] text-[#361A17] font-black bg-[#F2E5D6]/95 px-2.5 py-0.5 rounded-full border border-[#BAA18D]">
-                  {selectedBase.name} • {selectedSauce.name}
-                </div>
+                  </div>
+                )}
               </div>
 
               {/* Composition Summary Checklist */}
@@ -548,6 +554,70 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
           <div>
             <p className="font-black text-xs">Custom DripStick Added to Bag!</p>
             <p className="text-[10px] text-[#FAF5EE]/80">₹{totalPrice} • View in your cart</p>
+          </div>
+        </div>
+      )}
+
+      {/* Realistic Macro Detail Inspection Modal */}
+      {isZoomed && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={() => setIsZoomed(false)}
+        >
+          <div
+            className="relative max-w-xl w-full bg-[#FAF5EE] rounded-3xl overflow-hidden border-2 border-[#BAA18D] shadow-2xl animate-fade-in p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-[#BAA18D]">
+              <div>
+                <h4 className="font-brand font-black text-xl text-[#361A17]">
+                  Artisanal Macro Food Details
+                </h4>
+                <p className="text-xs text-[#361A17]/80 mt-0.5">
+                  {selectedBase.name} • {selectedSauce.name} • {selectedToppings.map((t) => t.name).join(', ') || 'Pure Couverture'}
+                </p>
+              </div>
+              <button
+                onClick={() => setIsZoomed(false)}
+                className="w-8 h-8 rounded-full bg-[#E5D3C0] hover:bg-[#D5BFA9] text-[#361A17] flex items-center justify-center font-bold text-sm transition-colors"
+                title="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="mt-4 relative rounded-2xl overflow-hidden border border-[#BAA18D] shadow-inner aspect-square max-h-[440px] mx-auto bg-[#E9D9C8]">
+              <img
+                src={ASSETS.realisticDripstick}
+                alt="Realistic Artisanal DripStick Macro"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-center"
+              />
+              <div
+                className="absolute inset-0 pointer-events-none mix-blend-color opacity-35"
+                style={{
+                  background: `radial-gradient(circle at 50% 35%, ${selectedSauce.color || '#4A2C2A'} 0%, transparent 75%)`,
+                }}
+              />
+              <div className="absolute bottom-3 inset-x-3 flex items-center justify-between pointer-events-none">
+                <div className="bg-[#361A17]/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[11px] font-bold border border-white/20 shadow-md">
+                  100% Pure Belgian Couverture • Pearl Sugar Crust
+                </div>
+                <div className="bg-[#FAF5EE]/95 text-[#361A17] px-2.5 py-1 rounded-full text-[10px] font-black border border-[#BAA18D]">
+                  45°C Warm
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-between items-center text-xs text-[#361A17]/80">
+              <span className="font-medium">Handcrafted on stick with authentic Belgian pearl batter</span>
+              <button
+                onClick={() => setIsZoomed(false)}
+                className="px-5 py-2.5 bg-[#361A17] text-white rounded-full font-bold uppercase text-[10px] tracking-wider hover:bg-[#281310] transition-all"
+              >
+                Done
+              </button>
+            </div>
           </div>
         </div>
       )}
