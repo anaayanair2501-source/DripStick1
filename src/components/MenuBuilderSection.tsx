@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Sparkles, Check, Plus, RefreshCw, ShoppingBag, Flame, ChevronRight, Info, Heart, Wand2, ZoomIn, Eye, X } from 'lucide-react';
+import { Sparkles, Check, Plus, RefreshCw, ShoppingBag, Flame, ChevronRight, Info, Heart, Wand2, ZoomIn, Eye, X, Camera, Palette } from 'lucide-react';
 import { WAFFLE_BASES, SAUCE_DIPS, TOPPINGS, DRIZZLE_EXTRAS, ASSETS } from '../data/mockData';
 import { CustomDripStick, WaffleBase, SauceDip, Topping, DrizzleExtra } from '../types';
 import { soundEffects } from '../utils/soundEffects';
+import { RealisticWaffleCanvas } from './RealisticWaffleCanvas';
 
 interface MenuBuilderSectionProps {
   onAddCustomToCart: (custom: CustomDripStick) => void;
@@ -17,6 +18,7 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
   const [isSuccessModal, setIsSuccessModal] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
   const [isZoomed, setIsZoomed] = useState<boolean>(false);
+  const [previewMode, setPreviewMode] = useState<'stick' | 'photo'>('stick');
 
   // Dynamically resolve realistic preview image based on all active choices
   const { previewImage, styleLabel } = React.useMemo(() => {
@@ -521,10 +523,41 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
           <div className="lg:col-span-5 sticky top-24">
             <div className="bg-[#E7D6C5] p-6 sm:p-8 rounded-3xl border-2 border-[#BAA18D] shadow-xl relative overflow-hidden">
               
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#643419] bg-[#D7C0A9] px-3 py-1 rounded-full border border-[#BAA18D] flex items-center gap-1 shadow-2xs">
-                  <Sparkles className="w-3 h-3 text-[#B45309]" /> Live DripStick Preview
-                </span>
+              <div className="flex items-center justify-between mb-3.5">
+                {/* View Mode Toggle Pill: Interactive Live Stick vs Macro Studio Photo */}
+                <div className="flex items-center bg-[#D7C0A9] p-1 rounded-full border border-[#BAA18D] shadow-2xs">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundEffects.playDip();
+                      setPreviewMode('stick');
+                    }}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${
+                      previewMode === 'stick'
+                        ? 'bg-[#361A17] text-white shadow-xs'
+                        : 'text-[#361A17]/80 hover:text-[#361A17]'
+                    }`}
+                  >
+                    <Palette className="w-3 h-3" />
+                    <span>Interactive Stick</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundEffects.playDip();
+                      setPreviewMode('photo');
+                    }}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${
+                      previewMode === 'photo'
+                        ? 'bg-[#361A17] text-white shadow-xs'
+                        : 'text-[#361A17]/80 hover:text-[#361A17]'
+                    }`}
+                  >
+                    <Camera className="w-3 h-3" />
+                    <span>Studio Photo</span>
+                  </button>
+                </div>
+
                 <button
                   onClick={handleReset}
                   className="text-xs text-[#361A17]/85 hover:text-[#361A17] flex items-center gap-1 font-bold bg-[#F2E5D6] px-2.5 py-1 rounded-full border border-[#BAA18D]"
@@ -535,84 +568,156 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
               </div>
 
               {/* Dynamic Realistic DripStick Showcase */}
-              <div className="relative w-full h-84 sm:h-96 rounded-2xl overflow-hidden border-2 border-[#BAA18D] shadow-inner group bg-gradient-to-b from-[#FFFDF9] to-[#E9D9C8]">
-                {/* Photorealistic DripStick Master Image with key to animate smoothly on option change */}
-                <img
-                  key={previewImage}
-                  src={previewImage}
-                  alt={`Custom Artisanal DripStick - ${styleLabel}`}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108 animate-fade-in"
-                />
+              {previewMode === 'stick' ? (
+                /* INTERACTIVE REALISTIC DRIPSTICK CANVAS (Works exactly like original, rendered realistically) */
+                <div className="relative w-full h-88 sm:h-96 rounded-2xl overflow-hidden border-2 border-[#BAA18D] shadow-inner group bg-gradient-to-b from-[#FFFDF9] via-[#FAF4ED] to-[#E9D9C8] flex items-center justify-center p-2 animate-fade-in">
+                  <RealisticWaffleCanvas
+                    selectedBase={selectedBase}
+                    selectedSauce={selectedSauce}
+                    selectedToppings={selectedToppings}
+                    selectedDrizzle={selectedDrizzle}
+                    className="w-full h-full max-h-[355px]"
+                  />
 
-                {/* Dynamic Warm Ambient Couverture Glaze Layer */}
-                <div
-                  className="absolute inset-0 pointer-events-none transition-all duration-700 mix-blend-color opacity-30"
-                  style={{
-                    background: `radial-gradient(circle at 50% 35%, ${selectedSauce.color || '#4A2C2A'} 0%, transparent 75%)`,
-                  }}
-                />
-
-                {/* Subdued Glaze Highlights */}
-                <div
-                  className="absolute top-0 inset-x-0 h-48 pointer-events-none transition-all duration-700 mix-blend-overlay opacity-20"
-                  style={{ backgroundColor: selectedSauce.color }}
-                />
-
-                {/* Subtle Base Tint for Belgian Dark Cocoa Base */}
-                {selectedBase.id === 'base-dark' && (
-                  <div className="absolute bottom-0 inset-x-0 h-40 pointer-events-none bg-gradient-to-t from-[#251311]/50 to-transparent mix-blend-multiply" />
-                )}
-
-                {/* Top Badge: Freshly Dipped & Temperature Tag */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                  <div className="flex items-center gap-1.5 bg-[#361A17]/85 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/20 shadow-md">
-                    <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping inline-block" />
-                    <span>Live Visual • {selectedSauce.name.split(' ')[0]}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setIsZoomed(true)}
-                    className="pointer-events-auto bg-[#361A17]/80 hover:bg-[#361A17] text-white p-1.5 rounded-full border border-white/20 shadow-md transition-all hover:scale-110 active:scale-95 flex items-center justify-center"
-                    title="Zoom in on realistic macro details"
-                  >
-                    <ZoomIn className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-                {/* Active Style Ribbon */}
-                <div className="absolute top-11 left-3 pointer-events-none">
-                  <span className="bg-[#FAF5EE]/95 backdrop-blur-md text-[#361A17] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs">
-                    {styleLabel}
-                  </span>
-                </div>
-
-                {/* Live Floating Ingredient Tags */}
-                <div className="absolute bottom-3 inset-x-3 flex flex-wrap items-center justify-between gap-1.5 pointer-events-none">
-                  <div className="bg-[#361A17]/90 backdrop-blur-md text-white px-3 py-1 rounded-xl text-[11px] font-extrabold border border-white/15 shadow-lg flex items-center gap-1.5">
-                    <span className="text-sm">{selectedBase.icon || '🧇'}</span>
-                    <span>{selectedBase.name}</span>
-                  </div>
-
-                  <div className="bg-[#FAF5EE]/95 backdrop-blur-md text-[#361A17] px-3 py-1 rounded-xl text-[11px] font-black border border-[#BAA18D] shadow-lg flex items-center gap-1.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full border border-black/20"
-                      style={{ backgroundColor: selectedSauce.color }}
-                    />
-                    <span className="truncate max-w-[130px]">{selectedSauce.name}</span>
-                  </div>
-                </div>
-
-                {/* Selected Toppings Ribbon on Top Right */}
-                {selectedToppings.length > 0 && (
-                  <div className="absolute top-11 right-3 pointer-events-none flex flex-col items-end gap-1">
-                    <div className="bg-[#FAF5EE]/90 backdrop-blur-md text-[#361A17] text-[9px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs flex items-center gap-1">
-                      <span>{selectedToppings.map((t) => t.icon).join(' ')}</span>
-                      <span>{selectedToppings.length} {selectedToppings.length === 1 ? 'Topping' : 'Toppings'}</span>
+                  {/* Top Badge: Freshly Dipped & Temperature Tag */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                    <div className="flex items-center gap-1.5 bg-[#361A17]/85 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/20 shadow-md">
+                      <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping inline-block" />
+                      <span>Live Custom Build • 45°C Couverture</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pointer-events-auto">
+                      <button
+                        type="button"
+                        onClick={() => setIsZoomed(true)}
+                        className="bg-[#361A17]/80 hover:bg-[#361A17] text-white p-1.5 rounded-full border border-white/20 shadow-md transition-all hover:scale-110 active:scale-95 flex items-center justify-center"
+                        title="Zoom in on realistic food details"
+                      >
+                        <ZoomIn className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPreviewMode('photo')}
+                        className="bg-[#361A17]/80 hover:bg-[#361A17] text-white p-1.5 rounded-full border border-white/20 shadow-md transition-all hover:scale-110 active:scale-95 flex items-center justify-center"
+                        title="View studio photograph"
+                      >
+                        <Camera className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   </div>
-                )}
-              </div>
+
+                  {/* Active Style Ribbon */}
+                  <div className="absolute top-11 left-3 pointer-events-none">
+                    <span className="bg-[#FAF5EE]/95 backdrop-blur-md text-[#361A17] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs">
+                      {styleLabel}
+                    </span>
+                  </div>
+
+                  {/* Live Floating Ingredient Tags */}
+                  <div className="absolute bottom-3 inset-x-3 flex flex-wrap items-center justify-between gap-1.5 pointer-events-none">
+                    <div className="bg-[#361A17]/90 backdrop-blur-md text-white px-3 py-1 rounded-xl text-[11px] font-extrabold border border-white/15 shadow-lg flex items-center gap-1.5">
+                      <span className="text-sm">{selectedBase.icon || '🧇'}</span>
+                      <span>{selectedBase.name}</span>
+                    </div>
+
+                    <div className="bg-[#FAF5EE]/95 backdrop-blur-md text-[#361A17] px-3 py-1 rounded-xl text-[11px] font-black border border-[#BAA18D] shadow-lg flex items-center gap-1.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full border border-black/20"
+                        style={{ backgroundColor: selectedSauce.color }}
+                      />
+                      <span className="truncate max-w-[130px]">{selectedSauce.name}</span>
+                    </div>
+                  </div>
+
+                  {/* Selected Toppings Ribbon on Top Right */}
+                  {selectedToppings.length > 0 && (
+                    <div className="absolute top-11 right-3 pointer-events-none flex flex-col items-end gap-1">
+                      <div className="bg-[#FAF5EE]/90 backdrop-blur-md text-[#361A17] text-[9px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs flex items-center gap-1">
+                        <span>{selectedToppings.map((t) => t.icon).join(' ')}</span>
+                        <span>{selectedToppings.length} {selectedToppings.length === 1 ? 'Topping' : 'Toppings'}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                /* HIGH-RES STUDIO PHOTO VIEW */
+                <div className="relative w-full h-88 sm:h-96 rounded-2xl overflow-hidden border-2 border-[#BAA18D] shadow-inner group bg-gradient-to-b from-[#FFFDF9] to-[#E9D9C8] animate-fade-in">
+                  <img
+                    key={previewImage}
+                    src={previewImage}
+                    alt={`Custom Artisanal DripStick - ${styleLabel}`}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108 animate-fade-in"
+                  />
+
+                  {/* Dynamic Warm Ambient Couverture Glaze Layer */}
+                  <div
+                    className="absolute inset-0 pointer-events-none transition-all duration-700 mix-blend-color opacity-30"
+                    style={{
+                      background: `radial-gradient(circle at 50% 35%, ${selectedSauce.color || '#4A2C2A'} 0%, transparent 75%)`,
+                    }}
+                  />
+
+                  {/* Subdued Glaze Highlights */}
+                  <div
+                    className="absolute top-0 inset-x-0 h-48 pointer-events-none transition-all duration-700 mix-blend-overlay opacity-20"
+                    style={{ backgroundColor: selectedSauce.color }}
+                  />
+
+                  {/* Subtle Base Tint for Belgian Dark Cocoa Base */}
+                  {selectedBase.id === 'base-dark' && (
+                    <div className="absolute bottom-0 inset-x-0 h-40 pointer-events-none bg-gradient-to-t from-[#251311]/50 to-transparent mix-blend-multiply" />
+                  )}
+
+                  {/* Top Badge: Freshly Dipped & Temperature Tag */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                    <div className="flex items-center gap-1.5 bg-[#361A17]/85 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/20 shadow-md">
+                      <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping inline-block" />
+                      <span>Studio Photo • {selectedSauce.name.split(' ')[0]}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setIsZoomed(true)}
+                      className="pointer-events-auto bg-[#361A17]/80 hover:bg-[#361A17] text-white p-1.5 rounded-full border border-white/20 shadow-md transition-all hover:scale-110 active:scale-95 flex items-center justify-center"
+                      title="Zoom in on realistic macro details"
+                    >
+                      <ZoomIn className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  {/* Active Style Ribbon */}
+                  <div className="absolute top-11 left-3 pointer-events-none">
+                    <span className="bg-[#FAF5EE]/95 backdrop-blur-md text-[#361A17] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs">
+                      {styleLabel}
+                    </span>
+                  </div>
+
+                  {/* Live Floating Ingredient Tags */}
+                  <div className="absolute bottom-3 inset-x-3 flex flex-wrap items-center justify-between gap-1.5 pointer-events-none">
+                    <div className="bg-[#361A17]/90 backdrop-blur-md text-white px-3 py-1 rounded-xl text-[11px] font-extrabold border border-white/15 shadow-lg flex items-center gap-1.5">
+                      <span className="text-sm">{selectedBase.icon || '🧇'}</span>
+                      <span>{selectedBase.name}</span>
+                    </div>
+
+                    <div className="bg-[#FAF5EE]/95 backdrop-blur-md text-[#361A17] px-3 py-1 rounded-xl text-[11px] font-black border border-[#BAA18D] shadow-lg flex items-center gap-1.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full border border-black/20"
+                        style={{ backgroundColor: selectedSauce.color }}
+                      />
+                      <span className="truncate max-w-[130px]">{selectedSauce.name}</span>
+                    </div>
+                  </div>
+
+                  {/* Selected Toppings Ribbon on Top Right */}
+                  {selectedToppings.length > 0 && (
+                    <div className="absolute top-11 right-3 pointer-events-none flex flex-col items-end gap-1">
+                      <div className="bg-[#FAF5EE]/90 backdrop-blur-md text-[#361A17] text-[9px] font-black px-2.5 py-0.5 rounded-full border border-[#BAA18D] shadow-xs flex items-center gap-1">
+                        <span>{selectedToppings.map((t) => t.icon).join(' ')}</span>
+                        <span>{selectedToppings.length} {selectedToppings.length === 1 ? 'Topping' : 'Toppings'}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Quick Flavor Style Switcher to preview different images instantly */}
               <div className="mt-3 pt-3 border-t border-[#BAA18D]/70">
