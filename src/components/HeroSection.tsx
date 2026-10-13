@@ -197,8 +197,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     // Spawn 10 dynamic particle crumbs
     const crumbs: FlyingCrumb[] = Array.from({ length: 10 }).map((_, i) => ({
       id: Date.now() + i,
-      x: (Math.random() - 0.5) * 200,
-      y: (Math.random() - 0.5) * 150 + 20,
+      x: (Math.random() - 0.5) * 180,
+      y: (Math.random() - 0.5) * 140 + 20,
       size: Math.random() * 6 + 4,
       rotation: Math.random() * 360,
       color: i % 2 === 0 ? '#F59E0B' : '#4A2C2A',
@@ -266,69 +266,171 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         
         {/* =======================================================
-            TOP STATUS & SENSORY LAB HEADER BAR
+            TOP HEADLINE BANNER: PROMINENT, UN-SQUEEZED DISPLAY
+            "STICK. DIP. CRUNCH." with CRUNCH prominently visible
            ======================================================= */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-6 mb-6 border-b border-[#4A2C2A]/10">
-          <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFE4E6] border border-[#FECDD3] text-xs font-black uppercase tracking-wider text-[#9F1239] shadow-2xs">
-              <Flame className="w-3.5 h-3.5 text-[#E11D48] animate-pulse" />
-              <span>210°C Cast-Iron</span>
-            </span>
-            <span className="text-xs font-mono font-bold text-[#4A2C2A]/70 hidden sm:inline">
-              • {currentFlavor.origin}
-            </span>
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 mb-6 border-b border-[#4A2C2A]/10">
+          <div>
+            <div className="flex flex-wrap items-center gap-2.5 mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFE4E6] border border-[#FECDD3] text-xs font-black uppercase tracking-wider text-[#9F1239] shadow-2xs">
+                <Flame className="w-3.5 h-3.5 text-[#E11D48] animate-pulse" />
+                <span>210°C Cast-Iron</span>
+              </span>
+              <span className="text-xs font-mono font-bold text-[#4A2C2A]/70">
+                • Real Belgian Couverture Fondue
+              </span>
+            </div>
+
+            {/* Giant Spanning Display Headline */}
+            <h1 className="font-brand font-black text-4xl sm:text-6xl lg:text-7xl xl:text-8xl text-[#4A2C2A] tracking-tight leading-[0.92] uppercase">
+              STICK. DIP.{' '}
+              <span
+                className="transition-colors duration-500 inline-block drop-shadow-xs"
+                style={{ color: currentFlavor.accentColor }}
+              >
+                CRUNCH.
+              </span>
+            </h1>
           </div>
 
-          <div className="flex items-center gap-3 text-xs font-bold text-[#4A2C2A]">
-            <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#4A2C2A]/10 shadow-2xs">
-              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-              <span>{currentFlavor.rating} Rating</span>
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#4A2C2A]/10 shadow-2xs">
-              <Volume2 className="w-3.5 h-3.5 text-amber-700" />
-              <span>32.4 dB Acoustic Crunch</span>
-            </span>
+          {/* Right Sensory Headline Tag */}
+          <div className="max-w-md lg:text-right flex flex-col lg:items-end">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="inline-flex items-center gap-1 bg-white/80 px-3 py-1 rounded-full border border-[#4A2C2A]/10 text-xs font-bold text-[#4A2C2A] shadow-2xs">
+                <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                <span>{currentFlavor.rating} Rating</span>
+              </span>
+              <span className="text-xs font-mono font-bold text-amber-900 bg-amber-100/70 px-2.5 py-1 rounded-full border border-amber-300">
+                {currentFlavor.origin}
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-[#4A2C2A]/80 font-semibold leading-relaxed">
+              "{currentFlavor.tagline}"
+            </p>
           </div>
         </div>
 
         {/* =======================================================
-            EDITORIAL SPATIAL COMPOSITION:
-            Not left-text/right-photo, and not center-stacked.
-            An interlocking tri-spatial layout with central interactive centerpiece.
+            THE HORIZONTAL DIPPING AXIS ("THE LINE")
+            Sleek interactive rail connecting all 5 flavors
            ======================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-8">
-          
-          {/* ZONE 1 (Left Wing): Bold Typographic Statements & Story */}
-          <div className="lg:col-span-3 flex flex-col justify-center">
-            <motion.h1
-              initial={{ opacity: 0, x: -15 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="font-brand font-black text-5xl sm:text-6xl lg:text-7xl text-[#4A2C2A] tracking-tight leading-[0.88] uppercase mb-4"
-            >
-              STICK.<br />
-              DIP.
-            </motion.h1>
-
-            <p className="text-sm text-[#4A2C2A]/80 font-medium leading-relaxed mb-4">
-              Caramelized Liège pearl sugar waffles plunged into warm continuous couverture fondue.
-            </p>
-
-            <div className="p-3 rounded-2xl bg-white/60 border border-[#4A2C2A]/10 shadow-2xs">
-              <div className="text-[10px] font-mono font-black uppercase text-[#4A2C2A]/60 mb-0.5">
-                Current Couverture
-              </div>
-              <div className="text-xs font-black text-[#4A2C2A]">
-                {currentFlavor.name}
-              </div>
-              <div className="text-[11px] text-amber-900 font-semibold mt-0.5">
-                {currentFlavor.temp}
-              </div>
-            </div>
+        <div className="w-full relative mb-8">
+          <div className="flex items-center justify-between mb-2.5 px-1">
+            <span className="text-[11px] font-mono font-black uppercase tracking-widest text-[#4A2C2A]/60 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>The Dipping Axis — Select Signature Reserve</span>
+            </span>
+            <span className="text-xs font-bold text-amber-900 font-mono">
+              0{selectedIdx + 1} / 0{FLAVORS.length}
+            </span>
           </div>
 
-          {/* ZONE 2 (Center Stage): Interactive Waffle Stick Hero Showcase */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center relative">
+          <div className="relative p-2 rounded-2xl bg-white/80 border border-[#4A2C2A]/15 shadow-sm">
+            {/* Structural line behind nodes */}
+            <div className="absolute top-1/2 left-6 right-6 -translate-y-1/2 h-[2px] bg-[#4A2C2A]/10 pointer-events-none" />
+
+            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2">
+              {FLAVORS.map((f, idx) => {
+                const isSelected = selectedIdx === idx;
+                return (
+                  <button
+                    key={f.id}
+                    type="button"
+                    onClick={() => {
+                      soundEffects.playDip();
+                      setSelectedIdx(idx);
+                      setBites(0);
+                    }}
+                    className={`relative p-2.5 rounded-xl transition-all cursor-pointer select-none text-left flex items-center gap-2.5 ${
+                      isSelected
+                        ? 'bg-[#4A2C2A] text-[#FAF5EE] shadow-md scale-102'
+                        : 'bg-white/60 hover:bg-white text-[#4A2C2A]/70 hover:text-[#4A2C2A]'
+                    }`}
+                  >
+                    <span className="text-xl">{f.emoji}</span>
+                    <div className="truncate">
+                      <div className="font-brand font-black text-xs truncate">
+                        {f.shortName}
+                      </div>
+                      <div className={`text-[10px] font-mono font-bold ${isSelected ? 'text-amber-300' : 'text-amber-800'}`}>
+                        ₹{f.price}
+                      </div>
+                    </div>
+
+                    {isSelected && (
+                      <motion.div
+                        layoutId="activeAxisPill"
+                        className="absolute inset-0 rounded-xl ring-2 ring-amber-400/50 pointer-events-none"
+                        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* =======================================================
+            SPATIAL 3-POD SHOWCASE (Left Controls • Center Waffle • Right Action)
+            Balanced, open, and never overlapping
+           ======================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-6">
+          
+          {/* LEFT POD (lg:col-span-4): Molten Dip Depth & Sensory Notes */}
+          <div className="lg:col-span-4 flex flex-col gap-4">
+            
+            {/* Dip Depth Controller */}
+            <div className="p-4 rounded-2xl bg-white/80 border border-[#4A2C2A]/15 shadow-sm">
+              <div className="flex items-center justify-between mb-2.5">
+                <span className="text-[11px] font-mono font-bold uppercase text-[#4A2C2A]/70 flex items-center gap-1.5">
+                  <Sliders className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Molten Dip Depth</span>
+                </span>
+                <span className="text-xs font-mono font-bold text-amber-900 bg-amber-100/60 px-2 py-0.5 rounded-md">
+                  {activePercent}% Submerged
+                </span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-[#FAF5EE] border border-[#4A2C2A]/10">
+                {DIP_LEVELS.map((level) => {
+                  const isActive = dipDepth === level.id;
+                  return (
+                    <button
+                      key={level.id}
+                      type="button"
+                      onClick={() => handleDipChange(level.id)}
+                      className={`relative py-1.5 px-2 rounded-lg text-xs font-black tracking-wide transition-all cursor-pointer text-center ${
+                        isActive
+                          ? 'bg-[#4A2C2A] text-[#FAF5EE] shadow-xs'
+                          : 'text-[#4A2C2A]/70 hover:text-[#4A2C2A]'
+                      }`}
+                    >
+                      {level.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Tasting Notes Pod */}
+            <div className="p-4 rounded-2xl bg-white/70 border border-[#4A2C2A]/15 shadow-2xs">
+              <div className="text-[10px] font-mono font-black uppercase text-[#4A2C2A]/60 mb-1">
+                Tasting Notes & Profile
+              </div>
+              <p className="text-xs text-[#4A2C2A]/85 font-medium leading-relaxed">
+                "{currentFlavor.notes}"
+              </p>
+              <div className="mt-2.5 pt-2 border-t border-[#4A2C2A]/10 flex items-center justify-between text-[11px] font-mono font-bold text-amber-900">
+                <span>{currentFlavor.temp}</span>
+                <span>★ {currentFlavor.rating}</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* CENTER POD (lg:col-span-4): Tactile 3D Waffle Hero Stage */}
+          <div className="lg:col-span-4 flex flex-col items-center justify-center relative">
             
             {/* Floating Crunch Celebration Bubble */}
             <AnimatePresence>
@@ -350,7 +452,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               ref={cardRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className="w-full max-w-[340px] sm:max-w-[380px] relative perspective-1000"
+              className="w-full max-w-[320px] sm:max-w-[340px] relative perspective-1000"
             >
               <motion.div
                 style={{
@@ -369,18 +471,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 onClick={handleBite}
                 className="relative rounded-3xl bg-white border-4 border-white shadow-2xl p-3 sm:p-4 cursor-pointer select-none group overflow-hidden"
               >
-                {/* Header Tag */}
+                {/* Header Tag on Card */}
                 <div className="flex items-center justify-between mb-2.5 relative z-20">
-                  <span className="font-mono text-[10px] font-black uppercase px-3 py-1 rounded-full bg-[#4A2C2A] text-[#FAF5EE]">
+                  <span className="font-mono text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-[#4A2C2A] text-[#FAF5EE]">
                     {currentFlavor.shortName}
                   </span>
                   <span className="text-xs font-bold text-amber-900 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
-                    {bites < 4 ? `Tap Waffle to Bite (${bites}/4)` : 'Conquered! ✨'}
+                    {bites < 4 ? `Tap to Bite (${bites}/4)` : 'Conquered! ✨'}
                   </span>
                 </div>
 
                 {/* THE WAFFLE CANVAS STAGE */}
-                <div className="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden bg-stone-100 border border-[#4A2C2A]/10 flex items-center justify-center">
+                <div className="relative w-full h-80 sm:h-88 rounded-2xl overflow-hidden bg-stone-100 border border-[#4A2C2A]/10 flex items-center justify-center">
                   
                   {/* Dynamic Product Image Crossfade */}
                   <AnimatePresence mode="wait">
@@ -406,7 +508,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         animate={{ opacity: 1, scale: 1 }}
                         className="absolute inset-0 bg-[#FAF5EE] flex flex-col items-center justify-center p-6 text-center z-20"
                       >
-                        <div className="w-5 h-40 bg-[#D4A373] rounded-full border-2 border-[#A2673B] shadow-md relative flex flex-col justify-between items-center py-2">
+                        <div className="w-5 h-38 bg-[#D4A373] rounded-full border-2 border-[#A2673B] shadow-md relative flex flex-col justify-between items-center py-2">
                           <div className="w-5 h-5 rounded-full bg-[#4A2C2A] -mt-2.5 shadow-xs" />
                           <span className="text-[8px] font-mono font-bold text-[#4A2C2A] -rotate-90">
                             DRIPSTICK
@@ -415,7 +517,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         <h4 className="font-brand font-black text-base text-[#4A2C2A] mt-3">
                           Clean Beechwood Stick! ✨
                         </h4>
-                        <p className="text-xs text-[#4A2C2A]/70 max-w-[200px] font-medium mt-1">
+                        <p className="text-xs text-[#4A2C2A]/70 max-w-[180px] font-medium mt-0.5">
                           Conquered to the stick.
                         </p>
                         <button
@@ -426,7 +528,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                           }}
                           className="mt-3 px-3.5 py-1.5 rounded-full bg-[#4A2C2A] text-white text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
                         >
-                          <RotateCcw className="w-3 h-3 text-amber-400" />
+                          <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
                           <span>Another Waffle</span>
                         </button>
                       </motion.div>
@@ -477,7 +579,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   ))}
 
                   {/* Caption on Image */}
-                  <div className="absolute bottom-2.5 inset-x-2.5 bg-white/95 backdrop-blur-md p-2.5 rounded-xl border border-[#4A2C2A]/10 flex items-center justify-between shadow-sm z-20">
+                  <div className="absolute bottom-2 inset-x-2 bg-white/95 backdrop-blur-md p-2 rounded-xl border border-[#4A2C2A]/10 flex items-center justify-between shadow-sm z-20">
                     <div className="truncate mr-2">
                       <div className="text-xs font-black text-[#4A2C2A] font-brand truncate">
                         {currentFlavor.name}
@@ -494,7 +596,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
 
                 {/* Card Interaction Footer */}
-                <div className="mt-2.5 pt-2 border-t border-[#4A2C2A]/10 flex items-center justify-between text-xs">
+                <div className="mt-2 pt-2 border-t border-[#4A2C2A]/10 flex items-center justify-between text-xs">
                   <span className="text-[11px] font-bold text-[#4A2C2A]/70">
                     {bites < 4 ? `Click waffle to take a bite` : 'Finished!'}
                   </span>
@@ -511,7 +613,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <button
                       type="button"
                       onClick={handleReset}
-                      className="px-2.5 py-0.5 rounded-full bg-stone-200 text-[#4A2C2A] text-[10px] font-black uppercase tracking-wider cursor-pointer"
+                      className="px-2 py-0.5 rounded-full bg-stone-200 text-[#4A2C2A] text-[10px] font-black uppercase tracking-wider cursor-pointer"
                     >
                       Reset
                     </button>
@@ -522,29 +624,41 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </div>
 
-          {/* ZONE 3 (Right Wing): Bold CRUNCH Anchor & Immediate CTA */}
-          <div className="lg:col-span-3 flex flex-col justify-center items-start lg:items-end text-left lg:text-right">
-            <motion.h2
-              initial={{ opacity: 0, x: 15 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="font-brand font-black text-5xl sm:text-6xl lg:text-7xl tracking-tight leading-[0.88] uppercase mb-4"
-              style={{ color: currentFlavor.accentColor }}
-            >
-              CRUNCH.
-            </motion.h2>
+          {/* RIGHT POD (lg:col-span-4): Acoustic Lab & Direct Order Actions */}
+          <div className="lg:col-span-4 flex flex-col gap-4">
+            
+            {/* Acoustic Crunch Monitor */}
+            <div className="p-4 rounded-2xl bg-white/80 border border-[#4A2C2A]/15 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-mono font-bold uppercase text-[#4A2C2A]/70 flex items-center gap-1.5">
+                  <Volume2 className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Acoustic Crunch Lab</span>
+                </span>
+                <span className="text-xs font-mono font-bold text-amber-900">
+                  32.4 dB
+                </span>
+              </div>
+              <p className="text-xs text-[#4A2C2A]/75 font-medium mb-3">
+                Liège caramelized pearl sugar core cracks under teeth with distinctive acoustic resonance.
+              </p>
+              <button
+                type="button"
+                onClick={handleBite}
+                className="w-full py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-[#4A2C2A] text-xs font-black uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <Volume2 className="w-3.5 h-3.5" />
+                <span>Test Crunch Sound</span>
+              </button>
+            </div>
 
-            <p className="text-xs sm:text-sm text-[#4A2C2A]/80 font-semibold leading-relaxed mb-5 max-w-xs">
-              "{currentFlavor.notes}"
-            </p>
-
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 w-full lg:w-auto">
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-2.5">
               <motion.button
                 type="button"
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={handleQuickAdd}
-                className="bg-[#4A2C2A] text-[#FAF5EE] px-6 py-3.5 rounded-full font-brand font-black uppercase text-xs tracking-wider shadow-xl hover:bg-[#2D1B19] transition-colors flex items-center justify-center gap-2 cursor-pointer w-full"
+                className="bg-[#4A2C2A] text-[#FAF5EE] px-6 py-3.5 rounded-2xl font-brand font-black uppercase text-xs tracking-wider shadow-xl hover:bg-[#2D1B19] transition-colors flex items-center justify-center gap-2 cursor-pointer w-full"
               >
                 {addedToast ? (
                   <>
@@ -567,117 +681,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   soundEffects.playDip();
                   onExploreMenu();
                 }}
-                className="bg-white text-[#4A2C2A] border-2 border-[#4A2C2A] px-5 py-3 rounded-full font-brand font-black uppercase text-xs tracking-wider shadow-2xs hover:bg-[#FAF5EE] transition-colors flex items-center justify-center gap-1.5 cursor-pointer w-full"
+                className="bg-white text-[#4A2C2A] border-2 border-[#4A2C2A] px-5 py-3 rounded-2xl font-brand font-black uppercase text-xs tracking-wider shadow-2xs hover:bg-[#FAF5EE] transition-colors flex items-center justify-center gap-1.5 cursor-pointer w-full"
               >
-                <span>Full Menu</span>
+                <span>Explore Full Menu</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </motion.button>
             </div>
+
           </div>
 
         </div>
 
         {/* =======================================================
-            THE HORIZONTAL AXIS ("THE LINE"): SPANNING RUNWAY
-            Connecting all 5 flavors along an interactive dipping track
+            BOTTOM BADGES STRIP
            ======================================================= */}
-        <div className="w-full relative my-8">
-          <div className="flex items-center justify-between mb-3 px-1">
-            <span className="text-[11px] font-mono font-black uppercase tracking-widest text-[#4A2C2A]/60 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>The Dipping Axis — Select Flavor Reserve</span>
-            </span>
-            <span className="text-xs font-bold text-amber-900 font-mono">
-              0{selectedIdx + 1} / 0{FLAVORS.length}
-            </span>
-          </div>
-
-          {/* The Structural Line Track */}
-          <div className="relative p-2 rounded-2xl bg-white/80 border border-[#4A2C2A]/15 shadow-sm">
-            <div className="absolute top-1/2 left-6 right-6 -translate-y-1/2 h-[2px] bg-[#4A2C2A]/10 pointer-events-none" />
-
-            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2">
-              {FLAVORS.map((f, idx) => {
-                const isSelected = selectedIdx === idx;
-                return (
-                  <button
-                    key={f.id}
-                    type="button"
-                    onClick={() => {
-                      soundEffects.playDip();
-                      setSelectedIdx(idx);
-                      setBites(0);
-                    }}
-                    className={`relative p-2.5 rounded-xl transition-all cursor-pointer select-none text-left flex items-center gap-2.5 ${
-                      isSelected
-                        ? 'bg-[#4A2C2A] text-[#FAF5EE] shadow-md scale-102'
-                        : 'bg-white/60 hover:bg-white text-[#4A2C2A]/70 hover:text-[#4A2C2A]'
-                    }`}
-                  >
-                    <span className="text-xl">{f.emoji}</span>
-                    <div className="truncate">
-                      <div className="font-brand font-black text-xs truncate">
-                        {f.shortName}
-                      </div>
-                      <div className={`text-[10px] font-mono font-bold ${isSelected ? 'text-amber-300' : 'text-amber-800'}`}>
-                        ₹{f.price}
-                      </div>
-                    </div>
-
-                    {isSelected && (
-                      <motion.div
-                        layoutId="activeAxisPill"
-                        className="absolute inset-0 rounded-xl ring-2 ring-amber-400/50 pointer-events-none"
-                        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* =======================================================
-            BOTTOM TACTILE CONTROLS (Dip Depth & Craft Credentials)
-           ======================================================= */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#4A2C2A]/10">
-          
-          {/* Molten Dip Depth 3-Way Pill */}
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono font-bold uppercase text-[#4A2C2A]/70 flex items-center gap-1">
-              <Sliders className="w-3.5 h-3.5 text-amber-600" />
-              <span>Dip Depth:</span>
-            </span>
-
-            <div className="flex items-center gap-1 p-1 rounded-xl bg-white border border-[#4A2C2A]/10 shadow-2xs">
-              {DIP_LEVELS.map((level) => {
-                const isActive = dipDepth === level.id;
-                return (
-                  <button
-                    key={level.id}
-                    type="button"
-                    onClick={() => handleDipChange(level.id)}
-                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer select-none ${
-                      isActive
-                        ? 'bg-[#4A2C2A] text-[#FAF5EE] shadow-xs'
-                        : 'text-[#4A2C2A]/70 hover:text-[#4A2C2A]'
-                    }`}
-                  >
-                    {level.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Micro Credentials */}
-          <div className="flex items-center gap-4 text-xs font-semibold text-[#4A2C2A]/70">
-            <span>✦ 100% Belgian Cocoa</span>
-            <span>✦ Liège Brioche Dough</span>
-            <span>✦ Ready in 3 Mins</span>
-          </div>
-
+        <div className="flex flex-wrap items-center justify-center gap-6 pt-4 border-t border-[#4A2C2A]/10 text-xs font-semibold text-[#4A2C2A]/70">
+          <span>✦ 100% Belgian Cocoa</span>
+          <span>✦ Liège Brioche Dough</span>
+          <span>✦ Dipped Hot in 3 Mins</span>
         </div>
 
       </div>
