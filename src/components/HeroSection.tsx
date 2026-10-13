@@ -7,17 +7,13 @@ import {
   useTransform,
 } from 'motion/react';
 import {
-  Flame,
-  Volume2,
-  Check,
-  Plus,
+  Sparkles,
+  ShoppingBag,
   ArrowRight,
   RotateCcw,
-  Sliders,
-  Star,
-  Sparkles,
+  Check,
 } from 'lucide-react';
-import { ASSETS } from '../data/mockData';
+import { ASSETS, SHOW_STOPPERS } from '../data/mockData';
 import { soundEffects } from '../utils/soundEffects';
 import { ShowStopperProduct } from '../types';
 
@@ -35,13 +31,8 @@ interface FlavorOption {
   emoji: string;
   tagline: string;
   price: number;
-  rating: number;
   accentColor: string;
-  chocolateColor: string;
   image: string;
-  origin: string;
-  temp: string;
-  notes: string;
 }
 
 const FLAVORS: FlavorOption[] = [
@@ -50,84 +41,51 @@ const FLAVORS: FlavorOption[] = [
     name: 'Antwerp Oreo Noir',
     shortName: 'Oreo Noir',
     emoji: '🍪',
-    tagline: '38% Belgian milk fondue with crushed dark cocoa biscuits',
+    tagline: 'Warm milk chocolate fondue with crushed dark cocoa cookies.',
     price: 189,
-    rating: 4.96,
     accentColor: '#3B82F6',
-    chocolateColor: '#361A17',
     image: ASSETS.waffleOreo,
-    origin: 'Flemish Cocoa Foundry',
-    temp: '45°C Warm Couverture',
-    notes: 'Liège caramelized pearl sugar core under dark chocolate wafer shards.',
   },
   {
     id: 'prod-pistachio-dream',
     name: 'Dubai Emerald Pistachio',
     shortName: 'Pistachio Gold',
     emoji: '🟢',
-    tagline: 'Toasted golden kadaifi soaked in Sicilian pistachio cream',
+    tagline: 'Toasted golden kadaifi soaked in Sicilian pistachio cream.',
     price: 249,
-    rating: 4.98,
     accentColor: '#10B981',
-    chocolateColor: '#2D5A27',
     image: ASSETS.wafflePistachio,
-    origin: 'Sicilian Bronte Harvest',
-    temp: '46°C Emerald Tap',
-    notes: 'Acoustic phyllo crunch enveloped in stone-ground emerald green pistachio cream.',
   },
   {
     id: 'prod-nutella-royale',
     name: 'Turin Nutella Royale',
     shortName: 'Nutella Royale',
     emoji: '🌰',
-    tagline: 'Warm Piedmont hazelnut cocoa spread crowned with crunchy wafer nibs',
+    tagline: 'Warm Piedmont hazelnut gianduja crowned with crisp wafer nibs.',
     price: 229,
-    rating: 4.97,
-    accentColor: '#854D0E',
-    chocolateColor: '#451A03',
+    accentColor: '#92400E',
     image: ASSETS.waffleNutella,
-    origin: 'Piedmont Hazelnut Valley',
-    temp: '47°C Molten Gianduja',
-    notes: 'Glossy roasted hazelnut cream cascading over golden Liège pearl sugar waffle.',
   },
   {
     id: 'prod-biscoff',
     name: 'Lotus Speculoos Lava',
     shortName: 'Lotus Biscoff',
     emoji: '🍯',
-    tagline: 'Brown sugar spice, white velvet fondue & biscuit crunch',
+    tagline: 'Warm caramel speculoos cream & crunchy spiced Belgian biscuits.',
     price: 219,
-    rating: 4.94,
     accentColor: '#D97706',
-    chocolateColor: '#8B4513',
     image: ASSETS.waffleBiscoff,
-    origin: 'Belgian Speculoos Guild',
-    temp: '44°C White Velvet',
-    notes: 'Warm speculoos spiced brioche with caramelized molasses biscuit crunch.',
   },
   {
     id: 'prod-strawberry-bliss',
     name: 'Alpine Ruby Strawberry',
     shortName: 'Ruby Berry',
     emoji: '🍓',
-    tagline: 'Freeze-dried tart alpine berries over Swiss white chocolate',
+    tagline: 'Tart freeze-dried alpine berries over Swiss white chocolate.',
     price: 209,
-    rating: 4.92,
     accentColor: '#EC4899',
-    chocolateColor: '#BE185D',
     image: ASSETS.waffleStrawberry,
-    origin: 'Swiss Berry Orchards',
-    temp: '43°C Vanilla Velvet',
-    notes: 'Crisp mountain berry tartness cutting through sweet vanilla bean white chocolate.',
   },
-];
-
-type DipDepth = 'drizzle' | 'deep' | 'drowned';
-
-const DIP_LEVELS: { id: DipDepth; label: string; percent: number }[] = [
-  { id: 'drizzle', label: 'Drizzle (35%)', percent: 35 },
-  { id: 'deep', label: 'Deep Dip (65%)', percent: 65 },
-  { id: 'drowned', label: 'Drowned (95%)', percent: 95 },
 ];
 
 interface FlyingCrumb {
@@ -145,7 +103,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onAddProductToCart,
 }) => {
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
-  const [dipDepth, setDipDepth] = useState<DipDepth>('deep');
   const [bites, setBites] = useState<number>(0);
   const [isCrunching, setIsCrunching] = useState<boolean>(false);
   const [flyingCrumbs, setFlyingCrumbs] = useState<FlyingCrumb[]>([]);
@@ -156,15 +113,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Smooth spring physics for 3D card tilt
-  const springConfig = { damping: 20, stiffness: 180 };
+  // Smooth subtle 3D card tilt for a tactile feel
+  const springConfig = { damping: 24, stiffness: 200 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
   const rotateX = useTransform(smoothY, [-0.5, 0.5], [6, -6]);
   const rotateY = useTransform(smoothX, [-0.5, 0.5], [-6, 6]);
 
   const currentFlavor = FLAVORS[selectedIdx];
-  const activePercent = DIP_LEVELS.find((d) => d.id === dipDepth)?.percent || 65;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -194,14 +150,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     setCrunchFloater(true);
     setBites((prev) => prev + 1);
 
-    // Spawn 10 dynamic particle crumbs
-    const crumbs: FlyingCrumb[] = Array.from({ length: 10 }).map((_, i) => ({
+    // Spawn 8 playful particle crumbs
+    const crumbs: FlyingCrumb[] = Array.from({ length: 8 }).map((_, i) => ({
       id: Date.now() + i,
-      x: (Math.random() - 0.5) * 180,
-      y: (Math.random() - 0.5) * 140 + 20,
+      x: (Math.random() - 0.5) * 160,
+      y: (Math.random() - 0.5) * 120 + 20,
       size: Math.random() * 6 + 4,
       rotation: Math.random() * 360,
-      color: i % 2 === 0 ? '#F59E0B' : '#4A2C2A',
+      color: i % 2 === 0 ? currentFlavor.accentColor : '#4A2C2A',
     }));
     setFlyingCrumbs(crumbs);
 
@@ -209,498 +165,296 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       setIsCrunching(false);
       setCrunchFloater(false);
       setFlyingCrumbs([]);
-    }, 800);
+    }, 700);
   };
 
-  const handleReset = () => {
+  const handleReset = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     soundEffects.playPop();
     setBites(0);
   };
 
-  const handleDipChange = (level: DipDepth) => {
-    soundEffects.playDip();
-    setDipDepth(level);
-  };
-
-  const handleQuickAdd = () => {
-    soundEffects.playChime();
-    if (onAddProductToCart) {
-      const product: any = {
-        id: currentFlavor.id,
-        name: currentFlavor.name,
-        price: currentFlavor.price,
-        rating: currentFlavor.rating,
-        image: currentFlavor.image,
-        badge: 'Master Fondue',
-        category: 'Signature Drip',
-        calories: 380,
-        tagline: currentFlavor.tagline,
-        base: { name: 'Classic Golden Pearl', price: 99 },
-        sauce: { name: currentFlavor.name, price: 49 },
-        toppings: [{ name: 'Hand-Crushed Crunch', price: 41 }],
-      };
+  const handleOrder = () => {
+    soundEffects.playSuccess();
+    const product = SHOW_STOPPERS.find((p) => p.id === currentFlavor.id);
+    if (product && onAddProductToCart) {
       onAddProductToCart(product);
+      setAddedToast(true);
+      setTimeout(() => setAddedToast(false), 2200);
     } else {
       onOrderNow();
     }
-    setAddedToast(true);
-    setTimeout(() => setAddedToast(false), 2200);
   };
 
   return (
-    <section
-      id="hero"
-      className="relative pt-28 pb-16 lg:pt-32 lg:pb-20 overflow-hidden bg-[#FAF5EE] select-none border-b border-[#4A2C2A]/10"
-    >
-      {/* Dynamic Ambient Background Glow aligned with active flavor */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[550px] rounded-full blur-3xl pointer-events-none -z-0"
-        animate={{
-          backgroundColor: currentFlavor.accentColor,
-          opacity: [0.10, 0.18, 0.10],
-          scale: [0.95, 1.05, 0.95],
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FFF9F2] to-[#FFF5EC] pt-6 pb-14 sm:pb-20 border-b border-[#F0E6D8]/80">
+      {/* Gentle ambient glow tied to the selected flavor */}
+      <div
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[140px] opacity-15 pointer-events-none transition-colors duration-700"
+        style={{ backgroundColor: currentFlavor.accentColor }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        
-        {/* =======================================================
-            TOP HEADLINE BANNER: PROMINENT, UN-SQUEEZED DISPLAY
-            "STICK. DIP. CRUNCH." with CRUNCH prominently visible
-           ======================================================= */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 mb-6 border-b border-[#4A2C2A]/10">
-          <div>
-            <div className="flex flex-wrap items-center gap-2.5 mb-3">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFE4E6] border border-[#FECDD3] text-xs font-black uppercase tracking-wider text-[#9F1239] shadow-2xs">
-                <Flame className="w-3.5 h-3.5 text-[#E11D48] animate-pulse" />
-                <span>210°C Cast-Iron</span>
-              </span>
-              <span className="text-xs font-mono font-bold text-[#4A2C2A]/70">
-                • Real Belgian Couverture Fondue
-              </span>
-            </div>
-
-            {/* Giant Spanning Display Headline */}
-            <h1 className="font-brand font-black text-4xl sm:text-6xl lg:text-7xl xl:text-8xl text-[#4A2C2A] tracking-tight leading-[0.92] uppercase">
-              STICK. DIP.{' '}
-              <span
-                className="transition-colors duration-500 inline-block drop-shadow-xs"
-                style={{ color: currentFlavor.accentColor }}
-              >
-                CRUNCH.
-              </span>
-            </h1>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Top Ribbon: Minimal category badge & user-friendly flavor switch */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 mb-6 border-b border-[#4A2C2A]/10">
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#4A2C2A]/70">
+            <span className="w-2 h-2 rounded-full bg-[#E07A5F] animate-ping" />
+            <span>Belgian Liège Waffle Foundry</span>
+            <span className="text-[#4A2C2A]/30">•</span>
+            <span className="text-[#4A2C2A]/50 hidden sm:inline">Fresh Off The Cast Iron</span>
           </div>
 
-          {/* Right Sensory Headline Tag */}
-          <div className="max-w-md lg:text-right flex flex-col lg:items-end">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center gap-1 bg-white/80 px-3 py-1 rounded-full border border-[#4A2C2A]/10 text-xs font-bold text-[#4A2C2A] shadow-2xs">
-                <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                <span>{currentFlavor.rating} Rating</span>
-              </span>
-              <span className="text-xs font-mono font-bold text-amber-900 bg-amber-100/70 px-2.5 py-1 rounded-full border border-amber-300">
-                {currentFlavor.origin}
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-[#4A2C2A]/80 font-semibold leading-relaxed">
-              "{currentFlavor.tagline}"
-            </p>
-          </div>
-        </div>
-
-        {/* =======================================================
-            THE HORIZONTAL DIPPING AXIS ("THE LINE")
-            Sleek interactive rail connecting all 5 flavors
-           ======================================================= */}
-        <div className="w-full relative mb-8">
-          <div className="flex items-center justify-between mb-2.5 px-1">
-            <span className="text-[11px] font-mono font-black uppercase tracking-widest text-[#4A2C2A]/60 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>The Dipping Axis — Select Signature Reserve</span>
-            </span>
-            <span className="text-xs font-bold text-amber-900 font-mono">
-              0{selectedIdx + 1} / 0{FLAVORS.length}
-            </span>
-          </div>
-
-          <div className="relative p-2 rounded-2xl bg-white/80 border border-[#4A2C2A]/15 shadow-sm">
-            {/* Structural line behind nodes */}
-            <div className="absolute top-1/2 left-6 right-6 -translate-y-1/2 h-[2px] bg-[#4A2C2A]/10 pointer-events-none" />
-
-            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2">
-              {FLAVORS.map((f, idx) => {
-                const isSelected = selectedIdx === idx;
-                return (
-                  <button
-                    key={f.id}
-                    type="button"
-                    onClick={() => {
-                      soundEffects.playDip();
-                      setSelectedIdx(idx);
-                      setBites(0);
-                    }}
-                    className={`relative p-2.5 rounded-xl transition-all cursor-pointer select-none text-left flex items-center gap-2.5 ${
-                      isSelected
-                        ? 'bg-[#4A2C2A] text-[#FAF5EE] shadow-md scale-102'
-                        : 'bg-white/60 hover:bg-white text-[#4A2C2A]/70 hover:text-[#4A2C2A]'
-                    }`}
-                  >
-                    <span className="text-xl">{f.emoji}</span>
-                    <div className="truncate">
-                      <div className="font-brand font-black text-xs truncate">
-                        {f.shortName}
-                      </div>
-                      <div className={`text-[10px] font-mono font-bold ${isSelected ? 'text-amber-300' : 'text-amber-800'}`}>
-                        ₹{f.price}
-                      </div>
-                    </div>
-
-                    {isSelected && (
-                      <motion.div
-                        layoutId="activeAxisPill"
-                        className="absolute inset-0 rounded-xl ring-2 ring-amber-400/50 pointer-events-none"
-                        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* =======================================================
-            SPATIAL 3-POD SHOWCASE (Left Controls • Center Waffle • Right Action)
-            Balanced, open, and never overlapping
-           ======================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-6">
-          
-          {/* LEFT POD (lg:col-span-4): Molten Dip Depth & Sensory Notes */}
-          <div className="lg:col-span-4 flex flex-col gap-4">
-            
-            {/* Dip Depth Controller */}
-            <div className="p-4 rounded-2xl bg-white/80 border border-[#4A2C2A]/15 shadow-sm">
-              <div className="flex items-center justify-between mb-2.5">
-                <span className="text-[11px] font-mono font-bold uppercase text-[#4A2C2A]/70 flex items-center gap-1.5">
-                  <Sliders className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Molten Dip Depth</span>
-                </span>
-                <span className="text-xs font-mono font-bold text-amber-900 bg-amber-100/60 px-2 py-0.5 rounded-md">
-                  {activePercent}% Submerged
-                </span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-[#FAF5EE] border border-[#4A2C2A]/10">
-                {DIP_LEVELS.map((level) => {
-                  const isActive = dipDepth === level.id;
-                  return (
-                    <button
-                      key={level.id}
-                      type="button"
-                      onClick={() => handleDipChange(level.id)}
-                      className={`relative py-1.5 px-2 rounded-lg text-xs font-black tracking-wide transition-all cursor-pointer text-center ${
-                        isActive
-                          ? 'bg-[#4A2C2A] text-[#FAF5EE] shadow-xs'
-                          : 'text-[#4A2C2A]/70 hover:text-[#4A2C2A]'
-                      }`}
-                    >
-                      {level.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Tasting Notes Pod */}
-            <div className="p-4 rounded-2xl bg-white/70 border border-[#4A2C2A]/15 shadow-2xs">
-              <div className="text-[10px] font-mono font-black uppercase text-[#4A2C2A]/60 mb-1">
-                Tasting Notes & Profile
-              </div>
-              <p className="text-xs text-[#4A2C2A]/85 font-medium leading-relaxed">
-                "{currentFlavor.notes}"
-              </p>
-              <div className="mt-2.5 pt-2 border-t border-[#4A2C2A]/10 flex items-center justify-between text-[11px] font-mono font-bold text-amber-900">
-                <span>{currentFlavor.temp}</span>
-                <span>★ {currentFlavor.rating}</span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* CENTER POD (lg:col-span-4): Tactile 3D Waffle Hero Stage */}
-          <div className="lg:col-span-4 flex flex-col items-center justify-center relative">
-            
-            {/* Floating Crunch Celebration Bubble */}
-            <AnimatePresence>
-              {crunchFloater && (
-                <motion.div
-                  initial={{ opacity: 0, y: 15, scale: 0.8 }}
-                  animate={{ opacity: 1, y: -25, scale: 1.15 }}
-                  exit={{ opacity: 0, y: -45, scale: 0.9 }}
-                  transition={{ duration: 0.6 }}
-                  className="absolute -top-7 left-1/2 -translate-x-1/2 z-40 bg-[#4A2C2A] text-amber-300 font-brand font-black text-xs px-4 py-2 rounded-full shadow-xl border border-amber-400/40 pointer-events-none flex items-center gap-1.5 whitespace-nowrap"
+          {/* User-friendly flavor tabs */}
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {FLAVORS.map((flavor, idx) => {
+              const isActive = selectedIdx === idx;
+              return (
+                <button
+                  key={flavor.id}
+                  onClick={() => {
+                    soundEffects.playDip();
+                    setSelectedIdx(idx);
+                    setBites(0);
+                  }}
+                  className={`group relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap cursor-pointer ${
+                    isActive
+                      ? 'bg-[#4A2C2A] text-white shadow-sm'
+                      : 'bg-white/80 text-[#4A2C2A]/80 hover:bg-white hover:text-[#4A2C2A] border border-[#4A2C2A]/10'
+                  }`}
                 >
-                  <span>CRUNCH! 32.4 dB 🧇</span>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  <span className="text-sm">{flavor.emoji}</span>
+                  <span>{flavor.shortName}</span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="flavorIndicator"
+                      className="w-1.5 h-1.5 rounded-full bg-white ml-0.5"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-            {/* 3D TILT TACTILE WAFFLE CARD */}
-            <div
+        {/* Unique Tri-Spatial Architectural Layout (Neither left-only nor center-stacked) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Anchor: STICK. DIP. typographic statement */}
+          <div className="lg:col-span-4 flex flex-col justify-center">
+            <div className="space-y-1">
+              <span className="inline-block text-xs uppercase tracking-widest font-bold text-[#E07A5F] bg-[#E07A5F]/10 px-2.5 py-1 rounded-full mb-3">
+                01 / The Ritual
+              </span>
+              <h1 className="font-brand font-black text-6xl sm:text-7xl lg:text-8xl tracking-tight text-[#4A2C2A] leading-[0.88]">
+                STICK.
+              </h1>
+              <h1 className="font-brand font-black text-6xl sm:text-7xl lg:text-8xl tracking-tight text-[#4A2C2A] leading-[0.88] pl-3 sm:pl-4">
+                DIP.
+              </h1>
+            </div>
+
+            <p className="mt-6 text-sm sm:text-base text-[#4A2C2A]/70 leading-relaxed font-sans max-w-sm">
+              Caramelized Belgian pearl sugar brioche grilled golden, ready for molten couverture immersion.
+            </p>
+
+            <div className="mt-6 flex items-center gap-3 text-xs text-[#4A2C2A]/60">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4A2C2A]/40" />
+              <span>100% Belgian chocolate</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4A2C2A]/40" />
+              <span>Baked to order</span>
+            </div>
+          </div>
+
+          {/* Center Anchor: The Luscious Interactive Waffle Photo Card */}
+          <div className="lg:col-span-5 flex justify-center">
+            <motion.div
               ref={cardRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className="w-full max-w-[320px] sm:max-w-[340px] relative perspective-1000"
+              style={{
+                rotateX,
+                rotateY,
+                transformStyle: 'preserve-3d',
+              }}
+              className="relative w-full max-w-[380px] sm:max-w-[420px] rounded-3xl bg-white p-3 sm:p-4 shadow-xl border border-[#4A2C2A]/10 transition-shadow hover:shadow-2xl cursor-pointer group"
+              onClick={handleBite}
             >
-              <motion.div
-                style={{
-                  rotateX,
-                  rotateY,
-                  transformStyle: 'preserve-3d',
-                }}
-                animate={{
-                  y: [-3, 3, -3],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 5,
-                  ease: 'easeInOut',
-                }}
-                onClick={handleBite}
-                className="relative rounded-3xl bg-white border-4 border-white shadow-2xl p-3 sm:p-4 cursor-pointer select-none group overflow-hidden"
-              >
-                {/* Header Tag on Card */}
-                <div className="flex items-center justify-between mb-2.5 relative z-20">
-                  <span className="font-mono text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-[#4A2C2A] text-[#FAF5EE]">
-                    {currentFlavor.shortName}
-                  </span>
-                  <span className="text-xs font-bold text-amber-900 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
-                    {bites < 4 ? `Tap to Bite (${bites}/4)` : 'Conquered! ✨'}
-                  </span>
-                </div>
+              {/* Top Tag on Card */}
+              <div className="flex items-center justify-between px-2 pt-1 pb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#4A2C2A]/80 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E07A5F]" />
+                  {currentFlavor.name}
+                </span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#FFF5EC] text-[#4A2C2A] border border-[#E07A5F]/20">
+                  ₹{currentFlavor.price}
+                </span>
+              </div>
 
-                {/* THE WAFFLE CANVAS STAGE */}
-                <div className="relative w-full h-80 sm:h-88 rounded-2xl overflow-hidden bg-stone-100 border border-[#4A2C2A]/10 flex items-center justify-center">
-                  
-                  {/* Dynamic Product Image Crossfade */}
-                  <AnimatePresence mode="wait">
-                    {bites < 4 ? (
-                      <motion.img
-                        key={currentFlavor.id}
-                        src={currentFlavor.image}
-                        alt={currentFlavor.name}
-                        referrerPolicy="no-referrer"
-                        initial={{ opacity: 0, scale: 0.96 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 1.04 }}
-                        transition={{ duration: 0.35 }}
-                        className={`w-full h-full object-cover transition-transform duration-300 ${
-                          isCrunching ? 'scale-95' : 'group-hover:scale-102'
-                        }`}
-                      />
-                    ) : (
-                      /* Clean Beechwood Stick State */
-                      <motion.div
-                        key="eaten"
-                        initial={{ opacity: 0, scale: 0.85 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="absolute inset-0 bg-[#FAF5EE] flex flex-col items-center justify-center p-6 text-center z-20"
-                      >
-                        <div className="w-5 h-38 bg-[#D4A373] rounded-full border-2 border-[#A2673B] shadow-md relative flex flex-col justify-between items-center py-2">
-                          <div className="w-5 h-5 rounded-full bg-[#4A2C2A] -mt-2.5 shadow-xs" />
-                          <span className="text-[8px] font-mono font-bold text-[#4A2C2A] -rotate-90">
-                            DRIPSTICK
-                          </span>
-                        </div>
-                        <h4 className="font-brand font-black text-base text-[#4A2C2A] mt-3">
-                          Clean Beechwood Stick! ✨
-                        </h4>
-                        <p className="text-xs text-[#4A2C2A]/70 max-w-[180px] font-medium mt-0.5">
-                          Conquered to the stick.
-                        </p>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleReset();
-                          }}
-                          className="mt-3 px-3.5 py-1.5 rounded-full bg-[#4A2C2A] text-white text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
-                        >
-                          <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
-                          <span>Another Waffle</span>
-                        </button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+              {/* High-Resolution Waffle Photo Container */}
+              <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-[#FAF6F0] flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentFlavor.id}
+                    src={currentFlavor.image}
+                    alt={currentFlavor.name}
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{
+                      opacity: 1,
+                      scale: isCrunching ? 0.98 : 1,
+                    }}
+                    exit={{ opacity: 0, scale: 1.04 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    className="w-full h-full object-cover select-none"
+                    draggable={false}
+                  />
+                </AnimatePresence>
 
-                  {/* LIQUID DUNK DEPTH WATERLINE OVERLAY */}
-                  {bites < 4 && (
-                    <motion.div
-                      className="absolute inset-x-0 bottom-0 pointer-events-none transition-all duration-500 overflow-hidden"
-                      style={{ height: `${activePercent}%` }}
+                {/* Simulated bite marks */}
+                {bites > 0 && (
+                  <div className="absolute top-4 right-4 flex items-center gap-1 bg-[#4A2C2A]/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm shadow-md">
+                    <span>{bites} {bites === 1 ? 'bite' : 'bites'}</span>
+                    <button
+                      onClick={handleReset}
+                      className="ml-1 hover:text-[#E07A5F] transition-colors p-0.5"
+                      title="Reset bites"
                     >
-                      <div
-                        className="w-full h-full opacity-35 relative"
-                        style={{
-                          background: `linear-gradient(to top, ${currentFlavor.chocolateColor} 0%, transparent 100%)`,
-                        }}
-                      >
-                        <motion.div
-                          className="absolute top-0 inset-x-0 h-1.5 bg-white/40 shadow-xs"
-                          animate={{ opacity: [0.3, 0.7, 0.3] }}
-                          transition={{ repeat: Infinity, duration: 2 }}
-                        />
-                      </div>
-                    </motion.div>
-                  )}
+                      <RotateCcw className="w-3 h-3" />
+                    </button>
+                  </div>
+                )}
 
-                  {/* FLYING CRUMB PARTICLES WITH SPRING PHYSICS */}
+                {/* Flying Crumb Particles */}
+                <AnimatePresence>
                   {flyingCrumbs.map((crumb) => (
                     <motion.div
                       key={crumb.id}
-                      initial={{ x: 0, y: 0, scale: 0, opacity: 1 }}
+                      initial={{ scale: 0, x: 0, y: 0, opacity: 1 }}
                       animate={{
+                        scale: [0, 1.2, 0],
                         x: crumb.x,
                         y: crumb.y,
-                        scale: 1,
-                        opacity: 0,
+                        opacity: [1, 0.9, 0],
                         rotate: crumb.rotation,
                       }}
-                      transition={{ duration: 0.7, ease: 'easeOut' }}
-                      className="absolute rounded-full pointer-events-none z-30"
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.65, ease: 'easeOut' }}
                       style={{
-                        width: `${crumb.size}px`,
-                        height: `${crumb.size}px`,
+                        width: crumb.size,
+                        height: crumb.size,
                         backgroundColor: crumb.color,
+                        borderRadius: crumb.size > 7 ? '2px' : '50%',
                       }}
+                      className="absolute pointer-events-none z-30 shadow-sm"
                     />
                   ))}
+                </AnimatePresence>
 
-                  {/* Caption on Image */}
-                  <div className="absolute bottom-2 inset-x-2 bg-white/95 backdrop-blur-md p-2 rounded-xl border border-[#4A2C2A]/10 flex items-center justify-between shadow-sm z-20">
-                    <div className="truncate mr-2">
-                      <div className="text-xs font-black text-[#4A2C2A] font-brand truncate">
-                        {currentFlavor.name}
-                      </div>
-                      <div className="text-[10px] font-bold text-amber-900 truncate mt-0.5">
-                        {currentFlavor.tagline}
-                      </div>
-                    </div>
-                    <span className="text-sm font-mono font-black text-[#4A2C2A] shrink-0">
-                      ₹{currentFlavor.price}
+                {/* "CRUNCH!" popup floater */}
+                <AnimatePresence>
+                  {crunchFloater && (
+                    <motion.div
+                      initial={{ scale: 0.5, y: 15, opacity: 0 }}
+                      animate={{ scale: 1.15, y: -20, opacity: 1 }}
+                      exit={{ scale: 0.9, y: -40, opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="absolute z-40 bg-[#4A2C2A] text-white px-3 py-1 rounded-full text-xs font-black tracking-wider uppercase shadow-lg border border-white/20"
+                    >
+                      CRUNCH!
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Hover hint to tap/bite */}
+                {bites === 0 && (
+                  <div className="absolute bottom-3 inset-x-3 flex items-center justify-center">
+                    <span className="bg-black/60 backdrop-blur-sm text-white/90 text-[11px] font-medium px-3 py-1 rounded-full shadow-sm group-hover:bg-[#4A2C2A]/90 transition-colors">
+                      Click waffle to take a bite
                     </span>
                   </div>
+                )}
+              </div>
 
+              {/* Bottom Card Footer: Quick bite dots */}
+              <div className="flex items-center justify-between px-2 pt-3 pb-1 text-xs text-[#4A2C2A]/60">
+                <span className="font-medium text-[#4A2C2A]/70">Crispiness Level</span>
+                <div className="flex items-center gap-1.5">
+                  {[0, 1, 2, 3].map((dotIdx) => (
+                    <span
+                      key={dotIdx}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        dotIdx < (bites || 4)
+                          ? 'bg-[#E07A5F]'
+                          : 'bg-[#4A2C2A]/20'
+                      }`}
+                    />
+                  ))}
                 </div>
-
-                {/* Card Interaction Footer */}
-                <div className="mt-2 pt-2 border-t border-[#4A2C2A]/10 flex items-center justify-between text-xs">
-                  <span className="text-[11px] font-bold text-[#4A2C2A]/70">
-                    {bites < 4 ? `Click waffle to take a bite` : 'Finished!'}
-                  </span>
-                  {bites < 4 ? (
-                    <motion.button
-                      type="button"
-                      whileTap={{ scale: 0.92 }}
-                      onClick={handleBite}
-                      className="px-2.5 py-1 rounded-full bg-amber-400 hover:bg-amber-500 text-[#4A2C2A] text-[10px] font-black uppercase tracking-wider shadow-2xs cursor-pointer"
-                    >
-                      Bite ({bites}/4)
-                    </motion.button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={handleReset}
-                      className="px-2 py-0.5 rounded-full bg-stone-200 text-[#4A2C2A] text-[10px] font-black uppercase tracking-wider cursor-pointer"
-                    >
-                      Reset
-                    </button>
-                  )}
-                </div>
-
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
           </div>
 
-          {/* RIGHT POD (lg:col-span-4): Acoustic Lab & Direct Order Actions */}
-          <div className="lg:col-span-4 flex flex-col gap-4">
-            
-            {/* Acoustic Crunch Monitor */}
-            <div className="p-4 rounded-2xl bg-white/80 border border-[#4A2C2A]/15 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-mono font-bold uppercase text-[#4A2C2A]/70 flex items-center gap-1.5">
-                  <Volume2 className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Acoustic Crunch Lab</span>
-                </span>
-                <span className="text-xs font-mono font-bold text-amber-900">
-                  32.4 dB
-                </span>
-              </div>
-              <p className="text-xs text-[#4A2C2A]/75 font-medium mb-3">
-                Liège caramelized pearl sugar core cracks under teeth with distinctive acoustic resonance.
-              </p>
-              <button
-                type="button"
-                onClick={handleBite}
-                className="w-full py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-[#4A2C2A] text-xs font-black uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+          {/* Right Anchor: CRUNCH. headline & Clear, User-Friendly Order Actions */}
+          <div className="lg:col-span-3 flex flex-col justify-center space-y-6">
+            <div className="space-y-1">
+              <span className="inline-block text-xs uppercase tracking-widest font-bold text-[#E07A5F] bg-[#E07A5F]/10 px-2.5 py-1 rounded-full mb-3">
+                02 / The Climax
+              </span>
+              <h1
+                className="font-brand font-black text-6xl sm:text-7xl lg:text-8xl tracking-tight leading-[0.88] transition-colors duration-300"
+                style={{ color: currentFlavor.accentColor }}
               >
-                <Volume2 className="w-3.5 h-3.5" />
-                <span>Test Crunch Sound</span>
-              </button>
+                CRUNCH.
+              </h1>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-2.5">
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleQuickAdd}
-                className="bg-[#4A2C2A] text-[#FAF5EE] px-6 py-3.5 rounded-2xl font-brand font-black uppercase text-xs tracking-wider shadow-xl hover:bg-[#2D1B19] transition-colors flex items-center justify-center gap-2 cursor-pointer w-full"
+            <p className="text-sm sm:text-base text-[#4A2C2A]/80 leading-relaxed font-sans">
+              {currentFlavor.tagline}
+            </p>
+
+            {/* Clear, High-Affordance Action Buttons */}
+            <div className="space-y-3 pt-2">
+              <button
+                onClick={handleOrder}
+                className="w-full flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl bg-[#4A2C2A] text-white font-semibold text-base shadow-lg shadow-[#4A2C2A]/20 hover:bg-[#381F1E] active:scale-[0.98] transition-all cursor-pointer group"
               >
                 {addedToast ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-400 animate-bounce" />
-                    <span>Added Hot to Cart!</span>
+                    <Check className="w-5 h-5 text-emerald-400" />
+                    <span>Added to Cart!</span>
                   </>
                 ) : (
                   <>
-                    <Plus className="w-4 h-4 text-amber-400" />
-                    <span>Order Hot • ₹{currentFlavor.price}</span>
+                    <ShoppingBag className="w-5 h-5 text-[#F5DEB3] group-hover:scale-110 transition-transform" />
+                    <span>Order Now • ₹{currentFlavor.price}</span>
                   </>
                 )}
-              </motion.button>
+              </button>
 
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <button
                 onClick={() => {
-                  soundEffects.playDip();
+                  soundEffects.playPop();
                   onExploreMenu();
                 }}
-                className="bg-white text-[#4A2C2A] border-2 border-[#4A2C2A] px-5 py-3 rounded-2xl font-brand font-black uppercase text-xs tracking-wider shadow-2xs hover:bg-[#FAF5EE] transition-colors flex items-center justify-center gap-1.5 cursor-pointer w-full"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-white/80 hover:bg-white text-[#4A2C2A] font-medium text-sm border border-[#4A2C2A]/15 hover:border-[#4A2C2A]/30 transition-all cursor-pointer group"
               >
                 <span>Explore Full Menu</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </motion.button>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
 
+            {/* Subtle Reassurance Tags */}
+            <div className="pt-2 flex flex-col gap-1 text-xs text-[#4A2C2A]/60">
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-600 font-bold">✓</span>
+                <span>Ready for pickup / dine-in in 3 minutes</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-600 font-bold">✓</span>
+                <span>Crafted fresh from Liege pearl sugar dough</span>
+              </div>
+            </div>
           </div>
-
         </div>
-
-        {/* =======================================================
-            BOTTOM BADGES STRIP
-           ======================================================= */}
-        <div className="flex flex-wrap items-center justify-center gap-6 pt-4 border-t border-[#4A2C2A]/10 text-xs font-semibold text-[#4A2C2A]/70">
-          <span>✦ 100% Belgian Cocoa</span>
-          <span>✦ Liège Brioche Dough</span>
-          <span>✦ Dipped Hot in 3 Mins</span>
-        </div>
-
       </div>
     </section>
   );
