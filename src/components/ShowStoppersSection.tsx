@@ -443,6 +443,7 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                           <img
                             src={product.image}
                             alt={product.name}
+                            referrerPolicy="no-referrer"
                             className={`w-full h-full object-cover transition-transform duration-500 ${
                               isSelected ? 'scale-110' : 'group-hover:scale-105'
                             }`}
@@ -528,6 +529,7 @@ export const ShowStoppersSection: React.FC<ShowStoppersSectionProps> = ({
                     <img
                       src={currentProduct.image}
                       alt={currentProduct.name}
+                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
 

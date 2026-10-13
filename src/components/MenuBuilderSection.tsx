@@ -62,6 +62,13 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
       };
     }
 
+    if (selectedSauce.id === 'sauce-nutella') {
+      return {
+        previewImage: ASSETS.waffleNutella,
+        styleLabel: 'Pure Flowing Nutella Royale & Roasted Hazelnuts',
+      };
+    }
+
     // 3. Topping overrides for milk chocolate or nutella
     if (selectedToppings.some((t) => t.id === 'top-oreo')) {
       return {
@@ -77,8 +84,20 @@ export const MenuBuilderSection: React.FC<MenuBuilderSectionProps> = ({ onAddCus
     }
     if (selectedToppings.some((t) => t.id === 'top-kitkat')) {
       return {
-        previewImage: ASSETS.waffleBueno,
-        styleLabel: 'Wafer Crunch & Milk Chocolate',
+        previewImage: ASSETS.waffleNutella,
+        styleLabel: 'Chunky KitKat & Nutella Drip',
+      };
+    }
+    if (selectedToppings.some((t) => t.id === 'top-sprinkles') && selectedSauce.id === 'sauce-white-velvet') {
+      return {
+        previewImage: ASSETS.waffleStrawberry,
+        styleLabel: 'Strawberry Rose White Velvet & Berry Shards',
+      };
+    }
+    if (selectedToppings.some((t) => t.id === 'top-hazelnut') && selectedSauce.id === 'sauce-white-velvet') {
+      return {
+        previewImage: ASSETS.wafflePistachio,
+        styleLabel: 'Sicilian Pistachio Velvet & Kadaifi Crunch',
       };
     }
 

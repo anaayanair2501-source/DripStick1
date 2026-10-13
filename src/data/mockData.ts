@@ -21,12 +21,18 @@ import coneWaffleImg from '../assets/images/cone_waffle_dip_1788099942308.jpg';
 import realisticDripstickImg from '../assets/images/realistic_dripstick_1788853805636.jpg';
 import waffleDarkDipImg from '../assets/images/waffle_dark_dip_1788854112130.jpg';
 import waffleWhiteDipImg from '../assets/images/waffle_white_dip_1788854128466.jpg';
+import waffleStrawberryImg from '../assets/images/waffle_strawberry_bliss_1791896615350.jpg';
+import wafflePistachioImg from '../assets/images/waffle_pistachio_kadaifi_1791896615545.jpg';
+import waffleNutellaImg from '../assets/images/waffle_nutella_royale_1791896615880.jpg';
 
 export const ASSETS = {
   heroWaffle: heroWaffleImg,
   waffleOreo: waffleOreoImg,
   waffleBueno: waffleBuenoImg,
   waffleBiscoff: waffleBiscoffImg,
+  waffleStrawberry: waffleStrawberryImg,
+  wafflePistachio: wafflePistachioImg,
+  waffleNutella: waffleNutellaImg,
   eventLifestyle: eventLifestyleImg,
   storyCraft: coneWaffleImg,
   realisticDripstick: realisticDripstickImg,
@@ -141,7 +147,7 @@ export const SAUCE_DIPS: SauceDip[] = [
     color: '#4A2C2A',
     colorHex: '#4A2C2A',
     cocoaPercent: '35%',
-    image: ASSETS.realisticDripstick,
+    image: waffleNutellaImg,
   },
   {
     id: 'sauce-speculoos-dip',
@@ -337,7 +343,7 @@ export const SHOW_STOPPERS: ShowStopperProduct[] = [
     toppings: [TOPPINGS[4]],
     drizzle: DRIZZLE_EXTRAS[1],
     badge: 'Sweet Pastel',
-    image: heroWaffleImg,
+    image: waffleStrawberryImg,
     calories: 320,
     isPopular: true,
     category: 'fruity',
@@ -362,7 +368,7 @@ export const SHOW_STOPPERS: ShowStopperProduct[] = [
     toppings: [TOPPINGS[3], TOPPINGS[5]],
     drizzle: DRIZZLE_EXTRAS[0],
     badge: 'Viral Dubai Edition',
-    image: waffleBuenoImg,
+    image: wafflePistachioImg,
     calories: 385,
     isPopular: true,
     category: 'nutty',
@@ -387,7 +393,7 @@ export const SHOW_STOPPERS: ShowStopperProduct[] = [
     toppings: [TOPPINGS[2], TOPPINGS[3]],
     drizzle: DRIZZLE_EXTRAS[2],
     badge: 'Heavy Indulgence',
-    image: waffleOreoImg,
+    image: waffleNutellaImg,
     calories: 395,
     category: 'chocolate',
     pastelTheme: {
@@ -610,30 +616,30 @@ export const SOCIAL_POSTS: SocialPost[] = [
   },
   {
     id: 'soc-2',
-    author: '@rohit_eats_blr',
-    image: waffleBiscoffImg,
-    likes: 8940,
-    comments: 184,
+    author: '@zoya_mumbai_eats',
+    image: wafflePistachioImg,
+    likes: 24890,
+    comments: 531,
     type: 'reel',
-    caption: 'Biscoff fans, listen up: The Biscoff Crush at DripStick Indiranagar has ruined normal waffles for me forever. 🧇✨',
+    caption: 'The viral Pistachio Kadaifi on a waffle stick is UNREAL. That emerald pistachio dip and crunchy toasted kadaifi! 🌿💚',
   },
   {
     id: 'soc-3',
     author: '@ananya_creations',
-    image: waffleBuenoImg,
-    likes: 21500,
-    comments: 490,
+    image: waffleStrawberryImg,
+    likes: 18750,
+    comments: 412,
     type: 'reel',
-    caption: 'When street food meets luxury… hand them a Bueno Bliss! 🤎 That hazelnut cream coating is liquid gold.',
+    caption: 'Strawberry Rose bliss! 🍓 White velvet Belgian chocolate with tart freeze-dried berry shards. Sweet perfection.',
   },
   {
     id: 'soc-4',
-    author: '@fest_chronicles',
-    image: eventLifestyleImg,
-    likes: 11200,
-    comments: 205,
-    type: 'photo',
-    caption: 'The DripStick booth had a 40-person line all day at the fest. Worth every single second! 🔥',
+    author: '@chocoholic_rahul',
+    image: waffleNutellaImg,
+    likes: 29400,
+    comments: 684,
+    type: 'reel',
+    caption: 'Pure molten Nutella dripping off hot waffle dough with chunky KitKat bites. Absolute decadence! 🍫🔥',
   },
 ];
 

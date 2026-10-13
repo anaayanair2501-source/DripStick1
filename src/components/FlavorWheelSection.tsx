@@ -19,12 +19,12 @@ interface WheelSegment {
 }
 
 const SEGMENTS: WheelSegment[] = [
-  { name: 'The Oreo Drip', emoji: '🍪', tagline: 'Midnight Crunchy Cookie Craving', bg: '#FFE4E6', text: '#9F1239', productId: 'show-1' },
-  { name: 'Lotus Biscoff', emoji: '🍯', tagline: 'Caramelized Belgian Cookie Butter', bg: '#FEF3C7', text: '#92400E', productId: 'show-2' },
-  { name: 'Triple Chocolate', emoji: '🍫', tagline: '100% Pure Dark Cocoa Avalanche', bg: '#EDE9FE', text: '#6B21A8', productId: 'show-4' },
-  { name: 'Ruby Berry Swirl', emoji: '🍓', tagline: 'Tart Berry & Velvet White Ganache', bg: '#DCFCE7', text: '#166534', productId: 'show-5' },
-  { name: 'Nutella Praline', emoji: '🌰', tagline: 'Warm Hazelnut Melt & Toasted Nuts', bg: '#FFEDD5', text: '#9A3412', productId: 'show-3' },
-  { name: 'Pistachio Dream', emoji: '🌿', tagline: 'Persian Pistachio & Honey Drizzle', bg: '#E0F2FE', text: '#0369A1', productId: 'show-6' },
+  { name: 'The Oreo Drip', emoji: '🍪', tagline: 'Midnight Crunchy Cookie Craving', bg: '#FFE4E6', text: '#9F1239', productId: 'prod-oreo-drip' },
+  { name: 'Bueno Bliss', emoji: '🌰', tagline: 'Piedmont Hazelnut Praline Ganache', bg: '#FFEDD5', text: '#9A3412', productId: 'prod-bueno' },
+  { name: 'Biscoff Crush', emoji: '✨', tagline: 'Spiced Belgian Speculoos Crunch', bg: '#FEF3C7', text: '#92400E', productId: 'prod-biscoff' },
+  { name: 'Strawberry Rose', emoji: '🍓', tagline: 'Tart Berry Shards & White Velvet Ganache', bg: '#FFE4E6', text: '#9F1239', productId: 'prod-strawberry-bliss' },
+  { name: 'Pistachio Kadaifi', emoji: '🌿', tagline: 'Sicilian Emerald Pistachio & Kadaifi Crunch', bg: '#DCFCE7', text: '#166534', productId: 'prod-pistachio-dream' },
+  { name: 'Nutella Royale', emoji: '🍫', tagline: 'Pure Flowing Nutella & Chunky KitKat', bg: '#E0F2FE', text: '#0369A1', productId: 'prod-dark-velvet' },
 ];
 
 export const FlavorWheelSection: React.FC<FlavorWheelSectionProps> = ({ onAddProduct, onOpenCart }) => {
@@ -165,19 +165,29 @@ export const FlavorWheelSection: React.FC<FlavorWheelSectionProps> = ({ onAddPro
                   {hasSpun ? '✨ YOUR MATCH' : 'FEATURED DROP'}
                 </div>
 
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-3xl p-2 rounded-2xl bg-white shadow-2xs border border-[#4A2C2A]/10">
-                    {winner.emoji}
-                  </span>
-                  <div>
-                    <h3 className="font-brand font-black text-2xl text-[#4A2C2A]">
-                      {winner.name}
-                    </h3>
-                    <p className="text-xs font-bold text-[#4A2C2A]/70">
-                      {winner.tagline}
-                    </p>
-                  </div>
-                </div>
+                {(() => {
+                  const matched = SHOW_STOPPERS.find((p) => p.id === winner.productId) || SHOW_STOPPERS[0];
+                  return (
+                    <div className="flex items-center gap-3.5 mb-3">
+                      <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 border-2 border-[#4A2C2A]/20 shadow-xs bg-white">
+                        <img
+                          src={matched.image}
+                          alt={winner.name}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-brand font-black text-2xl text-[#4A2C2A]">
+                          {winner.name}
+                        </h3>
+                        <p className="text-xs font-bold text-[#4A2C2A]/70">
+                          {winner.tagline}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })()}
 
                 <p className="text-xs text-[#4A2C2A]/85 leading-relaxed font-medium mb-4">
                   Fresh Liège dough baked with caramelized sugar, dipped into warm velvety fondue and loaded with premium crunch toppings.
