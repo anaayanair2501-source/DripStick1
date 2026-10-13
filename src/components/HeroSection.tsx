@@ -237,12 +237,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </div>
 
-        {/* Unique Tri-Spatial Architectural Layout (Neither left-only nor center-stacked) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        {/* Balanced 3-Column Editorial Grid (4 / 4 / 4) with Top-Aligned Baselines */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-start">
           {/* Left Anchor: STICK. DIP. typographic statement */}
-          <div className="lg:col-span-4 flex flex-col justify-center">
+          <div className="lg:col-span-4 flex flex-col space-y-6 lg:pt-2">
             <div className="space-y-1">
-              <span className="inline-block text-xs uppercase tracking-widest font-bold text-[#E07A5F] bg-[#E07A5F]/10 px-2.5 py-1 rounded-full mb-3">
+              <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest font-bold text-[#E07A5F] bg-[#E07A5F]/10 px-2.5 py-1 rounded-full mb-3">
                 01 / The Ritual
               </span>
               <h1 className="font-brand font-black text-6xl sm:text-7xl lg:text-8xl tracking-tight text-[#4A2C2A] leading-[0.88]">
@@ -253,20 +253,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </h1>
             </div>
 
-            <p className="mt-6 text-sm sm:text-base text-[#4A2C2A]/70 leading-relaxed font-sans max-w-sm">
-              Caramelized Belgian pearl sugar brioche grilled golden, ready for molten couverture immersion.
+            <p className="text-sm sm:text-base text-[#4A2C2A]/70 leading-relaxed font-sans max-w-sm">
+              Caramelized Belgian pearl sugar brioche grilled golden on heavy cast iron, ready for molten couverture immersion.
             </p>
 
-            <div className="mt-6 flex items-center gap-3 text-xs text-[#4A2C2A]/60">
+            <div className="pt-2 flex items-center gap-3 text-xs text-[#4A2C2A]/60">
               <span className="w-1.5 h-1.5 rounded-full bg-[#4A2C2A]/40" />
               <span>100% Belgian chocolate</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#4A2C2A]/40" />
-              <span>Baked to order</span>
+              <span>Baked fresh to order</span>
             </div>
           </div>
 
           {/* Center Anchor: The Luscious Interactive Waffle Photo Card */}
-          <div className="lg:col-span-5 flex justify-center">
+          <div className="lg:col-span-4 flex justify-center">
             <motion.div
               ref={cardRef}
               onMouseMove={handleMouseMove}
@@ -276,7 +276,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 rotateY,
                 transformStyle: 'preserve-3d',
               }}
-              className="relative w-full max-w-[380px] sm:max-w-[420px] rounded-3xl bg-white p-3 sm:p-4 shadow-xl border border-[#4A2C2A]/10 transition-shadow hover:shadow-2xl cursor-pointer group"
+              className="relative w-full max-w-[360px] sm:max-w-[380px] rounded-3xl bg-white p-3 sm:p-4 shadow-xl border border-[#4A2C2A]/10 transition-shadow hover:shadow-2xl cursor-pointer group"
               onClick={handleBite}
             >
               {/* Top Tag on Card */}
@@ -285,7 +285,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   <Sparkles className="w-3.5 h-3.5 text-[#E07A5F]" />
                   {currentFlavor.name}
                 </span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#FFF5EC] text-[#4A2C2A] border border-[#E07A5F]/20">
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#FFF5EC] text-[#4A2C2A] border border-[#E07A5F]/20">
                   ₹{currentFlavor.price}
                 </span>
               </div>
@@ -394,25 +394,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Right Anchor: CRUNCH. headline & Clear, User-Friendly Order Actions */}
-          <div className="lg:col-span-3 flex flex-col justify-center space-y-6">
+          <div className="lg:col-span-4 flex flex-col space-y-6 lg:pt-2 lg:pl-3">
             <div className="space-y-1">
-              <span className="inline-block text-xs uppercase tracking-widest font-bold text-[#E07A5F] bg-[#E07A5F]/10 px-2.5 py-1 rounded-full mb-3">
+              <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest font-bold text-[#E07A5F] bg-[#E07A5F]/10 px-2.5 py-1 rounded-full mb-3">
                 02 / The Climax
               </span>
               <h1
-                className="font-brand font-black text-6xl sm:text-7xl lg:text-8xl tracking-tight leading-[0.88] transition-colors duration-300"
+                className="font-brand font-black text-6xl sm:text-7xl lg:text-7xl xl:text-8xl tracking-tight leading-[0.88] whitespace-nowrap transition-colors duration-300"
                 style={{ color: currentFlavor.accentColor }}
               >
                 CRUNCH.
               </h1>
             </div>
 
-            <p className="text-sm sm:text-base text-[#4A2C2A]/80 leading-relaxed font-sans">
+            <p className="text-sm sm:text-base text-[#4A2C2A]/80 leading-relaxed font-sans max-w-sm">
               {currentFlavor.tagline}
             </p>
 
             {/* Clear, High-Affordance Action Buttons */}
-            <div className="space-y-3 pt-2">
+            <div className="space-y-3 pt-1 max-w-sm">
               <button
                 onClick={handleOrder}
                 className="w-full flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl bg-[#4A2C2A] text-white font-semibold text-base shadow-lg shadow-[#4A2C2A]/20 hover:bg-[#381F1E] active:scale-[0.98] transition-all cursor-pointer group"
@@ -442,15 +442,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </button>
             </div>
 
-            {/* Subtle Reassurance Tags */}
-            <div className="pt-2 flex flex-col gap-1 text-xs text-[#4A2C2A]/60">
-              <div className="flex items-center gap-2">
-                <span className="text-emerald-600 font-bold">✓</span>
-                <span>Ready for pickup / dine-in in 3 minutes</span>
+            {/* Clean Reassurance Check Signs */}
+            <div className="pt-1 flex flex-col gap-2 text-xs text-[#4A2C2A]/70 max-w-sm">
+              <div className="flex items-center gap-2.5">
+                <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <Check className="w-2.5 h-2.5 stroke-[3]" />
+                </div>
+                <span className="font-medium">Ready for pickup / dine-in in 3 minutes</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-emerald-600 font-bold">✓</span>
-                <span>Crafted fresh from Liege pearl sugar dough</span>
+              <div className="flex items-center gap-2.5">
+                <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <Check className="w-2.5 h-2.5 stroke-[3]" />
+                </div>
+                <span className="font-medium">Crafted fresh from Liège pearl sugar dough</span>
               </div>
             </div>
           </div>
